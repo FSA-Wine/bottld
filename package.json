@@ -3,14 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 8080",
+    "dev": "nodemon -r esm ssr-server.mjs",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
     "next": "9.2.1",
     "next-offline": "^4.0.6",
-    "react": "16.12.0",
+    "react": "^16.12.0",
     "react-dom": "16.12.0"
   }
 }
