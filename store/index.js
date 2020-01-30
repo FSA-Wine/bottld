@@ -2,11 +2,11 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { createLogger } from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
-//import cart from './cart'
+import singleWineReducer from './singleWine'
 
 
 const reducer = combineReducers({
-    //user
+    singleWine: singleWineReducer
 })
 
 const middleware = composeWithDevTools(
