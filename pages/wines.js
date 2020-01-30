@@ -1,16 +1,22 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
+import axios from 'axios'
 
 export default () => {
   const [wine, setWine] = useState('')
+  const [wines, setWines] = useState([])
 
   const handleChange = e => {
     setWine(e.target.value)
   }
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
     //DO SOMETHING HERE
+    const { data } = await axios.get('/api')
+    setWines(data)
+    console.log(wines, 'wines')
+
     setWine('')
   }
 

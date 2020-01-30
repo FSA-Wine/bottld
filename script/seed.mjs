@@ -1,8 +1,6 @@
 import faker from 'faker'
-import neo4j from 'neo4j-driver'
-import { db } from '../server/index.mjs'
+import { db, driver } from '../server/index.mjs'
 
-const driver = neo4j.driver('bolt://localhost:7687', neo4j.auth.basic('neo4j', 'bottld'))
 const session = driver.session()
 
 const wineSeeder = async db => {
