@@ -13,7 +13,7 @@ export default () => {
   const handleSubmit = async e => {
     e.preventDefault()
     //DO SOMETHING HERE
-    const { data } = await axios.get('/api')
+    const { data } = await axios.get('/api/wines')
     setWines(data)
     console.log(wines, 'wines')
 

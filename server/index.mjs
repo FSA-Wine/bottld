@@ -7,6 +7,8 @@ import passport from 'passport'
 import neo4j from 'node-neo4j'
 import neo4jDriver from 'neo4j-driver'
 
+import router from './api'
+
 dotenv.config()
 //Might need to change bolt??
 export const db = new neo4j('bolt://localhost:7687')
@@ -48,19 +50,7 @@ nextApp
 
     // API Routes
     // app.use('/auth', )
-    // app.use('/api', )
-
-    app.get('/api', (req, res) => {
-      const session = driver.session()
-      const cypher = 'MATCH (n:Wine) RETURN n LIMIT 25'
-      session
-        .run(cypher)
-        .then(result => {
-          res.send(result.records)
-        })
-        .catch(err => res.status(55).send(err))
-        .then(() => session.close())
-    })
+    app.use('/api', router)
 
     //Handles React stuff
     app.get('*', (req, res) => {
