@@ -3,6 +3,7 @@ import next from 'next'
 import dotenv from 'dotenv'
 import morgan from 'morgan'
 import session from 'express-session'
+import sessionstore from 'sessionstore'
 import passport from 'passport'
 import neo4j from 'node-neo4j'
 import neo4jDriver from 'neo4j-driver'
@@ -37,14 +38,14 @@ nextApp
     app.use(morgan('dev'))
     app.use(express.json())
     app.use(express.urlencoded({ extended: true }))
-    // app.use(
-    //   session({
-    //     secret: process.env.SESSION_SECRET,
-    //     // store: ,
-    //     resave: false,
-    //     saveUninitialized: false,
-    //   })
-    // )
+    app.use(
+      session({
+        store: sessionstore.createSessionStore(),
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: true,
+      })
+    )
     // app.use(passport.initialize())
     // app.use(passport.session())
 
