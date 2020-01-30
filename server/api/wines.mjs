@@ -19,4 +19,19 @@ router.get('/', async (req, res) => {
   }
 })
 
+router.get('/:wineId', async (req, res) => {
+  let session
+  try {
+    session = driver.session()
+    const wineId = req.params.wineId
+    const cypher = `MATCH (n:Wine) WHERE ID(n) = ${wineId} RETURN n`
+    const { records } = await session.run(cypher)
+    res.send(records)
+  } catch (err) {
+    res.status(500).send(err)
+  } finally {
+    await session.close()
+  }
+})
+
 export default router
