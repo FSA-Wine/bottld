@@ -27,10 +27,11 @@ const wineSeeder = async db => {
   //   UserArr.push({id: j, name: `${faker.name.firstName()} ${faker.name.lastName()}`})
   // }
 
-  // for (let j = 0; j < 100; j++) {
-  //   let curName = `${faker.name.firstName()} ${faker.name.lastName()}`;
-  //   await session.run(`MERGE (a:User {name: curName}) RETURN a`);
-  // }
+  for (let j = 0; j < 100; j++) {
+    await session.run(
+      `MERGE (a:User {name: "${faker.name.firstName()} ${faker.name.lastName()}", email: "${faker.internet.email()}", password: "${faker.random.word()}", userId: "${j}"}) RETURN a`
+    );
+  }
 
   await session.run(
     `LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/RoaldSchuring/wine_recommender/master/descriptor_mapping.csv' AS line MERGE (d:Characteristic {title: line.level_1})`
@@ -84,6 +85,17 @@ const wineSeeder = async db => {
     CREATE (a)-[:CREATED_IN]->(b)
     RETURN a, b`
   );
+
+  for (let i = 0; i < 100; i++) {
+    await session.run(
+      `MATCH (a:User), (b:Wine)
+    WHERE id(b) = ${Math.floor(
+      Math.random() * 80000
+    )} AND a.userId = "${Math.floor(Math.random() * 90)}"
+    MERGE (a)-[:ENJOYED_DRINKING]->(b)
+    RETURN a, b`
+    );
+  }
 
   session.close();
   driver.close();
