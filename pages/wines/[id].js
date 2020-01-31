@@ -16,20 +16,38 @@ class SingleWineWithoutRouter extends Component {
       loc: props.router.query.loc,
       loaded: false
     };
+    this.trimParen = this.trimParen.bind(this)
   }
 
   componentDidMount() {
     this.props.fetchSingleWine(this.props.router.query.id);
-    console.log("this?", this);
-    console.log("props?", this.props);
+  }
+
+  trimParen(title) {
+    if (title.lastIndexOf('(') !== -1) {
+      let sParenIdx = title.lastIndexOf('(')
+      return title.slice(0, sParenIdx)
+    }
   }
 
   render() {
-    return (
-      <div>
-        <h1>Wine #{this.props.router.query.id}</h1>
-      </div>
-    );
+    const singleWine = this.props.singleWine;
+    if (singleWine.length) {
+      let curWine = singleWine[0]._fields[0].properties;
+      return (
+        <div>
+          <h1>{this.trimParen(curWine.title)}</h1>
+          <p>Winery: {curWine.winery}</p>
+          <p>Varietal: {curWine.variety}</p>
+          <p>Origin: {curWine.province}, {curWine.country}</p>
+          <p>Est. price: ${curWine.price}</p>
+          <p>Score: {curWine.points.low}</p>
+          <p style={{ fontStyle: "italic" }}>{curWine.description}</p>
+        </div>
+      );
+    } else {
+      return <div> Nothing Found</div>;
+    }
   }
 }
 
