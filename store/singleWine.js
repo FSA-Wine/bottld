@@ -21,9 +21,7 @@ export const fetchSingleWine = id => {
   };
 };
 
-const initialState = {};
-
-export const singleWineReducer = (state = initialState, action) => {
+export const singleWineReducer = (state = [], action) => {
   switch (action.type) {
     case GET_SINGLE_WINE:
       return action.wine;
