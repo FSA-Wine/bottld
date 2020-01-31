@@ -1,7 +1,9 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import withRedux from 'next-redux-wrapper'
+import 'semantic-ui-css/semantic.min.css'
 import store from '../store'
+import '../styles/App.css'
 
 const App = props => {
   const { Component, pageProps, store } = props
