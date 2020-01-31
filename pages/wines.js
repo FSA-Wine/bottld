@@ -7,8 +7,6 @@ import { fetchWines } from '../store/wines'
 import Paginate from '../components/Paginate'
 
 const Wines = props => {
-  const [wine, setWine] = useState('')
-  // const [wines, setWines] = useState([])
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(25)
   const [search, setSearch] = useState('')
@@ -21,22 +19,13 @@ const Wines = props => {
     setSearch(e.target.value)
   }
 
-  const handleSubmit = async e => {
-    e.preventDefault()
-    props.fetchWines(page, limit, search)
-    setSearch('')
-  }
-
   return (
     <div>
       <Head>
         <title>Search Wines</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="search" value={search} onChange={handleChange}></input>
-        <button disabled={!search}>Submit</button>
-      </form>
+      <input type="text" name="search" value={search} onChange={handleChange}></input>
       <ul>
         {props.wines.length ? (
           props.wines.map(wine => (
