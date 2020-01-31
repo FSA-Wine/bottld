@@ -19,6 +19,7 @@
     "neo4j-driver": "^4.0.1",
     "next": "9.2.1",
     "next-offline": "^4.0.6",
+    "next-redux-wrapper": "^4.0.1",
     "node-neo4j": "^2.0.3",
     "passport": "^0.4.1",
     "passport-google-oauth": "^2.0.0",
