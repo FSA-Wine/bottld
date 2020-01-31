@@ -20,16 +20,22 @@ class SingleWineWithoutRouter extends Component {
 
   componentDidMount() {
     this.props.fetchSingleWine(this.props.router.query.id);
-    console.log("this?", this);
-    console.log("props?", this.props);
   }
 
   render() {
-    return (
-      <div>
-        <h1>Wine #{this.props.router.query.id}</h1>
-      </div>
-    );
+    console.log(this.props.singleWine);
+    const singleWine = this.props.singleWine;
+    if (singleWine.length) {
+      let curWine = singleWine[0]._fields[0].properties;
+      return (
+        <div>
+          <div>Wine Found!</div>
+          <div>{curWine.title}</div>
+        </div>
+      );
+    } else {
+      return <div> Nothing Found</div>;
+    }
   }
 }
 
