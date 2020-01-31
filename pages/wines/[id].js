@@ -1,7 +1,10 @@
 import { useRouter } from "next/router";
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
+import Link from 'next/link'
 import { fetchSingleWine } from "../../store/singleWine";
+import 'semantic-ui-css/semantic.min.css'
+import { Button, Card, Flag, Segment } from 'semantic-ui-react'
 
 const SingleWine = props => {
   const router = useRouter();
@@ -16,28 +19,67 @@ class SingleWineWithoutRouter extends Component {
       loc: props.router.query.loc,
       loaded: false
     };
+    this.trimParen = this.trimParen.bind(this)
   }
 
   componentDidMount() {
     this.props.fetchSingleWine(this.props.router.query.id);
   }
 
+  trimParen(title) {
+    if (title.lastIndexOf('(') !== -1) {
+      let sParenIdx = title.lastIndexOf('(')
+      return title.slice(0, sParenIdx)
+    }
+  }
+
   render() {
-    console.log(this.props.singleWine);
     const singleWine = this.props.singleWine;
+    const fakeArr = ['wine1', 'wine2', 'wine3', 'wine4', 'wine5'];
     if (singleWine.length) {
       let curWine = singleWine[0]._fields[0].properties;
       return (
-        <div>
-          <div>Wine Found!</div>
-          <div>{curWine.title}</div>
-        </div>
+        <Fragment>
+          <div>
+            <h1>{this.trimParen(curWine.title)}</h1>
+            <p>Winery: {curWine.winery}</p>
+            <p>Varietal: {curWine.variety}</p>
+            <Flag name="france" />
+            <p>Origin: {curWine.province}, {curWine.country}</p>
+            <p>Est. price: ${curWine.price}</p>
+            <p>Score: {curWine.points.low}</p>
+            <p style={{ fontStyle: "italic" }}>{curWine.description}</p>
+          </div>
+
+          <Card.Group className='card-group'>
+            {fakeArr.map(el => {
+              return (
+                < Card key={el} style={{ maxWidth: `120px` }}>
+                  <Link href={`/wines/${el[4]}`}>
+                    <Card.Content>
+                      <Card.Header>{el}</Card.Header>
+                      <Card.Meta>Subhead</Card.Meta>
+                      <Card.Description>
+                        Some description
+                      </Card.Description>
+                    </Card.Content>
+                  </Link>
+                </Card>
+              )
+            })}
+          </Card.Group>
+
+        </Fragment >
       );
     } else {
       return <div> Nothing Found</div>;
     }
   }
 }
+
+
+
+
 
 const mapStateToProps = state => {
   return {
