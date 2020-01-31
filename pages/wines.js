@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import Head from 'next/head'
-import axios from 'axios'
+import Link from 'next/link'
 
 import { fetchWines } from '../store/wines'
 
@@ -20,11 +20,11 @@ const Wines = props => {
     setSearch(e.target.value)
   }
 
-  const handleSubmit = async e => {
-    e.preventDefault()
-    props.fetchWines(page, limit, search)
-    setSearch('')
-  }
+  // const handleSubmit = async e => {
+  //   e.preventDefault()
+  //   props.fetchWines(page, limit, search)
+  //   setSearch('')
+  // }
 
   return (
     <div>
@@ -32,10 +32,23 @@ const Wines = props => {
         <title>Search Wines</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="search" value={search} onChange={handleChange}></input>
-        <button disabled={!search}>Submit</button>
-      </form>
+      {/* <form onSubmit> */}
+      <input type="text" name="search" value={search} onChange={handleChange}></input>
+      {/* <button disabled={!search}>Submit</button> */}
+      {/* </form> */}
+      <ul>
+        {props.wines.length ? (
+          props.wines.map(wine => (
+            <Link href={`/wines/${wine._fields[0].identity.low}`}>
+              <a className="card">
+                <li key={wine._fields[0].identity.low}>{wine._fields[0].properties.title}</li>
+              </a>
+            </Link>
+          ))
+        ) : (
+          <li>Loading wines...</li>
+        )}
+      </ul>
     </div>
   )
 }

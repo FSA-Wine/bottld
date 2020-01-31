@@ -8,9 +8,7 @@ router.get('/', async (req, res) => {
   let session
   try {
     session = driver.session()
-    const cypher = req.query.search
-      ? `MATCH (n:Wine) WHERE toLower(n.title) STARTS WITH toLower('${req.query.search}') RETURN n`
-      : 'MATCH (n:Wine) RETURN n'
+    const cypher = `MATCH (n:Wine) WHERE toLower(n.title) STARTS WITH toLower('${req.query.search}') RETURN n`
     const { records } = await session.run(cypher)
     res.json(paginate(records, req.query.page, req.query.limit))
     res.json(records)
