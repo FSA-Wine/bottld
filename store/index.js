@@ -6,7 +6,8 @@ import singleWineReducer from './singleWine'
 import { winesReducer as wines } from './wines'
 
 const reducer = combineReducers({
-    singleWine: singleWineReducer, wines,
+  singleWine: singleWineReducer,
+  wines,
 })
 
 const middleware = composeWithDevTools(

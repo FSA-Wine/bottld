@@ -6,7 +6,7 @@ import axios from 'axios'
 import { fetchWines } from '../store/wines'
 
 const Wines = props => {
-  const [wine, setWine] = useState('')
+  // const [wine, setWine] = useState('')
   // const [wines, setWines] = useState([])
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(25)
@@ -17,17 +17,13 @@ const Wines = props => {
   }, [page, limit, search])
 
   const handleChange = e => {
-    setWine(e.target.value)
+    setSearch(e.target.value)
   }
 
   const handleSubmit = async e => {
     e.preventDefault()
-    //DO SOMETHING HERE
-    const { data } = await axios.get('/api/wines')
-    setWines(data)
-    console.log(wines, 'wines')
-
-    setWine('')
+    props.fetchWines(page, limit, search)
+    setSearch('')
   }
 
   return (
@@ -37,8 +33,8 @@ const Wines = props => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <form onSubmit={handleSubmit}>
-        <input type="text" name="search" value={wine} onChange={handleChange}></input>
-        <button disabled={!wine}>Submit</button>
+        <input type="text" name="search" value={search} onChange={handleChange}></input>
+        <button disabled={!search}>Submit</button>
       </form>
     </div>
   )
