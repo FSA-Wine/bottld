@@ -4,10 +4,12 @@ import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { singleWineReducer as singleWine } from './singleWine'
 import { winesReducer as wines } from './wines'
+import user from './user'
 
 const reducer = combineReducers({
   singleWine,
   wines,
+  user,
 })
 
 const middleware = composeWithDevTools(
