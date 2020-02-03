@@ -35,7 +35,6 @@ class SingleWineWithoutRouter extends Component {
 
   render() {
     const singleWine = this.props.singleWine;
-    const fakeArr = ["wine1", "wine2", "wine3", "wine4", "wine5"];
     if (singleWine.length) {
       let curWine = singleWine[0]._fields[0].properties;
       return (
