@@ -79,6 +79,16 @@ const wineSeeder = async db => {
   // )
 
   await session.run(
+    `MATCH (a:Note), (b:Wine)
+    WHERE a.title IN b.descriptors AND a.title = "allspice" CREATE (a)-[:FOUND_IN]->(b) RETURN a, b`
+  );
+
+  await session.run(
+    `MATCH (a:Note), (b:Wine)
+    WHERE a.title IN b.descriptors AND a.title = "berry" CREATE (a)-[:FOUND_IN]->(b) RETURN a, b`
+  );
+
+  await session.run(
     `MATCH (a:Note), (b:Characteristic)
     WHERE a.level1 = b.title
     CREATE (a)-[:ASSOC_WITH]->(b)
