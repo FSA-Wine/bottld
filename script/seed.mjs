@@ -34,8 +34,12 @@ const wineSeeder = async db => {
   await session.run(
     `LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/RoaldSchuring/wine_recommender/master/descriptor_mapping.csv' AS line MERGE (d:Note {title: line.level_3}) ON CREATE SET d.level1 = line.level_1`
   );
+  // await session.run(
+  //   `USING PERIODIC COMMIT 5000 LOAD CSV WITH HEADERS FROM 'file:///winemag-data-notes.csv' AS line MERGE (d:Wine {title: line.title}) ON CREATE SET d.country = line.country, d.description = trim(line.description), d.points = toInteger(line.points), d.price = toFloat(line.price), d.province = line.province, d.variety = line.variety, d.winery = line.winery, d.descriptors = split(line.normalized_descriptors, ',')`
+  // );
+
   await session.run(
-    `USING PERIODIC COMMIT 5000 LOAD CSV WITH HEADERS FROM 'file:///winemag-data-notes.csv' AS line MERGE (d:Wine {title: line.title}) ON CREATE SET d.country = line.country, d.description = trim(line.description), d.points = toInteger(line.points), d.price = toFloat(line.price), d.province = line.province, d.variety = line.variety, d.winery = line.winery, d.descriptors = split(line.normalized_descriptors, ',')`
+    `USING PERIODIC COMMIT 5000 LOAD CSV WITH HEADERS FROM 'file:///winemag-data-notes.csv' AS line MERGE (d:Wine {title: line.title}) ON CREATE SET d.country = line.country, d.description = trim(line.description), d.points = toInteger(line.points), d.price = toFloat(line.price), d.province = line.province, d.variety = line.variety, d.winery = line.winery, d.descriptors = split(lTrim(replace(replace(replace(line.normalized_descriptors, '[', ""), ']', ""), "'", "")), ", ")`
   );
 
   ///d.reviewVector = line.review_vector not included in this seed to reduce load time///
@@ -61,12 +65,18 @@ const wineSeeder = async db => {
   );
 
   ///Reationships: Wine-to-Note, Note-to-Characteristic, Wine-to-Variety, Wine-to-Province, Wine-to-Country////
-  await session.run(
-    `MATCH (a:Note), (b:Wine)
-    WHERE a.title IN b.descriptors
-    CREATE (a)-[:FOUND_IN]->(b)
-    RETURN a, b`
-  );
+  // await session.run(
+  //   `MATCH (a:Note), (b:Wine)
+  //   WHERE a.title IN b.descriptors
+  //   CREATE (a)-[:FOUND_IN]->(b)
+  //   RETURN a, b`
+  // );
+
+  // CALL apoc.periodic.iterate(
+  //   "MATCH (a:Note), (b:Wine) WHERE a.title IN b.descriptors",
+  //   "CREATE (a)-[:FOUND_IN]->(b)",
+  //   {batchSize: 10000}
+  // )
 
   await session.run(
     `MATCH (a:Note), (b:Characteristic)
