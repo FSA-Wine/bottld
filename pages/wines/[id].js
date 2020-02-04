@@ -41,7 +41,7 @@ class SingleWineWithoutRouter extends Component {
       return (
         <Layout>
           <div>
-            <h1>{this.trimParen(curWine.title)}</h1>
+            <h1>{curWine.title}</h1>
             <p>Winery: {curWine.winery}</p>
             <p>Varietal: {curWine.variety}</p>
             <Flag name="france" />
@@ -61,7 +61,9 @@ class SingleWineWithoutRouter extends Component {
                 <Card key={wineId} style={{ maxWidth: `120px` }}>
                   <Card.Content>
                     <Card.Header>
-                      <Link href={`/wines/${wineId}`}>{this.trimParen(currentWine.title)}</Link>
+                      <Link href={`/wines/${wineId}`}>
+                        <a>{currentWine.title}</a>
+                      </Link>
                     </Card.Header>
                     <Card.Meta>Subhead</Card.Meta>
                     <Card.Description>{currentWine.description.slice(0, 50)}</Card.Description>
