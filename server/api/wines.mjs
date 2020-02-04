@@ -1,27 +1,28 @@
-import express from "express";
-import { driver } from "../index.mjs";
-import paginate from "./middleware/paginate";
+import express from 'express'
+import { driver } from '../index.mjs'
+import paginate from './middleware/paginate'
 
-const router = express.Router();
+const router = express.Router()
 
-router.get("/", async (req, res) => {
-  let session;
+router.get('/', async (req, res) => {
+  let session
   try {
-    session = driver.session();
-    const cypher = `MATCH (n:Wine) WHERE toLower(n.title) STARTS WITH toLower('${req.query.search}') RETURN n LIMIT 250`;
-    const { records } = await session.run(cypher);
-    res.json(paginate(records, req.query.page, req.query.limit));
-    res.json(records);
+    session = driver.session()
+    const cypher = `MATCH (n:Wine) WHERE toLower(n.title) STARTS WITH toLower('${req.query.search}') RETURN n LIMIT 250`
+    const { records } = await session.run(cypher)
+    res.json(paginate(records, req.query.page, req.query.limit))
+    res.json(records)
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err)
   } finally {
-    await session.close();
+    await session.close()
   }
-});
+})
 
-router.get("/:wineId", async (req, res) => {
-  let session;
+router.get('/:wineId', async (req, res) => {
+  let session
   try {
+
     session = driver.session();
     let data = [];
     const wineId = req.params.wineId;
@@ -37,14 +38,15 @@ router.get("/:wineId", async (req, res) => {
     data.push(record2.records);
 
     res.send(data);
-  } catch (err) {
-    res.status(500).send(err);
-  } finally {
-    await session.close();
-  }
-});
 
-export default router;
+  } catch (err) {
+    res.status(500).send(err)
+  } finally {
+    await session.close()
+  }
+})
+
+export default router
 
 //creates relationships for the note to wines
 // MATCH (a:Note), (b:Wine)
