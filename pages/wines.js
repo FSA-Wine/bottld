@@ -25,7 +25,12 @@ const Wines = props => {
         <title>Search Wines</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <input type="text" name="search" value={search} onChange={handleChange}></input>
+      <input
+        type="text"
+        name="search"
+        value={search}
+        onChange={handleChange}
+        placeholder="Search wines"></input>
       <ul>
         {props.wines.length ? (
           props.wines.map(wine => (
