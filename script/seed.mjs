@@ -6,11 +6,11 @@ const session = driver.session();
 const wineSeeder = async () => {
   //Deletes all nodes and relationships
   await session.run("MATCH (n) DETACH DELETE n");
+  await session.run("CREATE CONSTRAINT ON (d:Wine) ASSERT d.title IS UNIQUE");
   await session.run(
     "CREATE CONSTRAINT ON (d:Characteristic) ASSERT d.title IS UNIQUE"
   );
   await session.run("CREATE CONSTRAINT ON (d:Note) ASSERT d.title IS UNIQUE");
-  await session.run("CREATE CONSTRAINT ON (d:Wine) ASSERT d.title IS UNIQUE");
   await session.run(
     "CREATE CONSTRAINT ON (d:Variety) ASSERT d.title IS UNIQUE"
   );
@@ -29,6 +29,10 @@ const wineSeeder = async () => {
   // }
 
   await session.run(
+    `USING PERIODIC COMMIT 5000 LOAD CSV WITH HEADERS FROM 'file:///winemag-data-notes.csv' AS line MERGE (d:Wine {title: line.title}) ON CREATE SET d.country = line.country, d.description = trim(line.description), d.points = toInteger(line.points), d.price = toFloat(line.price), d.province = line.province, d.variety = line.variety, d.winery = line.winery, d.descriptors = split(lTrim(replace(replace(replace(line.normalized_descriptors, '[', ""), ']', ""), "'", "")), ", ")`
+  );
+
+  await session.run(
     `LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/RoaldSchuring/wine_recommender/master/descriptor_mapping.csv' AS line MERGE (d:Characteristic {title: line.level_1})`
   );
   await session.run(
@@ -37,10 +41,6 @@ const wineSeeder = async () => {
   // await session.run(
   //   `USING PERIODIC COMMIT 5000 LOAD CSV WITH HEADERS FROM 'file:///winemag-data-notes.csv' AS line MERGE (d:Wine {title: line.title}) ON CREATE SET d.country = line.country, d.description = trim(line.description), d.points = toInteger(line.points), d.price = toFloat(line.price), d.province = line.province, d.variety = line.variety, d.winery = line.winery, d.descriptors = split(line.normalized_descriptors, ',')`
   // );
-
-  await session.run(
-    `USING PERIODIC COMMIT 5000 LOAD CSV WITH HEADERS FROM 'file:///winemag-data-notes.csv' AS line MERGE (d:Wine {title: line.title}) ON CREATE SET d.country = line.country, d.description = trim(line.description), d.points = toInteger(line.points), d.price = toFloat(line.price), d.province = line.province, d.variety = line.variety, d.winery = line.winery, d.descriptors = split(lTrim(replace(replace(replace(line.normalized_descriptors, '[', ""), ']', ""), "'", "")), ", ")`
-  );
 
   ///d.reviewVector = line.review_vector not included in this seed to reduce load time///
 
