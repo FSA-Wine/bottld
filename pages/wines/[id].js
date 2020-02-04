@@ -44,7 +44,7 @@ class SingleWineWithoutRouter extends Component {
             <h1>{curWine.title}</h1>
             <p>Winery: {curWine.winery}</p>
             <p>Varietal: {curWine.variety}</p>
-            <Flag name="france" />
+            {/* <Flag name="france" /> */}
             <p>
               Origin: {curWine.province}, {curWine.country}
             </p>
