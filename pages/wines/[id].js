@@ -37,7 +37,7 @@ class SingleWineWithoutRouter extends Component {
   render() {
     const singleWine = this.props.singleWine
     if (singleWine.length) {
-      let curWine = singleWine[0]._fields[0].properties
+      let curWine = singleWine[0][0]._fields[0].properties
       return (
         <Layout>
           <div>
@@ -54,7 +54,7 @@ class SingleWineWithoutRouter extends Component {
           </div>
 
           <Card.Group className="card-group">
-            {singleWine.map(el => {
+            {singleWine[1].map(el => {
               let currentWine = el._fields[1].properties
               let wineId = el._fields[1].identity.low
               return (
