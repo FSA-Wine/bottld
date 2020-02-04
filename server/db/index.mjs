@@ -34,13 +34,16 @@ export const User = sqlDB.define('user', {
   },
   tried: {
     type: Sequelize.ARRAY(Sequelize.INTEGER),
+    defaultValue: [],
   },
   liked: {
     type: Sequelize.ARRAY(Sequelize.INTEGER),
+    defaultValue: [],
   },
   tasteProfile: {
     //Might need to change later?
     type: Sequelize.ARRAY(Sequelize.INTEGER),
+    defaultValue: [],
   },
 })
 

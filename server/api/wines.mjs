@@ -1,41 +1,41 @@
-import express from "express";
-import { driver } from "../index.mjs";
-import paginate from "./middleware/paginate";
+import express from 'express'
+import { driver } from '../index.mjs'
+import paginate from './middleware/paginate'
 
-const router = express.Router();
+const router = express.Router()
 
-router.get("/", async (req, res) => {
-  let session;
+router.get('/', async (req, res) => {
+  let session
   try {
-    session = driver.session();
-    const cypher = `MATCH (n:Wine) WHERE toLower(n.title) STARTS WITH toLower('${req.query.search}') RETURN n LIMIT 250`;
-    const { records } = await session.run(cypher);
-    res.json(paginate(records, req.query.page, req.query.limit));
-    res.json(records);
+    session = driver.session()
+    const cypher = `MATCH (n:Wine) WHERE toLower(n.title) STARTS WITH toLower('${req.query.search}') RETURN n LIMIT 250`
+    const { records } = await session.run(cypher)
+    res.json(paginate(records, req.query.page, req.query.limit))
+    res.json(records)
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err)
   } finally {
-    await session.close();
+    await session.close()
   }
-});
+})
 
-router.get("/:wineId", async (req, res) => {
-  let session;
+router.get('/:wineId', async (req, res) => {
+  let session
   try {
-    session = driver.session();
-    const wineId = req.params.wineId;
-    const cypher = `MATCH (n:Wine), (a:Note) WHERE ID(n) = ${wineId} AND a.title IN n.descriptors MERGE (a)-[:FOUND_IN]-> (n) RETURN n`;
-    const cypher2 = `MATCH (w:Wine)<-[:FOUND_IN]-(:Note)-[:FOUND_IN]->(w2:Wine) WHERE ID(w) = ${wineId} AND w.variety = w2.variety RETURN w, w2 LIMIT 5`;
-    const { records } = await session.run(cypher2);
-    res.send(records);
+    session = driver.session()
+    const wineId = req.params.wineId
+    const cypher = `MATCH (n:Wine), (a:Note) WHERE ID(n) = ${wineId} AND a.title IN n.descriptors MERGE (a)-[:FOUND_IN]-> (n) RETURN n`
+    const cypher2 = `MATCH (w:Wine)<-[:FOUND_IN]-(:Note)-[:FOUND_IN]->(w2:Wine) WHERE ID(w) = ${wineId} AND w.variety = w2.variety RETURN w, w2 LIMIT 5`
+    const { records } = await session.run(cypher2)
+    res.send(records)
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err)
   } finally {
-    await session.close();
+    await session.close()
   }
-});
+})
 
-export default router;
+export default router
 
 //creates relationships for the note to wines
 // MATCH (a:Note), (b:Wine)
