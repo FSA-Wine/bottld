@@ -4,8 +4,11 @@ import { connect } from 'react-redux'
 import Link from 'next/link'
 import { fetchSingleWine } from '../../store/singleWine'
 import 'semantic-ui-css/semantic.min.css'
-import { Button, Card, Flag, Segment } from 'semantic-ui-react'
+import { Grid, Image } from 'semantic-ui-react'
 import Layout from '../../components/Layout'
+import SingleWineDetails from '../../components/SingleWineDetails'
+import SingleWineCharts from '../../components/SingleWineCharts'
+import RecommendRow from '../../components/RecommendRow'
 
 const SingleWine = props => {
   const router = useRouter()
@@ -20,58 +23,49 @@ class SingleWineWithoutRouter extends Component {
       loc: props.router.query.loc,
       loaded: false,
     }
-    this.trimParen = this.trimParen.bind(this)
   }
 
   componentDidMount() {
     this.props.fetchSingleWine(this.props.router.query.id)
   }
 
-  trimParen(title) {
-    if (title.lastIndexOf('(') !== -1) {
-      let sParenIdx = title.lastIndexOf('(')
-      return title.slice(0, sParenIdx)
-    }
-  }
-
   render() {
     const singleWine = this.props.singleWine
+
     if (singleWine.length) {
+      let recWineArr = this.props.singleWine[1]
       let curWine = singleWine[0][0]._fields[0].properties
       return (
         <Layout>
-          <div>
-            <h1>{curWine.title}</h1>
-            <p>Winery: {curWine.winery}</p>
-            <p>Varietal: {curWine.variety}</p>
-            {/* <Flag name="france" /> */}
-            <p>
-              Origin: {curWine.province}, {curWine.country}
-            </p>
-            <p>Est. price: ${curWine.price}</p>
-            <p>Score: {curWine.points.low}</p>
-            <p style={{ fontStyle: 'italic' }}>{curWine.description}</p>
+          <div className="content smaller-text">
+            <div className="top-section">
+              <Grid centered stackable doubling columns={3} style={{ margin: `35px` }}>
+                <Grid.Column width={2} only="tablet computer">
+                  <Image
+                    centered
+                    src="/wineRed.png"
+                    alt="red wine"
+                    style={{ width: `120px`, top: `9px` }}
+                  />
+                </Grid.Column>
+                <Grid.Column width={8}>
+                  <SingleWineDetails singleWine={curWine} />
+                </Grid.Column>
+                <Grid.Column doubling stackable mobile={16} tablet={16} computer={6}>
+                  <SingleWineCharts />
+                </Grid.Column>
+              </Grid>
+            </div>
+            <div className="lower-section-bg">
+              <div className="lower-section">
+                <Grid>
+                  <Grid.Row>
+                    <RecommendRow recWines={recWineArr} />
+                  </Grid.Row>
+                </Grid>
+              </div>
+            </div>
           </div>
-
-          <Card.Group className="card-group">
-            {singleWine[1].map(el => {
-              let currentWine = el._fields[1].properties
-              let wineId = el._fields[1].identity.low
-              return (
-                <Card key={wineId} style={{ maxWidth: `120px` }}>
-                  <Card.Content>
-                    <Card.Header>
-                      <Link href={`/wines/${wineId}`}>
-                        <a>{currentWine.title}</a>
-                      </Link>
-                    </Card.Header>
-                    <Card.Meta>Subhead</Card.Meta>
-                    <Card.Description>{currentWine.description.slice(0, 50)}</Card.Description>
-                  </Card.Content>
-                </Card>
-              )
-            })}
-          </Card.Group>
         </Layout>
       )
     } else {
