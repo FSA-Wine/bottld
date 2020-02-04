@@ -64,6 +64,12 @@ const wineSeeder = async db => {
       MERGE (d:Country {title: line.country}))`
   );
 
+  ///Adds Properties WineColor and Lat/Long
+
+  // await session.run(
+  //   `LOAD CSV WITH HEADERS FROM 'file:///wine_categories_assigned.csv' AS line MATCH (d:Wine) WHERE d.variety = line.variety`
+  // )
+
   ///Reationships: Wine-to-Note, Note-to-Characteristic, Wine-to-Variety, Wine-to-Province, Wine-to-Country////
   // await session.run(
   //   `MATCH (a:Note), (b:Wine)
