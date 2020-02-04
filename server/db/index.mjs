@@ -32,6 +32,16 @@ export const User = sqlDB.define('user', {
       notEmpty: true,
     },
   },
+  tried: {
+    type: Sequelize.ARRAY(Sequelize.INTEGER),
+  },
+  liked: {
+    type: Sequelize.ARRAY(Sequelize.INTEGER),
+  },
+  tasteProfile: {
+    //Might need to change later?
+    type: Sequelize.ARRAY(Sequelize.INTEGER),
+  },
 })
 
 // This is a global Mocha hook used for resource cleanup.

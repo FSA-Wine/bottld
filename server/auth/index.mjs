@@ -5,6 +5,12 @@ import next from 'next'
 
 const router = express.Router()
 
+router.post('/logout', (req, res) => {
+  req.logout()
+  req.session.destroy()
+  res.redirect('/')
+})
+
 router.get('/me', async (req, res) => {
   try {
     const user = await User.findByPk(req.user.id)
