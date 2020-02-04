@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import Link from 'next/link'
 import { connect } from 'react-redux'
 import { logout } from '../store/user'
@@ -19,15 +19,22 @@ const Nav = props => (
           <a>Home</a>
         </Link>
       </li>
-      <li>
-        {props.isLoggedIn ? (
-          <a href="#" onClick={() => props.logout()}>
-            Logout
-          </a>
-        ) : (
+      {props.isLoggedIn ? (
+        <Fragment>
+          <li>
+            <a href="/user">Profile</a>
+          </li>
+          <li>
+            <a href="#" onClick={() => props.logout()}>
+              Logout
+            </a>
+          </li>
+        </Fragment>
+      ) : (
+        <li>
           <a href="/auth/google">Login with Google</a>
-        )}
-      </li>
+        </li>
+      )}
       {/* {links.map(({ key, href, label }) => (
         <li key={key}>
           <a href={href}>{label}</a>

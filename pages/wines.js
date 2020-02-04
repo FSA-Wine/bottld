@@ -5,6 +5,7 @@ import Link from 'next/link'
 
 import { fetchWines } from '../store/wines'
 import Paginate from '../components/Paginate'
+import Layout from '../components/Layout'
 
 const Wines = props => {
   const [page, setPage] = useState(1)
@@ -20,34 +21,36 @@ const Wines = props => {
   }
 
   return (
-    <div>
-      <Head>
-        <title>Search Wines</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <input
-        type="text"
-        name="search"
-        value={search}
-        onChange={handleChange}
-        placeholder="Search wines"></input>
-      <ul>
-        {props.wines.length ? (
-          props.wines.map(wine => (
-            <Link
-              href={`/wines/${wine._fields[0].identity.low}`}
-              key={wine._fields[0].identity.low}>
-              <a className="card">
-                <li>{wine._fields[0].properties.title}</li>
-              </a>
-            </Link>
-          ))
-        ) : (
-          <li>Loading wines...</li>
-        )}
-      </ul>
-      <Paginate limit={limit} count={props.wineCount} setPage={newPage => setPage(newPage)} />
-    </div>
+    <Layout>
+      <div>
+        {/* <Head>
+          <title>Search Wines</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head> */}
+        <input
+          type="text"
+          name="search"
+          value={search}
+          onChange={handleChange}
+          placeholder="Search wines"></input>
+        <ul>
+          {props.wines.length ? (
+            props.wines.map(wine => (
+              <Link
+                href={`/wines/${wine._fields[0].identity.low}`}
+                key={wine._fields[0].identity.low}>
+                <a className="card">
+                  <li>{wine._fields[0].properties.title}</li>
+                </a>
+              </Link>
+            ))
+          ) : (
+            <li>Loading wines...</li>
+          )}
+        </ul>
+        <Paginate limit={limit} count={props.wineCount} setPage={newPage => setPage(newPage)} />
+      </div>
+    </Layout>
   )
 }
 
