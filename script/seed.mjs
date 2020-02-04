@@ -78,15 +78,15 @@ const wineSeeder = async db => {
   //   {batchSize: 10000}
   // )
 
-  await session.run(
-    `MATCH (a:Note), (b:Wine)
-    WHERE a.title IN b.descriptors AND a.title = "allspice" CREATE (a)-[:FOUND_IN]->(b) RETURN a, b`
-  );
+  // await session.run(
+  //   `MATCH (a:Note), (b:Wine)
+  //   WHERE a.title IN b.descriptors AND a.title = "allspice" MERGE (a)-[:FOUND_IN]->(b) RETURN a, b`
+  // );
 
-  await session.run(
-    `MATCH (a:Note), (b:Wine)
-    WHERE a.title IN b.descriptors AND a.title = "berry" CREATE (a)-[:FOUND_IN]->(b) RETURN a, b`
-  );
+  // await session.run(
+  //   `MATCH (a:Note), (b:Wine)
+  //   WHERE a.title IN b.descriptors AND a.title = "berry" MERGE (a)-[:FOUND_IN]->(b) RETURN a, b`
+  // );
 
   await session.run(
     `MATCH (a:Note), (b:Characteristic)
