@@ -22,12 +22,23 @@ router.get('/', async (req, res) => {
 router.get('/:wineId', async (req, res) => {
   let session
   try {
-    session = driver.session()
-    const wineId = req.params.wineId
-    const cypher = `MATCH (n:Wine), (a:Note) WHERE ID(n) = ${wineId} AND a.title IN n.descriptors MERGE (a)-[:FOUND_IN]-> (n) RETURN n`
-    const cypher2 = `MATCH (w:Wine)<-[:FOUND_IN]-(:Note)-[:FOUND_IN]->(w2:Wine) WHERE ID(w) = ${wineId} AND w.variety = w2.variety RETURN w, w2 LIMIT 5`
-    const { records } = await session.run(cypher2)
-    res.send(records)
+
+    session = driver.session();
+    let data = [];
+    const wineId = req.params.wineId;
+    // const cypher = `MATCH (n:Wine), (a:Note) WHERE ID(n) = ${wineId} AND a.title IN n.descriptors MERGE (a)-[:FOUND_IN]-> (n) RETURN n`;
+    await session.run(
+      `MATCH (n:Wine), (a:Note) WHERE ID(n) = ${wineId} AND a.title IN n.descriptors MERGE (a)-[:FOUND_IN]-> (n) RETURN n`
+    );
+    const cypher = `MATCH (w:Wine)<-[:FOUND_IN]-(:Note)-[:FOUND_IN]->(w2:Wine) WHERE ID(w) = ${wineId} AND w.variety = w2.variety RETURN w, w2 LIMIT 5`;
+    const cypher2 = `MATCH (w:Wine), (n:Note), (c:Characteristic) WHERE ID(w) = ${wineId} AND n.title IN w.descriptors AND (n)-[:ASSOC_WITH]-(c) RETURN c.title, count(c) AS count`;
+    const { records } = await session.run(cypher);
+    const record2 = await session.run(cypher2);
+    data.push(records);
+    data.push(record2.records);
+
+    res.send(data);
+
   } catch (err) {
     res.status(500).send(err)
   } finally {
@@ -45,3 +56,6 @@ export default router
 // MATCH (w:Wine {title: "Veramar 2016 JB Winemaker Series Chardonnay (Virginia)"})<-[:FOUND_IN]-(:Note)-[:FOUND_IN]->(w2:Wine) WHERE w.variety = w2.variety RETURN w2.title LIMIT 5
 
 ///MATCH (w:Wine)<-[:FOUND_IN]-(:Note)-[:FOUND_IN]->(w2:Wine) WHERE ID(w) = 8 AND w.variety = w2.variety RETURN w2 LIMIT 5///
+///this returns all Characteristic Nodes related to the Note nodes found in this Wine
+
+// MATCH (w:Wine), (n:Note), (c:Characteristic) WHERE ID(w) = 8 AND (n)-[:FOUND_IN]->(w) AND (n)-[:ASSOC_WITH]-(c) RETURN c
