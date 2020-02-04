@@ -4,14 +4,13 @@ import paginate from "./middleware/paginate";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-  let session;
+router.get('/', async (req, res) => {
+  const session = driver.session()
   try {
-    session = driver.session();
-    const cypher = `MATCH (n:Wine) WHERE toLower(n.title) STARTS WITH toLower('${req.query.search}') RETURN n LIMIT 250`;
-    const { records } = await session.run(cypher);
-    res.json(paginate(records, req.query.page, req.query.limit));
-    res.json(records);
+    const cypher = `MATCH (n:Wine) WHERE toLower(n.title) STARTS WITH toLower('${req.query.search}') RETURN n LIMIT 250`
+    const { records } = await session.run(cypher)
+    res.json(paginate(records, req.query.page, req.query.limit))
+    res.json(records)
   } catch (err) {
     res.status(500).send(err);
   } finally {
@@ -20,9 +19,8 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:wineId", async (req, res) => {
-  let session;
+  const session = driver.session();
   try {
-    session = driver.session();
     let data = [];
     const wineId = req.params.wineId;
     const cypher = `MATCH (n:Wine), (a:Note) WHERE ID(n) = ${wineId} AND a.title IN n.descriptors MERGE (a)-[:FOUND_IN]->(n) RETURN n`;

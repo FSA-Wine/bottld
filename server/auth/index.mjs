@@ -1,7 +1,6 @@
 import express from 'express'
-import { User } from '../db'
+import { driver } from '../index.mjs'
 import google from './google'
-import next from 'next'
 
 const router = express.Router()
 
@@ -12,11 +11,17 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', async (req, res) => {
+  const session = driver.session()
   try {
-    const user = await User.findByPk(req.user.id)
-    res.json(user)
+    if (req.user) {
+      const cypher = `MATCH (n:User) WHERE ID(n) = ${req.user.identity.low} RETURN n`
+      const { records } = await session.run(cypher)
+      res.json(records[0]._fields[0].properties)
+    } else res.json({})
   } catch (error) {
     console.error(error)
+  } finally {
+    await session.close()
   }
 })
 

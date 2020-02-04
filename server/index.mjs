@@ -5,32 +5,29 @@ import morgan from 'morgan'
 import session from 'express-session'
 import sessionstore from 'sessionstore'
 import passport from 'passport'
-import neo4j from 'node-neo4j'
-import neo4jDriver from 'neo4j-driver'
+import neo4j from 'neo4j-driver'
 
-import { sqlDB } from './db'
 import router from './api'
 import auth from './auth/index.mjs'
 
 dotenv.config()
-//Might need to change bolt??
-export const db = new neo4j('bolt://localhost:7687')
-export const driver = neo4jDriver.driver(
-  'bolt://localhost:7687',
-  neo4jDriver.auth.basic('neo4j', 'bottld')
-)
+export const driver = neo4j.driver('bolt://localhost:7687', neo4j.auth.basic('neo4j', 'bottld'))
 const PORT = process.env.PORT
 const dev = process.env.NODE_ENV !== 'production'
 const nextApp = next({ dev })
 const handle = nextApp.getRequestHandler()
 
-passport.serializeUser((user, done) => done(null, user.id))
+passport.serializeUser((user, done) => done(null, user.identity.low))
 passport.deserializeUser(async (id, done) => {
+  const neoSession = driver.session()
   try {
-    const user = await sqlDB.models.user.findByPk(id)
-    done(null, user)
+    const cypher = `MATCH (n:User) WHERE ID(n) = ${id} RETURN n`
+    const { records } = await neoSession.run(cypher)
+    done(null, records[0]._fields[0])
   } catch (err) {
     done(err)
+  } finally {
+    await neoSession.close()
   }
 })
 
@@ -60,8 +57,6 @@ nextApp
     app.get('*', (req, res) => {
       return handle(req, res)
     })
-
-    sqlDB.sync()
 
     app.listen(PORT, err => {
       if (err) throw err
