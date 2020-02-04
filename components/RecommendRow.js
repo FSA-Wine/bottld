@@ -80,7 +80,7 @@ class RecommendRow extends Component {
             <div>
                 <Grid>
                     <Grid.Row>
-                        <div><h3>We also think you\'ll like:</h3></div>
+                        <div><h3>{"We also think you'll like:"}</h3></div>
                     </Grid.Row>
                     <Grid.Row>
                         <Grid centered stackable doubling columns={3}>
