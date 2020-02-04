@@ -6,7 +6,7 @@
     "dev": "nodemon -r esm server/index.mjs",
     "build": "next build",
     "start": "next start",
-    "seed": "node esm script/seed.mjs"
+    "seed": "node -r esm script/seed.mjs"
   },
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
