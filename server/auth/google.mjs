@@ -3,7 +3,7 @@ import Google from 'passport-google-oauth'
 import dotenv from 'dotenv'
 import express from 'express'
 
-import { User } from '../db/index.mjs'
+import { driver } from '../index.mjs'
 
 dotenv.config()
 const router = express.Router()
@@ -18,18 +18,16 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
     callbackURL: process.env.GOOGLE_CALLBACK,
   }
 
-  const strategy = new GoogleStrategy(googleConfig, (token, refreshToken, profile, done) => {
+  const strategy = new GoogleStrategy(googleConfig, async (token, refreshToken, profile, done) => {
     const googleId = profile.id
     const email = profile.emails[0].value
     const firstName = profile.name.givenName
     const lastName = profile.name.familyName
+    const session = driver.session()
 
-    User.findOrCreate({
-      where: { googleId },
-      defaults: { email, firstName, lastName },
-    })
-      .then(([user]) => done(null, user))
-      .catch(done)
+    const cypher = `MERGE (n:User {googleId: '${googleId}'}) ON CREATE SET n.email = '${email}', n.firstName = '${firstName}', n.lastName = '${lastName}' RETURN n`
+    const { records } = await session.run(cypher)
+    done(null, records[0]._fields[0])
   })
 
   passport.use(strategy)
