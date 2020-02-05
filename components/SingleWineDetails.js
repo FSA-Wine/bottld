@@ -4,7 +4,6 @@ import { trimParen, wineColor } from './utils'
 //import { render } from '@testing-library/react';
 
 let currentHeart = '/heart-outline-512.png'
-
 class SingleWineDetails extends Component {
   constructor() {
     super()
@@ -55,8 +54,7 @@ class SingleWineDetails extends Component {
     const price = singleWine.price ? `${singleWine.price}` : 'Not available'
     return (
       <div>
-        <hr style={{ borderTop: `5px solid gray` }} />
-        {/* <hr style={{ borderTop: `5px solid ${wineColor(singleWine[0].color)}` }} /> */}
+        <hr style={{ borderTop: `5px solid ${wineColor(singleWine.color)}` }} />
         <h2>{trimParen(singleWine.title)}</h2>
         <p>
           <span className="sm-gray">WINERY:</span> {singleWine.winery}
