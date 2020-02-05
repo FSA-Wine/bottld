@@ -60,30 +60,15 @@ const wineSeeder = async () => {
   )
 
   ///Adds Properties WineColor and Lat/Long
+  await session.run(
+    `LOAD CSV WITH HEADERS FROM 'file:///wine_categories_assigned.csv' AS line MATCH (d:Wine) WHERE d.variety = line.variety SET d.color = line.color`
+  )
 
-  // await session.run(
-  //   `LOAD CSV WITH HEADERS FROM 'file:///wine_categories_assigned.csv' AS line MATCH (d:Wine) WHERE d.variety = line.variety`
-  // )
+  await session.run(
+    `LOAD CSV WITH HEADERS FROM 'file:///wine_provinces_geocoded.csv' AS line MATCH (d:Wine) WHERE d.province = line.Province_1 SET d.longY = line.LongY, d.latX = line.LatX`
+  )
 
   ///Reationships: Wine-to-Note, Note-to-Characteristic, Wine-to-Variety, Wine-to-Province, Wine-to-Country////
-  // await session.run(
-  //   `MATCH (a:Note), (b:Wine)
-  //   WHERE a.title IN b.descriptors
-  //   CREATE (a)-[:FOUND_IN]->(b)
-  //   RETURN a, b`
-  // );
-
-  // CALL apoc.periodic.iterate(
-  //   "MATCH (a:Note), (b:Wine) WHERE a.title IN b.descriptors",
-  //   "CREATE (a)-[:FOUND_IN]->(b)",
-  //   {batchSize: 10000}
-  // )
-
-  // await session.run(
-  //   `MATCH (a:Note), (b:Wine)
-  //   WHERE a.title IN b.descriptors AND a.title = "allspice" MERGE (a)-[:FOUND_IN]->(b) RETURN a, b`
-  // );
-
   await session.run(
     `MATCH (a:Note), (b:Wine) WHERE a.title IN b.descriptors CREATE (a)-[:FOUND_IN]->(b)`
   )
@@ -113,6 +98,13 @@ const wineSeeder = async () => {
     RETURN a, b`
   )
 
+  /// example of setting single note node relations to wines///
+  // await session.run(
+  //   `MATCH (a:Note), (b:Wine)
+  //   WHERE a.title IN b.descriptors AND a.title = "allspice" MERGE (a)-[:FOUND_IN]->(b) RETURN a, b`
+  // );
+
+  /// example for setting up some random user relationships to wines they liked **would need tweaking**///
   // for (let i = 0; i < 100; i++) {
   //   await session.run(
   //     `MATCH (a:User), (b:Wine)
