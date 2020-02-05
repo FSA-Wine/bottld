@@ -14,7 +14,7 @@ router.get('/me', async (req, res) => {
   const session = driver.session()
   try {
     if (req.user) {
-      const cypher = `MATCH (n:User) WHERE ID(n) = ${req.user.identity.low} RETURN n`
+      const cypher = `MATCH (n:User) WHERE n.googleId = '${req.user.properties.googleId}' RETURN n`
       const { records } = await session.run(cypher)
       res.json(records[0]._fields[0].properties)
     } else res.json({})
