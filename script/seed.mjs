@@ -59,7 +59,7 @@ const wineSeeder = async () => {
   )
 
   await session.run(
-    `LOAD CSV WITH HEADERS FROM 'file:///wine_provinces_geocoded.csv' AS line MATCH (d:Wine) WHERE d.province = line.Province_1 SET d.longY = line.LongY, d.latX = line.LatX`
+    `LOAD CSV WITH HEADERS FROM 'file:///wine_provinces_geocoded.csv' AS line MATCH (d:Wine) WHERE d.province = line.Province_1 SET d.latX = line.LongY, d.longY = line.LatX`
   )
 
   ///Reationships: Wine-to-Note, Note-to-Characteristic, Wine-to-Variety, Wine-to-Province, Wine-to-Country////

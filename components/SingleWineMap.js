@@ -1,57 +1,50 @@
 import React from 'react'
 import { Image } from 'semantic-ui-react'
+import 'mapbox-gl/dist/mapbox-gl.css'
 
-let countryFlag = country => {
-  switch (country) {
-    case 'US':
-      return '/US_flag.svg'
-      break
-    case 'Italy':
-      return '/Italy_flag.svg'
-      break
-    case 'Australia':
-      return '/Australia_flag.svg'
-      break
-    case 'German':
-      return '/German_flag.svg'
-      break
-    case 'Spain':
-      return '/Spain_flag.svg'
-      break
-    case 'Turkey':
-      return '/Turkey_flag.svg'
-      break
-    case 'Greece':
-      return '/Greece_flag.svg'
-      break
-    case 'Austria':
-      return '/Austria_flag.svg'
-      break
-    case 'Chile':
-      return '/Chile_flag.svg'
-      break
-    case 'Canada':
-      return '/Canada_flag.svg'
-      break
-    case 'South Africa':
-      return '/SouthAfrica_flag.svg'
-      break
-    default:
-      return 'https://react.semantic-ui.com/images/wireframe/square-image.png'
+// const SingleWineMap = props => {
+//   return (
+//     <Image
+//       style={{ width: `85%`, padding: `15px` }}
+//       src="https://react.semantic-ui.com/images/wireframe/square-image.png"
+//       //   size="mini"
+//       centered
+//       circular
+//     />
+//   )
+// }
+let token = process.env.MAPBOX_TOKEN
+import { Component } from 'react'
+import ReactMapGL from 'react-map-gl'
+
+class SingleWineMap extends Component {
+  state = {
+    viewport: {
+      width: '25vw',
+      height: '25vh',
+      latitude: 41.5868,
+      longitude: -93.625,
+      zoom: 5,
+    },
   }
-}
 
-const SingleWineMap = props => {
-  console.log('props?', props)
-  return (
-    <Image
-      style={{ width: `13%`, padding: `15px` }}
-      src={countryFlag(props.singleWine.country)}
-      //   size="mini"
-      centered
-      circular
-    />
-  )
+  componentDidMount() {
+    let curWine = this.props.singleWine
+    let viewport = { ...this.state.viewport }
+    viewport.latitude = parseFloat(curWine.latX)
+    viewport.longitude = parseFloat(curWine.longY)
+    this.setState({ viewport })
+  }
+  render() {
+    return (
+      <ReactMapGL
+        mapStyle="mapbox://styles/mapbox/streets-v9"
+        mapboxApiAccessToken="pk.eyJ1IjoicGx1aHJzZW4iLCJhIjoiY2s2OXM4ZTV6MGo1bjNrbjVlMm5rc2pkNyJ9.vp9mYcz8H3UGEPOXR0dnmA"
+        // onViewportChange={viewport => this.setState({ viewport })}
+        {...this.state.viewport}
+      />
+    )
+  }
 }
 
 export default SingleWineMap
