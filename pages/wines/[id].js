@@ -33,13 +33,20 @@ class SingleWineWithoutRouter extends Component {
     const singleWine = this.props.singleWine
 
     if (singleWine.length) {
-      let recWineArr = this.props.singleWine[1]
-      let curWine = singleWine[0][0]._fields[0].properties
+      let flavorData = this.props.singleWine[2];
+      let recWineArr = this.props.singleWine[1];
+      let curWine = singleWine[0][0]._fields[0].properties;
       return (
         <Layout>
           <div className="content smaller-text">
             <div className="top-section">
-              <Grid centered stackable doubling columns={3} style={{ margin: `35px` }}>
+              <Grid
+                centered
+                stackable
+                doubling
+                columns={3}
+                style={{ margin: `35px` }}
+              >
                 <Grid.Column width={2} only="tablet computer">
                   <Image
                     centered
@@ -51,8 +58,14 @@ class SingleWineWithoutRouter extends Component {
                 <Grid.Column width={8}>
                   <SingleWineDetails singleWine={curWine} />
                 </Grid.Column>
-                <Grid.Column doubling stackable mobile={16} tablet={16} computer={6}>
-                  <SingleWineCharts />
+                <Grid.Column
+                  doubling
+                  stackable
+                  mobile={16}
+                  tablet={16}
+                  computer={6}
+                >
+                  <SingleWineCharts flavorData={flavorData} />
                 </Grid.Column>
               </Grid>
             </div>
