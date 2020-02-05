@@ -1,36 +1,36 @@
-import { useRouter } from "next/router";
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import Link from "next/link";
-import { fetchSingleWine } from "../../store/singleWine";
-import "semantic-ui-css/semantic.min.css";
-import { Grid, Image } from "semantic-ui-react";
-import Layout from "../../components/Layout";
-import SingleWineDetails from "../../components/SingleWineDetails";
-import SingleWineCharts from "../../components/SingleWineCharts";
-import RecommendRow from "../../components/RecommendRow";
+import { useRouter } from 'next/router'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import Link from 'next/link'
+import { fetchSingleWine } from '../../store/singleWine'
+import 'semantic-ui-css/semantic.min.css'
+import { Grid, Image } from 'semantic-ui-react'
+import Layout from '../../components/Layout'
+import SingleWineDetails from '../../components/SingleWineDetails'
+import SingleWineCharts from '../../components/SingleWineCharts'
+import RecommendRow from '../../components/RecommendRow'
 
 const SingleWine = props => {
-  const router = useRouter();
+  const router = useRouter()
 
-  return <SingleWineWithoutRouter {...props} router={router} />;
-};
+  return <SingleWineWithoutRouter {...props} router={router} />
+}
 
 class SingleWineWithoutRouter extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       loc: props.router.query.loc,
-      loaded: false
-    };
+      loaded: false,
+    }
   }
 
   componentDidMount() {
-    this.props.fetchSingleWine(this.props.router.query.id);
+    this.props.fetchSingleWine(this.props.router.query.id)
   }
 
   render() {
-    const singleWine = this.props.singleWine;
+    const singleWine = this.props.singleWine
 
     if (singleWine.length) {
       let flavorData = this.props.singleWine[2];
@@ -80,30 +80,30 @@ class SingleWineWithoutRouter extends Component {
             </div>
           </div>
         </Layout>
-      );
+      )
     } else {
       return (
         <Layout>
           <div> Nothing Found</div>
         </Layout>
-      );
+      )
     }
   }
 }
 
 const mapStateToProps = state => {
   return {
-    singleWine: state.singleWine
-  };
-};
+    singleWine: state.singleWine,
+  }
+}
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchSingleWine: id => dispatch(fetchSingleWine(id))
-  };
-};
+    fetchSingleWine: id => dispatch(fetchSingleWine(id)),
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(SingleWine);
+export default connect(mapStateToProps, mapDispatchToProps)(SingleWine)
 
 // export default () => {
 //   const router = useRouter()

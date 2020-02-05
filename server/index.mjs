@@ -17,11 +17,11 @@ const dev = process.env.NODE_ENV !== 'production'
 const nextApp = next({ dev })
 const handle = nextApp.getRequestHandler()
 
-passport.serializeUser((user, done) => done(null, user.identity.low))
+passport.serializeUser((user, done) => done(null, user.properties.googleId))
 passport.deserializeUser(async (id, done) => {
   const neoSession = driver.session()
   try {
-    const cypher = `MATCH (n:User) WHERE ID(n) = ${id} RETURN n`
+    const cypher = `MATCH (n:User) WHERE n.googleId = '${id}' RETURN n`
     const { records } = await neoSession.run(cypher)
     done(null, records[0]._fields[0])
   } catch (err) {
