@@ -37,8 +37,8 @@ const Wines = props => {
           {props.wines.length ? (
             props.wines.map(wine => (
               <Link
-                href={`/wines/${wine._fields[0].properties.id}`}
-                key={wine._fields[0].properties.id}>
+                href={`/wines/${wine._fields[0].properties.id.low}`}
+                key={wine._fields[0].properties.id.low}>
                 <a className="card">
                   <li>{wine._fields[0].properties.title}</li>
                 </a>

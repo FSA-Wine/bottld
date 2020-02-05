@@ -94,6 +94,7 @@ class SingleWineWithoutRouter extends Component {
 const mapStateToProps = state => {
   return {
     singleWine: state.singleWine,
+    user: state.user,
   }
 }
 

@@ -9,10 +9,37 @@ router.get('/', async (req, res) => {
   try {
     const cypher = `MATCH (n:Wine) WHERE toLower(n.title) CONTAINS toLower('${req.query.search}') RETURN n LIMIT 250`
     const { records } = await session.run(cypher)
+    console.log(records.properties)
+
     res.json(paginate(records, req.query.page, req.query.limit))
-    res.json(records)
   } catch (err) {
     res.status(500).send(err)
+  } finally {
+    await session.close()
+  }
+})
+
+router.get('/liked', async (req, res) => {
+  const session = driver.session()
+  try {
+    const cypher = `MATCH (u:User {googleId: '${req.query.googleId}'})-[r:LIKED]->(Wine) RETURN Wine`
+    const { records } = await session.run(cypher)
+    res.json(records)
+  } catch (error) {
+    res.status(500).send(error)
+  } finally {
+    await session.close()
+  }
+})
+
+router.get('/tried', async (req, res) => {
+  const session = driver.session()
+  try {
+    const cypher = `MATCH (u:User {googleId: '${req.query.googleId}'})-[r:TRIED]->(Wine) RETURN Wine`
+    const { records } = await session.run(cypher)
+    res.json(records)
+  } catch (error) {
+    res.status(500).send(error)
   } finally {
     await session.close()
   }
@@ -21,8 +48,8 @@ router.get('/', async (req, res) => {
 router.post('/liked', async (req, res) => {
   const session = driver.session()
   try {
-    const likeCypher = `MATCH (w:Wine), (u:User) WHERE u.googleId = '${req.body.user.googleId}' AND w.id = '${req.body.wine.id}' MERGE (u)-[r:LIKED]->(w) RETURN u`
-    const triedCypher = `MATCH (w:Wine), (u:User) WHERE u.googleId = '${req.body.user.googleId}' AND w.id = '${req.body.wine.id}' MERGE (u)-[r:TRIED]->(w) RETURN u`
+    const likeCypher = `MATCH (w:Wine), (u:User) WHERE u.googleId = '${req.body.user.googleId}' AND w.id = ${req.body.wine.id} MERGE (u)-[r:LIKED]->(w) RETURN u`
+    const triedCypher = `MATCH (w:Wine), (u:User) WHERE u.googleId = '${req.body.user.googleId}' AND w.id = ${req.body.wine.id} MERGE (u)-[r:TRIED]->(w) RETURN u`
     const record = await session.run(likeCypher)
     const { records } = await session.run(triedCypher)
     res.json(records)
@@ -36,7 +63,7 @@ router.post('/liked', async (req, res) => {
 router.delete('/liked', async (req, res) => {
   const session = driver.session()
   try {
-    const unlikeCypher = `MATCH (u:User {googleId: '${req.body.user.googleId}'})-[r:LIKED]->(w:Wine {id: '${req.body.wine.id}'}) DELETE r RETURN u`
+    const unlikeCypher = `MATCH (u:User {googleId: '${req.body.user.googleId}'})-[r:LIKED]->(w:Wine {id: ${req.body.wine.id}}) DELETE r RETURN u`
     const { records } = await session.run(unlikeCypher)
     res.json(records)
   } catch (error) {
@@ -49,7 +76,7 @@ router.delete('/liked', async (req, res) => {
 router.post('/tried', async (req, res) => {
   const session = driver.session()
   try {
-    const triedCypher = `MATCH (w:Wine), (u:User) WHERE u.googleId = '${req.body.user.googleId}' AND w.id = '${req.body.wine.id}' MERGE (u)-[r:TRIED]->(w) RETURN u`
+    const triedCypher = `MATCH (w:Wine), (u:User) WHERE u.googleId = '${req.body.user.googleId}' AND w.id = ${req.body.wine.id} MERGE (u)-[r:TRIED]->(w) RETURN u`
     const { records } = await session.run(triedCypher)
     res.json(records)
   } catch (error) {
@@ -62,7 +89,7 @@ router.post('/tried', async (req, res) => {
 router.delete('/tried', async (req, res) => {
   const session = driver.session()
   try {
-    const untriedCypher = `MATCH (u:User {googleId: '${req.body.user.googleId}'})-[r:TRIED]->(w:Wine {id: '${req.body.wine.id}'}) DELETE r RETURN u`
+    const untriedCypher = `MATCH (u:User {googleId: '${req.body.user.googleId}'})-[r:TRIED]->(w:Wine {id: ${req.body.wine.id}}) DELETE r RETURN u`
     const { records } = await session.run(untriedCypher)
     res.json(records)
   } catch (error) {
@@ -77,9 +104,9 @@ router.get('/:wineId', async (req, res) => {
   try {
     let data = []
     const wineId = req.params.wineId
-    const cypher = `MATCH (n:Wine) WHERE n.id = '${wineId}' RETURN n`
-    const cypher2 = `MATCH (w:Wine {id: '${wineId}'})<-[:FOUND_IN]-(n:Note)-[:FOUND_IN]->(w2:Wine) WITH w2, COUNT(*) as commonNotes RETURN w2, commonNotes ORDER BY commonNotes DESC LIMIT 5`
-    const cypher3 = `MATCH (w:Wine), (n:Note), (c:Characteristic) WHERE w.id = '${wineId}' AND n.title IN w.descriptors AND (n)-[:ASSOC_WITH]-(c) RETURN c.title, count(c) AS count`
+    const cypher = `MATCH (n:Wine) WHERE n.id = ${wineId} RETURN n`
+    const cypher2 = `MATCH (w:Wine {id: ${wineId}})<-[:FOUND_IN]-(n:Note)-[:FOUND_IN]->(w2:Wine) WITH w2, COUNT(*) as commonNotes RETURN w2, commonNotes ORDER BY commonNotes DESC LIMIT 5`
+    const cypher3 = `MATCH (w:Wine), (n:Note), (c:Characteristic) WHERE w.id = ${wineId} AND n.title IN w.descriptors AND (n)-[:ASSOC_WITH]-(c) RETURN c.title, count(c) AS count`
     const { records } = await session.run(cypher)
     const record2 = await session.run(cypher2)
     const record3 = await session.run(cypher3)
