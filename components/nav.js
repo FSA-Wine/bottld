@@ -22,7 +22,9 @@ const Nav = props => (
       {props.isLoggedIn ? (
         <Fragment>
           <li>
-            <a href="/user">Profile</a>
+            <Link href="/user">
+              <a>Profile</a>
+            </Link>
           </li>
           <li>
             <a href="#" onClick={() => props.logout()}>

@@ -1,8 +1,7 @@
 import { useRouter } from 'next/router'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Link from 'next/link'
-import { fetchSingleWine } from '../../store/singleWine'
+import { fetchSingleWine, getSingleWine } from '../../store/singleWine'
 import 'semantic-ui-css/semantic.min.css'
 import { Grid, Image } from 'semantic-ui-react'
 import Layout from '../../components/Layout'
@@ -22,19 +21,47 @@ class SingleWineWithoutRouter extends Component {
     this.state = {
       loc: props.router.query.loc,
       loaded: false,
+      liked: false,
+      tried: false,
     }
   }
 
   componentDidMount() {
     this.props.fetchSingleWine(this.props.router.query.id)
+    // if (this.props.user) {
+    //   const liked = this.props.user.likedWines.filter(wine => {
+    //     return (
+    //       wine._fields[0].properties.id.low ===
+    //       this.props.singleWine[0][0]._fields[0].properties.id.low
+    //     )
+    //   })
+    //   const tried = !liked[0]
+    //     ? this.props.user.triedWines.filter(wine => {
+    //         return (
+    //           wine._fields[0].properties.id.low ===
+    //           this.props.singleWine[0][0]._fields[0].properties.id.low
+    //         )
+    //       })
+    //     : [true]
+    //   if (liked[0]) this.setState({ liked: true })
+    //   if (tried[0]) this.setState({ tried: true })
+    // }
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.router.query.id !== prevProps.router.query.id)
+      this.props.fetchSingleWine(this.props.router.query.id)
+  }
+
+  componentWillUnmount() {
+    this.props.getSingleWine([])
   }
 
   render() {
     const singleWine = this.props.singleWine
 
     if (singleWine.length) {
-      let flavorData = this.props.singleWine[2]
-      let recWineArr = this.props.singleWine[1]
+      let flavorData = singleWine[2]
+      let recWineArr = singleWine[1]
       let curWine = singleWine[0][0]._fields[0].properties
       return (
         <Layout>
@@ -52,8 +79,8 @@ class SingleWineWithoutRouter extends Component {
                 <Grid.Column width={8}>
                   <SingleWineDetails singleWine={curWine} />
                 </Grid.Column>
-                <Grid.Column doubling stackable mobile={16} tablet={16} computer={6}>
-                  <SingleWineCharts flavorData={flavorData} singleWine={curWine} />
+                <Grid.Column mobile={16} tablet={16} computer={6}>
+                  <SingleWineCharts flavorData={flavorData} />
                 </Grid.Column>
               </Grid>
             </div>
@@ -86,20 +113,9 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchSingleWine: id => dispatch(fetchSingleWine(id)),
-  }
+const mapDispatchToProps = {
+  fetchSingleWine,
+  getSingleWine,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleWine)
-
-// export default () => {
-//   const router = useRouter()
-
-//   return (
-//     <>
-//       <h1>Wine #{router.query.id}</h1>
-//     </>
-//   )
-// }
