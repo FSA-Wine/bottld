@@ -124,8 +124,9 @@ class RecommendRow extends Component {
           <Grid.Row>
             <Grid centered stackable doubling columns={3}>
               {this.props.recWines.map(el => {
+                let currentWineRec = el._fields[0].properties
                 return (
-                  <Grid.Column key={el._fields[1].properties.id}>
+                  <Grid.Column key={currentWineRec.id}>
                     <Card
                       style={{
                         margin: `0 auto`,
@@ -137,17 +138,17 @@ class RecommendRow extends Component {
                         ui={false}
                       />
                       <Card.Content>
-                        <Link href={`/wines/${el._fields[1].properties.id}`}>
+                        <Link href={`/wines/${currentWineRec.id}`}>
                           <Card.Header style={{ height: `70px` }}>
-                            {trimParen(el._fields[1].properties.title)}
+                            {trimParen(currentWineRec.title)}
                           </Card.Header>
                         </Link>
                         <Card.Meta style={{ fontStyle: `italic` }}>
-                          {el._fields[1].properties.variety}
+                          {currentWineRec.variety}
                         </Card.Meta>
                         <Card.Description>
-                          {el._fields[1].properties.price
-                            ? `$${el._fields[1].properties.price}`
+                          {el._fields[0].properties.price
+                            ? `$${currentWineRec.price}`
                             : 'Price not available'}
                         </Card.Description>
                       </Card.Content>
