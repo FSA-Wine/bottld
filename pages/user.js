@@ -10,9 +10,9 @@ const User = props => {
       <section>
         <section className="wines">
           <h2>Cheers, {props.user.firstName}!</h2>
-          <button onClick={() => setView('triedWines')}>Tried</button>
+          <button onClick={() => setView('likedWines')}>Liked</button>
           <span>
-            <button onClick={() => setView('likedWines')}>Liked</button>
+            <button onClick={() => setView('triedWines')}>Tried</button>
           </span>
           <ul>
             {!props.user[view] ? (
@@ -21,9 +21,8 @@ const User = props => {
               props.user[view].map(wine => {
                 const wineProps = wine._fields[0].properties
                 return (
-                  <Link href={`/wines/${wineProps.id.low}`} key={wineProps.id.low}>
+                  <Link href="/wines/[id]" as={`/wines/${wineProps.id.low}`} key={wineProps.id.low}>
                     <a className="card">
-                      {/* Need to grab the wine data and populate the li properly*/}
                       <li>{wineProps.title}</li>
                     </a>
                   </Link>
