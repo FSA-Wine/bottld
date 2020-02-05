@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 //import { render } from '@testing-library/react';
-import SingleWineMap from './SingleWineMap'
+// import SingleWineMap from './SingleWineMap'
 import PolarGraph from './PolarGraph'
+import dynamic from 'next/dynamic'
 
 let backgroundColorData = [
   'rgba(89, 110, 113, .5)',
@@ -13,6 +14,11 @@ let backgroundColorData = [
 let labelData = []
 let fakelabelData = ['Nutty', 'Fruit', 'Spice', 'Body', 'Caramel']
 let numData = []
+
+const DynamicMap = dynamic(() => import('./SingleWineMap'), {
+  loading: () => <p>Loading...</p>,
+  ssr: false,
+})
 
 class SingleWineCharts extends Component {
   constructor(props) {
@@ -57,7 +63,7 @@ class SingleWineCharts extends Component {
     return (
       <div>
         <div>
-          <SingleWineMap singleWine={this.props.singleWine} />
+          <DynamicMap singleWine={this.props.singleWine} />
         </div>
         <div className="chart-container">
           <p className="sm-gray">FLAVOR PROFILE</p>
