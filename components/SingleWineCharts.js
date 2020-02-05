@@ -12,7 +12,6 @@ let backgroundColorData = [
 ];
 let labelData = [];
 let fakelabelData = ["Nutty", "Fruit", "Spice", "Body", "Caramel"];
-let fakeNumData = [10, 8, 7, 3, 2];
 let numData = [];
 
 class SingleWineCharts extends Component {
@@ -27,26 +26,7 @@ class SingleWineCharts extends Component {
             backgroundColor: backgroundColorData
           }
         ]
-      },
-      singleWine: [
-        {
-          _fields: [
-            {
-              properties: {
-                country: "France",
-                province: "Champagne",
-                variety: "Champagne Blend",
-                description:
-                  "This is a full in the mouth, forward and fruity rosé, that is all fresh acidity and lively, crisp flavors. It has a light, zesty texture and the merest hint of toastiness. Drink now or give it a year's bottle aging.",
-                winery: "Dampierre",
-                title:
-                  "Dampierre NV Cuvée des Ambassadeurs Brut Rosé (Champagne)"
-              },
-              points: { low: 91, high: 0 }
-            }
-          ]
-        }
-      ]
+      }
     };
   }
 
@@ -54,12 +34,15 @@ class SingleWineCharts extends Component {
     let charData = this.props.flavorData;
     if (charData) {
       charData.map(el => {
-        labelData.push(el._fields[0]);
+        labelData.push(
+          el._fields[0]
+            .slice(0, 1)
+            .toUpperCase()
+            .concat(el._fields[0].slice(1))
+        );
         numData.push(el._fields[1].low);
       });
     }
-    console.log("char?", charData);
-    console.log("data?", labelData);
     this.getChartData();
   }
 
@@ -71,7 +54,6 @@ class SingleWineCharts extends Component {
   }
 
   render() {
-    console.log("flavordata?", this.state);
     return (
       <div>
         <div>
