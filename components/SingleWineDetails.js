@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { Icon } from 'semantic-ui-react'
+import { Icon, Image } from 'semantic-ui-react'
 import { trimParen, wineColor } from './utils'
 //import { render } from '@testing-library/react';
 
+let currentHeart = '/heart-outline-512.png'
 class SingleWineDetails extends Component {
   constructor() {
     super()
@@ -20,7 +21,7 @@ class SingleWineDetails extends Component {
         return 'Good'
         break
       case score < 90:
-        return 'Very good'
+        return 'Very Good'
         break
       case score < 94:
         return 'Excellent'
@@ -37,11 +38,15 @@ class SingleWineDetails extends Component {
   }
 
   //fills heart if clicked
-  // toggleHeart = () => {
-  //     const fillHeart = !(this.state.likeWine);
-  //     this.setState({ fillHeart });
-  //     this.state.likeWine ? (<Icon name='heart' />) : (<Icon name='heart outline' />)
-  // }
+  //   toggleHeart = () => {
+  //     const fillHeart = !this.state.likeWine
+  //     this.setState({ fillHeart })
+  //     this.state.likeWine
+  //       ? (currentHeart = '/suit-heart-512.png')
+  //       : //   <Image src="/heart-outline-512.png" size="mini" />
+  //         (currentHeart = '/heart-outline-512.png')
+  //     //   <Image src="/suit-heart-512.png" size="mini" />
+  //   }
 
   render() {
     const singleWine = this.props.singleWine
@@ -51,8 +56,7 @@ class SingleWineDetails extends Component {
       : 'Not available'
     return (
       <div>
-        <hr style={{ borderTop: `5px solid gray` }} />
-        {/* <hr style={{ borderTop: `5px solid ${wineColor(singleWine[0].color)}` }} /> */}
+        <hr style={{ borderTop: `5px solid ${wineColor(singleWine.color)}` }} />
         <h2>{trimParen(singleWine.title)}</h2>
         <p>
           <span className="sm-gray">WINERY:</span> {singleWine.winery}
@@ -69,10 +73,12 @@ class SingleWineDetails extends Component {
         <p>
           <span className="sm-gray">SCORE:</span>{' '}
           <span style={{ fontWeight: `bold` }}>{singleWine.points.low}</span> &nbsp;
-          <span style={{ color: `gray` }}>Excellent</span>
+          <span style={{ color: `gray` }}>{this.scoreComment(singleWine.points.low)}</span>
         </p>
+        {/* <p><Icon name='home' style={{ color: '#a61c00' }} /></p> */}
         <p>
-          <Icon name="home" style={{ color: '#a61c00' }} />
+          {/* <Image src={currentHeart} size="mini" onClick={() => this.toggleHeart()} /> */}
+          <Image src={currentHeart} size="mini" />
         </p>
         <p style={{ fontStyle: `italic` }}>{singleWine.description}</p>
       </div>
