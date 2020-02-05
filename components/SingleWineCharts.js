@@ -1,37 +1,37 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 //import { render } from '@testing-library/react';
-import SingleWineMap from "./SingleWineMap";
-import PolarGraph from "./PolarGraph";
+import SingleWineMap from './SingleWineMap'
+import PolarGraph from './PolarGraph'
 
 let backgroundColorData = [
-  "rgba(89, 110, 113, .5)",
-  "rgba(97, 116, 71, .5)",
-  "rgba(171, 170, 139, .5)",
-  "rgba(230, 221, 152, .5)",
-  "rgba(178, 157, 100, .5)"
-];
-let labelData = [];
-let fakelabelData = ["Nutty", "Fruit", "Spice", "Body", "Caramel"];
-let numData = [];
+  'rgba(89, 110, 113, .5)',
+  'rgba(97, 116, 71, .5)',
+  'rgba(171, 170, 139, .5)',
+  'rgba(230, 221, 152, .5)',
+  'rgba(178, 157, 100, .5)',
+]
+let labelData = []
+let fakelabelData = ['Nutty', 'Fruit', 'Spice', 'Body', 'Caramel']
+let numData = []
 
 class SingleWineCharts extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       chartData: {
         labels: [],
         datasets: [
           {
             data: [],
-            backgroundColor: backgroundColorData
-          }
-        ]
-      }
-    };
+            backgroundColor: backgroundColorData,
+          },
+        ],
+      },
+    }
   }
 
   componentDidMount() {
-    let charData = this.props.flavorData;
+    let charData = this.props.flavorData
     if (charData) {
       charData.map(el => {
         labelData.push(
@@ -39,25 +39,25 @@ class SingleWineCharts extends Component {
             .slice(0, 1)
             .toUpperCase()
             .concat(el._fields[0].slice(1))
-        );
-        numData.push(el._fields[1].low);
-      });
+        )
+        numData.push(el._fields[1].low)
+      })
     }
-    this.getChartData();
+    this.getChartData()
   }
 
   getChartData() {
-    let chartData = { ...this.state.chartData };
-    chartData.labels = labelData;
-    chartData.datasets[0].data = numData;
-    this.setState({ chartData });
+    let chartData = { ...this.state.chartData }
+    chartData.labels = labelData
+    chartData.datasets[0].data = numData
+    this.setState({ chartData })
   }
 
   render() {
     return (
       <div>
         <div>
-          <SingleWineMap />
+          <SingleWineMap singleWine={this.props.singleWine} />
         </div>
         <div className="chart-container">
           <p className="sm-gray">FLAVOR PROFILE</p>
@@ -66,8 +66,8 @@ class SingleWineCharts extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default SingleWineCharts;
+export default SingleWineCharts
