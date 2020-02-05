@@ -19,6 +19,8 @@ const defaultUser = {}
  */
 const getUser = user => ({ type: GET_USER, user })
 const removeUser = () => ({ type: REMOVE_USER })
+const getLikedWines = wines => ({ type: GET_LIKED_WINES, wines })
+const getTriedWines = wines => ({ type: GET_TRIED_WINES, wines })
 
 /**
  * THUNK CREATORS
@@ -27,6 +29,10 @@ export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
     dispatch(getUser(res.data || defaultUser))
+    const liked = await axios.get(`/api/wines/liked?googleId=${res.data.googleId}`)
+    const tried = await axios.get(`/api/wines/tried?googleId=${res.data.googleId}`)
+    dispatch(getLikedWines(liked.data))
+    dispatch(getTriedWines(tried.data))
   } catch (err) {
     console.error(err)
   }
