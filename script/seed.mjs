@@ -90,7 +90,7 @@ const wineSeeder = async () => {
 
   await session.run(
     `MATCH (a:Note), (b:Characteristic)
-    WHERE a.level1 = b.title
+    WHERE a.level1 = b.title AND NOT exists((a)-[:ASSOC_WITH]->(b))
     CREATE (a)-[:ASSOC_WITH]->(b)
     RETURN a, b`
   )
