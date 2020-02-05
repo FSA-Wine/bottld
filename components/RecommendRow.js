@@ -126,7 +126,7 @@ class RecommendRow extends Component {
               {this.props.recWines.map(el => {
                 let currentWineRec = el._fields[0].properties
                 return (
-                  <Grid.Column key={currentWineRec.id}>
+                  <Grid.Column key={currentWineRec.id.low}>
                     <Card
                       style={{
                         margin: `0 auto`,
@@ -138,7 +138,7 @@ class RecommendRow extends Component {
                         ui={false}
                       />
                       <Card.Content>
-                        <Link href={`/wines/${currentWineRec.id}`}>
+                        <Link href={`/wines/${currentWineRec.id.low}`}>
                           <Card.Header style={{ height: `70px` }}>
                             {trimParen(currentWineRec.title)}
                           </Card.Header>
