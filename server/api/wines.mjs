@@ -9,10 +9,37 @@ router.get('/', async (req, res) => {
   try {
     const cypher = `MATCH (n:Wine) WHERE toLower(n.title) CONTAINS toLower('${req.query.search}') RETURN n LIMIT 250`
     const { records } = await session.run(cypher)
+    console.log(records.properties)
+
     res.json(paginate(records, req.query.page, req.query.limit))
-    res.json(records)
   } catch (err) {
     res.status(500).send(err)
+  } finally {
+    await session.close()
+  }
+})
+
+router.get('/liked', async (req, res) => {
+  const session = driver.session()
+  try {
+    const cypher = `MATCH (u:User {googleId: '${req.query.googleId}'})-[r:LIKED]->(Wine) RETURN Wine`
+    const { records } = await session.run(cypher)
+    res.json(records)
+  } catch (error) {
+    res.status(500).send(error)
+  } finally {
+    await session.close()
+  }
+})
+
+router.get('/tried', async (req, res) => {
+  const session = driver.session()
+  try {
+    const cypher = `MATCH (u:User {googleId: '${req.query.googleId}'})-[r:TRIED]->(Wine) RETURN Wine`
+    const { records } = await session.run(cypher)
+    res.json(records)
+  } catch (error) {
+    res.status(500).send(error)
   } finally {
     await session.close()
   }
