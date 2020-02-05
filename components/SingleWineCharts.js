@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 //import { render } from '@testing-library/react';
-import SingleWineMap from './SingleWineMap'
+//import SingleWineMap from './SingleWineMap'
 import PolarGraph from './PolarGraph'
+import dynamic from 'next/dynamic'
+
+const MapWithNoSSR = dynamic(() => import('./SingleWineMap'), {
+    ssr: false
+})
 
 class SingleWineCharts extends Component {
     constructor(props) {
@@ -60,7 +65,7 @@ class SingleWineCharts extends Component {
         return (
             <div>
                 <div>
-                    <SingleWineMap />
+                    <MapWithNoSSR />
                 </div>
                 <div className="chart-container">
                     <p className='sm-gray'>FLAVOR PROFILE</p>

@@ -57,7 +57,7 @@ class SingleWineDetails extends Component {
                 <p><span className='sm-gray'>ORIGIN:</span> {singleWine.province}, {singleWine.country}</p>
                 <p><span className='sm-gray'>EST. PRICE:</span> {`$${price}`}</p>
                 <p><span className='sm-gray'>SCORE:</span> <span style={{ fontWeight: `bold` }}>{singleWine.points.low}</span> &nbsp;<span style={{ color: `gray` }}>{this.scoreComment(singleWine.points.low)}</span></p>
-                {/* <p><Icon name='heart' style={{ color: '#a61c00' }} /></p> */}
+                <p><Icon name='heart' style={{ color: '#a61c00' }} /></p>
                 <p style={{ fontStyle: `italic` }}>{singleWine.description}</p>
             </div >
         )

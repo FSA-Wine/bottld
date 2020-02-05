@@ -25,6 +25,7 @@ class SingleWineWithoutRouter extends Component {
     };
   }
 
+
   componentDidMount() {
     this.props.fetchSingleWine(this.props.router.query.id);
   }

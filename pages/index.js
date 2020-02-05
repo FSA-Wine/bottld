@@ -10,6 +10,8 @@ const Home = () => (
       <Head>
         <title>Home</title>
         <link rel="icon" href="/favicon.ico" />
+        <link href="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css" rel="stylesheet" />
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
       </Head>
 
       <div className="hero">

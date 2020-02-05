@@ -1,6 +1,6 @@
 export const trimParen = (title) => {
-    if (title.lastIndexOf('(') !== -1) {
-        let sParenIdx = title.lastIndexOf('(')
+    if (title.indexOf('(') !== -1) {
+        let sParenIdx = title.indexOf('(')
         return title.slice(0, sParenIdx)
     } else {
         return title;
