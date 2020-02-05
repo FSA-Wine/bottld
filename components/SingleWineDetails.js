@@ -26,7 +26,7 @@ class SingleWineDetails extends Component {
       case 'Australia':
         return '/Australia_flag.svg'
         break
-      case 'German':
+      case 'Germany':
         return '/German_flag.svg'
         break
       case 'Spain':
@@ -59,7 +59,7 @@ class SingleWineDetails extends Component {
   }
 
   scoreComment = score => {
-    switch (score) {
+    switch (true) {
       case score > 80 && score < 83:
         return 'Acceptable'
         break
