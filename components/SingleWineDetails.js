@@ -13,7 +13,7 @@ class SingleWineDetails extends Component {
   }
 
   scoreComment = score => {
-    switch (true) {
+    switch (score) {
       case score > 80 && score < 83:
         return 'Acceptable'
         break
@@ -51,7 +51,9 @@ class SingleWineDetails extends Component {
   render() {
     const singleWine = this.props.singleWine
     //let curWine = singleWine[0][0]._fields[0].properties;
-    const price = singleWine.price ? `${singleWine.price}` : 'Not available'
+    const price = singleWine.price
+      ? singleWine.price.toLocaleString(undefined, { style: 'currency', currency: 'USD' })
+      : 'Not available'
     return (
       <div>
         <hr style={{ borderTop: `5px solid ${wineColor(singleWine.color)}` }} />

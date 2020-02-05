@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import Head from 'next/head'
 import Link from 'next/link'
 
-import { fetchWines } from '../store/wines'
-import Paginate from '../components/Paginate'
-import Layout from '../components/Layout'
+import { fetchWines } from '../../store/wines'
+import Paginate from '../../components/Paginate'
+import Layout from '../../components/Layout'
 
 const Wines = props => {
   const [page, setPage] = useState(1)
@@ -37,7 +37,8 @@ const Wines = props => {
           {props.wines.length ? (
             props.wines.map(wine => (
               <Link
-                href={`/wines/${wine._fields[0].properties.id.low}`}
+                href="/wines/[id]"
+                as={`/wines/${wine._fields[0].properties.id.low}`}
                 key={wine._fields[0].properties.id.low}>
                 <a className="card">
                   <li>{wine._fields[0].properties.title}</li>
@@ -54,9 +55,9 @@ const Wines = props => {
   )
 }
 
-Wines.getInitialProps = async ({ store }) => {
-  store.dispatch(fetchWines(page, limit, search))
-}
+// Wines.getInitialProps = async ({ store }) => {
+//   store.dispatch(fetchWines(1, 25, ''))
+// }
 
 const mapState = state => ({
   wines: state.wines.data,
