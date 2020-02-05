@@ -7,6 +7,15 @@ import { trimParen, wineColor } from './utils'
 
 class RecommendRow extends Component {
   render() {
+    //             < Card style = {{
+    //                 margin: `0 auto`, borderTop: `5px solid ${wineColor(el._fields[0].color)}`, borderTopLeftRadius: `0`,
+    //                     borderTopRightRadius: `0`
+    //     }
+    // } >
+
+    //will need to add conditional for loading
+    //cards Link to SingleWine page
+
     return (
       <div>
         <Grid>
