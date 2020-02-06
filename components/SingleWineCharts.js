@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-//import { render } from '@testing-library/react';
-// import SingleWineMap from './SingleWineMap'
 import PolarGraph from './PolarGraph'
 import dynamic from 'next/dynamic'
 
@@ -39,7 +37,6 @@ class SingleWineCharts extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.flavorData !== prevProps.flavorData) {
-      console.log('should update')
       this.getChartData(this.props.flavorData)
     }
   }
@@ -73,7 +70,7 @@ class SingleWineCharts extends Component {
         <div className="chart-container">
           <p className="sm-gray">FLAVOR PROFILE</p>
           <div className="polar-container">
-            <PolarGraph chartData={this.state.chartData} wineId={this.props.wineId} />
+            <PolarGraph chartData={this.state.chartData} />
           </div>
         </div>
       </div>

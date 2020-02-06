@@ -1,21 +1,10 @@
-import React from 'react'
-import { Image } from 'semantic-ui-react'
+import React, { Component } from 'react'
 import 'mapbox-gl/dist/mapbox-gl.css'
-
-// const SingleWineMap = props => {
-//   return (
-//     <Image
-//       style={{ width: `85%`, padding: `15px` }}
-//       src="https://react.semantic-ui.com/images/wireframe/square-image.png"
-//       //   size="mini"
-//       centered
-//       circular
-//     />
-//   )
-// }
-let token = process.env.MAPBOX_TOKEN
-import { Component } from 'react'
 import ReactMapGL from 'react-map-gl'
+
+let token =
+  process.env.REACT_APP_MAPBOX_TOKEN ||
+  'pk.eyJ1IjoicGx1aHJzZW4iLCJhIjoiY2s2OXM4ZTV6MGo1bjNrbjVlMm5rc2pkNyJ9.vp9mYcz8H3UGEPOXR0dnmA'
 
 class SingleWineMap extends Component {
   state = {
@@ -48,8 +37,7 @@ class SingleWineMap extends Component {
     return (
       <ReactMapGL
         mapStyle="mapbox://styles/mapbox/streets-v9"
-        mapboxApiAccessToken="pk.eyJ1IjoicGx1aHJzZW4iLCJhIjoiY2s2OXM4ZTV6MGo1bjNrbjVlMm5rc2pkNyJ9.vp9mYcz8H3UGEPOXR0dnmA"
-        // onViewportChange={viewport => this.setState({ viewport })}
+        mapboxApiAccessToken={token}
         {...this.state.viewport}
       />
     )

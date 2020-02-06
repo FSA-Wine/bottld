@@ -11,10 +11,6 @@ class PolarGraph extends Component {
     displayLegend: false,
   }
 
-  // componentDidUpdate(prevProps) {
-
-  // }
-
   render() {
     return (
       <div className="chart">

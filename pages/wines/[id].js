@@ -20,7 +20,6 @@ class SingleWineWithoutRouter extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      loc: props.router.query.loc,
       loaded: false,
       liked: false,
       tried: false,
