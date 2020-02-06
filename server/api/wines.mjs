@@ -91,7 +91,7 @@ router.post('/tried', async (req, res) => {
 router.delete('/tried', async (req, res) => {
   const session = driver.session()
   try {
-    const untriedCypher = `MATCH (u:User {googleId: '${req.body.user.googleId}'})-[r:TRIED]->(w:Wine {id: ${req.body.wine.id.low}}) DELETE r`
+    const untriedCypher = `MATCH (u:User {googleId: '${req.body.user.googleId}'})-[relationship]>(w:Wine {id: ${req.body.wine.id.low}}) DELETE relationship`
     await session.run(untriedCypher)
     const cypher = `MATCH (u:User {googleId: '${req.body.user.googleId}'})-[r:TRIED]->(Wine) RETURN Wine`
     const { records } = await session.run(cypher)
