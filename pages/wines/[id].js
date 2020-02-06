@@ -57,14 +57,16 @@ class SingleWineWithoutRouter extends Component {
   }
 
   onLike = () => {
-    this.props.likeWine(
-      this.state.liked,
-      this.props.user,
-      this.props.singleWine[0][0]._fields[0].properties
-    )
-    this.setState(prevState => {
-      return { liked: !prevState.liked }
-    })
+    if (this.props.isLoggedIn) {
+      this.props.likeWine(
+        this.state.liked,
+        this.props.user,
+        this.props.singleWine[0][0]._fields[0].properties
+      )
+      this.setState(prevState => {
+        return { liked: !prevState.liked }
+      })
+    }
   }
 
   render() {
@@ -86,12 +88,12 @@ class SingleWineWithoutRouter extends Component {
                     alt="red wine"
                     style={{ width: `120px`, top: `9px` }}
                   />
-                  {/* <Button onClick={this.onLike}>{this.state.liked ? 'Unlike' : 'Like'}</Button> */}
                 </Grid.Column>
                 <Grid.Column width={8}>
                   <SingleWineDetails
                     singleWine={curWine}
                     likeWine={this.state.liked}
+                    isLoggedIn={this.props.isLoggedIn}
                     onLike={this.onLike}
                   />
                 </Grid.Column>
