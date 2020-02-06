@@ -9,6 +9,11 @@ const DynamicGraph = dynamic(() => import('../components/UserGraph'), {
   ssr: false,
 })
 
+const DynamicMap = dynamic(() => import('../components/UserMap'), {
+  loading: () => <p>Loading...</p>,
+  ssr: false,
+})
+
 const User = props => {
   const [view, setView] = useState('likedWines')
   return (
@@ -43,11 +48,16 @@ const User = props => {
               )}
             </ul>
             <div>
-              {!props.user[view] ? (
+              {!props.user.likedWines.length ? (
                 <div>Flavor Profile Not Available: Like some wines to get it started!</div>
               ) : (
                 <div>
-                  <DynamicGraph likedWine={props.user.likedWines} />
+                  <div>
+                    <DynamicGraph likedWine={props.user.likedWines} />
+                  </div>
+                  <div>
+                    <DynamicMap likedWine={props.user.likedWines} />
+                  </div>
                 </div>
               )}
             </div>
