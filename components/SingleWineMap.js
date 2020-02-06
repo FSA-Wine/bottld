@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import ReactMapGL from 'react-map-gl'
 
