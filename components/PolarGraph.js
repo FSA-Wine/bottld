@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { Polar } from "react-chartjs-2";
+import React, { Component } from 'react'
+import { Polar } from 'react-chartjs-2'
 
 class PolarGraph extends Component {
   constructor(props) {
-    super(props);
+    super(props)
   }
 
   static defaultProps = {
     displayTitle: false,
-    displayLegend: false
-  };
+    displayLegend: false,
+  }
 
   render() {
     return (
@@ -18,18 +18,18 @@ class PolarGraph extends Component {
           data={this.props.chartData}
           options={{
             title: {
-              display: this.props.displayTitle
+              display: this.props.displayTitle,
             },
             legend: {
-              display: this.props.displayLegend
-            }
+              display: this.props.displayLegend,
+            },
           }}
           width={100}
           height={50}
         />
       </div>
-    );
+    )
   }
 }
 
-export default PolarGraph;
+export default PolarGraph

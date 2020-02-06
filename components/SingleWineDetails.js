@@ -3,13 +3,6 @@ import { Image, Popup } from 'semantic-ui-react'
 import { trimParen, wineColor } from './utils'
 
 class SingleWineDetails extends Component {
-  constructor() {
-    super()
-    this.state = {
-      likeWine: false,
-    }
-  }
-
   countryFlag = country => {
     switch (country) {
       case 'US':
@@ -81,12 +74,6 @@ class SingleWineDetails extends Component {
     }
   }
 
-  toggleHeart = () => {
-    this.setState(prevState => ({
-      likeWine: !prevState.likeWine
-    }));
-  }
-
   render() {
     const singleWine = this.props.singleWine
     //let curWine = singleWine[0][0]._fields[0].properties;
@@ -122,13 +109,17 @@ class SingleWineDetails extends Component {
           circular
         />
         <p>
-          <Popup content={this.state.likeWine ? "You like this wine" : "Add to Liked Wines"}
+          <Popup
+            content={this.props.likeWine ? 'You like this wine' : 'Add to Liked Wines'}
             trigger={
-              <Image src={this.state.likeWine
-                ? ('/heart-solid.svg') :
-                ('/heart-outline.svg')} width="20px" onClick={() => this.toggleHeart()} />
+              <Image
+                src={this.props.likeWine ? '/heart-solid.svg' : '/heart-outline.svg'}
+                width="20px"
+                onClick={() => this.props.onLike()}
+              />
             }
-            position={'right center'} />
+            position={'right center'}
+          />
         </p>
         <p style={{ fontStyle: `italic` }}>{singleWine.description}</p>
       </div>
