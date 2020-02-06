@@ -51,7 +51,7 @@ class UserMap extends Component {
             latArr.push(curLat)
           }
           return (
-            <Marker longitude={parseFloat(wine.longY)} latitude={curLat}>
+            <Marker longitude={parseFloat(wine.longY)} latitude={curLat} offsetLeft={-20} offsetTop={-10}>
               <Image src="/map-marker.png" width="25px" />
             </Marker>
           )

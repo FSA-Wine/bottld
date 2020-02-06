@@ -53,6 +53,17 @@
     padding: 0;
     width: 70px;
   }
+
+  /* User Page */
+.list-body {
+  padding: 5px 0 0 7px;
+}
+
+/* width defined inline since width in css didn't hold at diff screen sizes */
+.lists {
+  height: calc(60vh);
+  overflow: scroll;
+}
   
   
   /* default styling*/
