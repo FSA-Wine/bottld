@@ -48,11 +48,11 @@ router.get('/tried', async (req, res) => {
 router.post('/liked', async (req, res) => {
   const session = driver.session()
   try {
-    const likeCypher = `MATCH (w:Wine), (u:User) WHERE u.googleId = '${req.body.user.googleId}' AND w.id = ${req.body.wine.id} MERGE (u)-[r:LIKED]->(w) RETURN u`
-    const triedCypher = `MATCH (w:Wine), (u:User) WHERE u.googleId = '${req.body.user.googleId}' AND w.id = ${req.body.wine.id} MERGE (u)-[r:TRIED]->(w) RETURN u`
+    const likeCypher = `MATCH (w:Wine), (u:User) WHERE u.googleId = '${req.body.user.googleId}' AND w.id = ${req.body.wine.id.low} MERGE (u)-[r:LIKED]->(w) RETURN w`
+    const triedCypher = `MATCH (w:Wine), (u:User) WHERE u.googleId = '${req.body.user.googleId}' AND w.id = ${req.body.wine.id.low} MERGE (u)-[r:TRIED]->(w) RETURN w`
     const record = await session.run(likeCypher)
     const { records } = await session.run(triedCypher)
-    res.json(records)
+    res.json(records[0])
   } catch (error) {
     res.status(500).send(error)
   } finally {
@@ -63,8 +63,10 @@ router.post('/liked', async (req, res) => {
 router.delete('/liked', async (req, res) => {
   const session = driver.session()
   try {
-    const unlikeCypher = `MATCH (u:User {googleId: '${req.body.user.googleId}'})-[r:LIKED]->(w:Wine {id: ${req.body.wine.id}}) DELETE r RETURN u`
-    const { records } = await session.run(unlikeCypher)
+    const unlikeCypher = `MATCH (u:User {googleId: '${req.body.user.googleId}'})-[r:LIKED]->(w:Wine {id: ${req.body.wine.id.low}}) DELETE r`
+    await session.run(unlikeCypher)
+    const cypher = `MATCH (u:User {googleId: '${req.body.user.googleId}'})-[r:LIKED]->(Wine) RETURN Wine`
+    const { records } = await session.run(cypher)
     res.json(records)
   } catch (error) {
     res.status(500).send(error)
@@ -76,9 +78,9 @@ router.delete('/liked', async (req, res) => {
 router.post('/tried', async (req, res) => {
   const session = driver.session()
   try {
-    const triedCypher = `MATCH (w:Wine), (u:User) WHERE u.googleId = '${req.body.user.googleId}' AND w.id = ${req.body.wine.id} MERGE (u)-[r:TRIED]->(w) RETURN u`
+    const triedCypher = `MATCH (w:Wine), (u:User) WHERE u.googleId = '${req.body.user.googleId}' AND w.id = ${req.body.wine.id.low} MERGE (u)-[r:TRIED]->(w) RETURN w`
     const { records } = await session.run(triedCypher)
-    res.json(records)
+    res.json(records[0])
   } catch (error) {
     res.status(500).send(error)
   } finally {
@@ -89,8 +91,10 @@ router.post('/tried', async (req, res) => {
 router.delete('/tried', async (req, res) => {
   const session = driver.session()
   try {
-    const untriedCypher = `MATCH (u:User {googleId: '${req.body.user.googleId}'})-[r:TRIED]->(w:Wine {id: ${req.body.wine.id}}) DELETE r RETURN u`
-    const { records } = await session.run(untriedCypher)
+    const untriedCypher = `MATCH (u:User {googleId: '${req.body.user.googleId}'})-[relationship]>(w:Wine {id: ${req.body.wine.id.low}}) DELETE relationship`
+    await session.run(untriedCypher)
+    const cypher = `MATCH (u:User {googleId: '${req.body.user.googleId}'})-[r:TRIED]->(Wine) RETURN Wine`
+    const { records } = await session.run(cypher)
     res.json(records)
   } catch (error) {
     res.status(500).send(error)

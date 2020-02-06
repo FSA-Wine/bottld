@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import { Icon, Image } from 'semantic-ui-react'
+import { Image, Popup } from 'semantic-ui-react'
 import { trimParen, wineColor } from './utils'
-//import { render } from '@testing-library/react';
 
-let currentHeart = '/heart-outline-512.png'
 class SingleWineDetails extends Component {
   constructor() {
     super()
@@ -75,7 +73,7 @@ class SingleWineDetails extends Component {
       case score < 98:
         return 'Superb'
         break
-      case score < 100:
+      case score < 101:
         return 'Classic'
         break
       default:
@@ -83,20 +81,14 @@ class SingleWineDetails extends Component {
     }
   }
 
-  //fills heart if clicked
-  //   toggleHeart = () => {
-  //     const fillHeart = !this.state.likeWine
-  //     this.setState({ fillHeart })
-  //     this.state.likeWine
-  //       ? (currentHeart = '/suit-heart-512.png')
-  //       : //   <Image src="/heart-outline-512.png" size="mini" />
-  //         (currentHeart = '/heart-outline-512.png')
-  //     //   <Image src="/suit-heart-512.png" size="mini" />
-  //   }
+  toggleHeart = () => {
+    this.setState(prevState => ({
+      likeWine: !prevState.likeWine
+    }));
+  }
 
   render() {
     const singleWine = this.props.singleWine
-    console.log('wine info?', singleWine)
     //let curWine = singleWine[0][0]._fields[0].properties;
     const price = singleWine.price
       ? singleWine.price.toLocaleString(undefined, { style: 'currency', currency: 'USD' })
@@ -129,10 +121,14 @@ class SingleWineDetails extends Component {
           centered
           circular
         />
-        {/* <p><Icon name='home' style={{ color: '#a61c00' }} /></p> */}
         <p>
-          {/* <Image src={currentHeart} size="mini" onClick={() => this.toggleHeart()} /> */}
-          <Image src={currentHeart} size="mini" />
+          <Popup content={this.state.likeWine ? "You like this wine" : "Add to Liked Wines"}
+            trigger={
+              <Image src={this.state.likeWine
+                ? ('/heart-solid.svg') :
+                ('/heart-outline.svg')} width="20px" onClick={() => this.toggleHeart()} />
+            }
+            position={'right center'} />
         </p>
         <p style={{ fontStyle: `italic` }}>{singleWine.description}</p>
       </div>
