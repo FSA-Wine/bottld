@@ -2,8 +2,9 @@ import { useRouter } from 'next/router'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchSingleWine, getSingleWine } from '../../store/singleWine'
+import { likeWine } from '../../store/user'
 import 'semantic-ui-css/semantic.min.css'
-import { Grid, Image } from 'semantic-ui-react'
+import { Grid, Image, Button } from 'semantic-ui-react'
 import Layout from '../../components/Layout'
 import SingleWineDetails from '../../components/SingleWineDetails'
 import SingleWineCharts from '../../components/SingleWineCharts'
@@ -56,6 +57,17 @@ class SingleWineWithoutRouter extends Component {
     this.props.getSingleWine([])
   }
 
+  onLike = () => {
+    this.props.likeWine(
+      this.state.liked,
+      this.props.user,
+      this.props.singleWine[0][0]._fields[0].properties
+    )
+    this.setState(prevState => {
+      return { liked: !prevState.liked }
+    })
+  }
+
   render() {
     const singleWine = this.props.singleWine
 
@@ -75,6 +87,7 @@ class SingleWineWithoutRouter extends Component {
                     alt="red wine"
                     style={{ width: `120px`, top: `9px` }}
                   />
+                  <Button onClick={this.onLike}>{this.state.liked ? 'Unlike' : 'Like'}</Button>
                 </Grid.Column>
                 <Grid.Column width={8}>
                   <SingleWineDetails singleWine={curWine} />
@@ -116,6 +129,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   fetchSingleWine,
   getSingleWine,
+  likeWine,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleWine)

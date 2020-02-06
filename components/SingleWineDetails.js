@@ -96,7 +96,6 @@ class SingleWineDetails extends Component {
 
   render() {
     const singleWine = this.props.singleWine
-    console.log('wine info?', singleWine)
     //let curWine = singleWine[0][0]._fields[0].properties;
     const price = singleWine.price
       ? singleWine.price.toLocaleString(undefined, { style: 'currency', currency: 'USD' })
