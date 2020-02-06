@@ -86,10 +86,14 @@ class SingleWineWithoutRouter extends Component {
                     alt="red wine"
                     style={{ width: `120px`, top: `9px` }}
                   />
-                  <Button onClick={this.onLike}>{this.state.liked ? 'Unlike' : 'Like'}</Button>
+                  {/* <Button onClick={this.onLike}>{this.state.liked ? 'Unlike' : 'Like'}</Button> */}
                 </Grid.Column>
                 <Grid.Column width={8}>
-                  <SingleWineDetails singleWine={curWine} />
+                  <SingleWineDetails
+                    singleWine={curWine}
+                    likeWine={this.state.liked}
+                    onLike={this.onLike}
+                  />
                 </Grid.Column>
                 <Grid.Column mobile={16} tablet={16} computer={6}>
                   <SingleWineCharts flavorData={flavorData} singleWine={curWine} />
