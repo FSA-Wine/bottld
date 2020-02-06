@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Image } from 'semantic-ui-react'
+import { Image, Popup } from 'semantic-ui-react'
 import { trimParen, wineColor } from './utils'
 
 class SingleWineDetails extends Component {
@@ -121,13 +121,14 @@ class SingleWineDetails extends Component {
           centered
           circular
         />
-
         <p>
-
-          <Image src={this.state.likeWine
-            ? ('/heart-solid.svg') :
-            ('/heart-outline.svg')} size="mini" width="20px" onClick={() => this.toggleHeart()} />
-
+          <Popup content={this.state.likeWine ? "You like this wine" : "Add to Liked Wines"}
+            trigger={
+              <Image src={this.state.likeWine
+                ? ('/heart-solid.svg') :
+                ('/heart-outline.svg')} width="20px" onClick={() => this.toggleHeart()} />
+            }
+            position={'right center'} />
         </p>
         <p style={{ fontStyle: `italic` }}>{singleWine.description}</p>
       </div>
