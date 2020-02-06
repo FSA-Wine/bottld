@@ -14,7 +14,7 @@ let fakeNumData = [1, 2, 4, 6, 3]
 let numData = []
 let dataObj = {}
 
-class PolarGraph extends Component {
+class UserGraph extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -66,10 +66,6 @@ class PolarGraph extends Component {
           numData.push(dataObj[label])
         }
       }
-      // for (let label in dataObj) {
-      //   labelData.push(label)
-      //   numData.push(dataObj[label])
-      // }
     }
     this.getChartData()
   }
@@ -118,4 +114,4 @@ class PolarGraph extends Component {
   }
 }
 
-export default PolarGraph
+export default UserGraph
