@@ -44,6 +44,12 @@ class SingleWineDetails extends Component {
       case 'Portugal':
         return '/Portugal_flag.svg'
         break
+      case 'Argentina':
+        return '/Argentina_flag.svg'
+        break
+      case 'New Zealand':
+        return '/NewZealand_flag.svg'
+        break
       default:
         return 'https://react.semantic-ui.com/images/wireframe/square-image.png'
     }
