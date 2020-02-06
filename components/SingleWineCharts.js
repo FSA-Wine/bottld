@@ -1,19 +1,14 @@
 import React, { Component } from 'react'
-//import { render } from '@testing-library/react';
-// import SingleWineMap from './SingleWineMap'
 import PolarGraph from './PolarGraph'
 import dynamic from 'next/dynamic'
 
-let backgroundColorData = [
+let backgroundColor = [
   'rgba(89, 110, 113, .5)',
   'rgba(97, 116, 71, .5)',
   'rgba(171, 170, 139, .5)',
   'rgba(230, 221, 152, .5)',
   'rgba(178, 157, 100, .5)',
 ]
-let labelData = []
-let fakelabelData = ['Nutty', 'Fruit', 'Spice', 'Body', 'Caramel']
-let numData = []
 
 const DynamicMap = dynamic(() => import('./SingleWineMap'), {
   loading: () => <p>Loading...</p>,
@@ -29,17 +24,42 @@ class SingleWineCharts extends Component {
         datasets: [
           {
             data: [],
-            backgroundColor: backgroundColorData,
+            backgroundColor,
           },
         ],
+      },
+      viewport: {
+        width: '25vw',
+        height: '25vh',
+        latitude: 41.5868,
+        longitude: -93.625,
+        zoom: 5,
       },
     }
   }
 
   componentDidMount() {
-    let charData = this.props.flavorData
-    if (charData) {
-      charData.map(el => {
+    this.getChartData(this.props.flavorData)
+    this.setView(this.props.singleWine)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.flavorData !== prevProps.flavorData) {
+      this.getChartData(this.props.flavorData)
+    }
+    if (
+      this.state.viewport.latitude !== parseFloat(this.props.singleWine.latX) ||
+      this.state.viewport.longitude !== parseFloat(this.props.singleWine.longY)
+    ) {
+      this.setView(this.props.singleWine)
+    }
+  }
+
+  getChartData(flavorData) {
+    if (flavorData) {
+      let labelData = []
+      let numData = []
+      flavorData.map(el => {
         labelData.push(
           el._fields[0]
             .slice(0, 1)
@@ -48,22 +68,25 @@ class SingleWineCharts extends Component {
         )
         numData.push(el._fields[1].low)
       })
+      let chartData = { ...this.state.chartData }
+      chartData.labels = labelData
+      chartData.datasets[0].data = numData
+      this.setState({ chartData })
     }
-    this.getChartData()
   }
 
-  getChartData() {
-    let chartData = { ...this.state.chartData }
-    chartData.labels = labelData
-    chartData.datasets[0].data = numData
-    this.setState({ chartData })
+  setView(wine) {
+    let viewport = { ...this.state.viewport }
+    viewport.latitude = parseFloat(wine.latX)
+    viewport.longitude = parseFloat(wine.longY)
+    this.setState({ viewport })
   }
 
   render() {
     return (
       <div>
         <div>
-          <DynamicMap singleWine={this.props.singleWine} />
+          <DynamicMap viewport={this.state.viewport} />
         </div>
         <div className="chart-container">
           <p className="sm-gray">FLAVOR PROFILE</p>
