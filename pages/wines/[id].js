@@ -93,7 +93,11 @@ class SingleWineWithoutRouter extends Component {
                   <SingleWineDetails singleWine={curWine} />
                 </Grid.Column>
                 <Grid.Column mobile={16} tablet={16} computer={6}>
-                  <SingleWineCharts flavorData={flavorData} singleWine={curWine} />
+                  <SingleWineCharts
+                    flavorData={flavorData}
+                    singleWine={curWine}
+                    wineId={this.props.router.query.id}
+                  />
                 </Grid.Column>
               </Grid>
             </div>
