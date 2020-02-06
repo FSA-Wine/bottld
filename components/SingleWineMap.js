@@ -35,6 +35,15 @@ class SingleWineMap extends Component {
     viewport.longitude = parseFloat(curWine.longY)
     this.setState({ viewport })
   }
+  componentDidUpdate() {
+    let curWine = this.props.singleWine
+    if (this.state.viewport.latitude !== parseFloat(curWine.latX)) {
+      let viewport = { ...this.state.viewport }
+      viewport.latitude = parseFloat(curWine.latX)
+      viewport.longitude = parseFloat(curWine.longY)
+      this.setState({ viewport })
+    }
+  }
   render() {
     return (
       <ReactMapGL
