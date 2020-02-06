@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import Link from 'next/link'
 import Layout from '../components/Layout'
+import dynamic from 'next/dynamic'
+
+const DynamicGraph = dynamic(() => import('../components/UserPolarGraph'), {
+  loading: () => <p>Loading...</p>,
+  ssr: false,
+})
 
 const User = props => {
   const [view, setView] = useState('likedWines')
@@ -21,15 +27,29 @@ const User = props => {
               props.user[view].map(wine => {
                 const wineProps = wine._fields[0].properties
                 return (
-                  <Link href="/wines/[id]" as={`/wines/${wineProps.id.low}`} key={wineProps.id.low}>
-                    <a className="card">
-                      <li>{wineProps.title}</li>
-                    </a>
-                  </Link>
+                  <div>
+                    <Link
+                      href="/wines/[id]"
+                      as={`/wines/${wineProps.id.low}`}
+                      key={wineProps.id.low}>
+                      <a className="card">
+                        <li>{wineProps.title}</li>
+                      </a>
+                    </Link>
+                  </div>
                 )
               })
             )}
           </ul>
+          <div>
+            {!props.user[view] ? (
+              <div>Flavor Profile Not Available: Like some wines to get it started!</div>
+            ) : (
+              <div>
+                <DynamicGraph likedWine={props.user.likedWines} />
+              </div>
+            )}
+          </div>
         </section>
         <section className="data">
           <div></div>

@@ -110,7 +110,7 @@ router.get('/:wineId', async (req, res) => {
     const wineId = req.params.wineId
     const cypher = `MATCH (n:Wine) WHERE n.id = ${wineId} RETURN n`
     const cypher2 = `MATCH (w:Wine {id: ${wineId}})<-[:FOUND_IN]-(n:Note)-[:FOUND_IN]->(w2:Wine) WITH w2, COUNT(*) as commonNotes RETURN w2, commonNotes ORDER BY commonNotes DESC LIMIT 5`
-    const cypher3 = `MATCH (w:Wine), (n:Note), (c:Characteristic) WHERE w.id = ${wineId} AND n.title IN w.descriptors AND (n)-[:ASSOC_WITH]-(c) RETURN c.title, count(c) AS count`
+    const cypher3 = `MATCH (w:Wine), (n:Note), (c:Characteristic) WHERE w.id = ${wineId} AND n.title IN w.descriptors AND (n)-[:ASSOC_WITH]-(c) RETURN c.title, count(c) ORDER BY count(c) DESC LIMIT 5`
     const { records } = await session.run(cypher)
     const record2 = await session.run(cypher2)
     const record3 = await session.run(cypher3)
