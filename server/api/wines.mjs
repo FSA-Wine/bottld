@@ -117,6 +117,11 @@ router.get('/:wineId', async (req, res) => {
     data.push(records)
     data.push(record2.records)
     data.push(record3.records)
+    if (req.user) {
+      const cypher4 = `MATCH (w:Wine {id: ${wineId}})<-[r:LIKED]-(u:User {googleId: '${req.user.properties.googleId}'}) RETURN count(w) > 0 as w`
+      const record4 = await session.run(cypher4)
+      data.push(record4.records[0]._fields[0])
+    } else data.push(false)
 
     res.send(data)
   } catch (err) {

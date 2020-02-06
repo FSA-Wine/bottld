@@ -27,33 +27,19 @@ class SingleWineWithoutRouter extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchSingleWine(this.props.router.query.id)
-    // if (this.props.user) {
-    //   const liked = this.props.user.likedWines.filter(wine => {
-    //     return (
-    //       wine._fields[0].properties.id.low ===
-    //       this.props.singleWine[0][0]._fields[0].properties.id.low
-    //     )
-    //   })
-    //   const tried = !liked[0]
-    //     ? this.props.user.triedWines.filter(wine => {
-    //         return (
-    //           wine._fields[0].properties.id.low ===
-    //           this.props.singleWine[0][0]._fields[0].properties.id.low
-    //         )
-    //       })
-    //     : [true]
-    //   if (liked[0]) this.setState({ liked: true })
-    //   if (tried[0]) this.setState({ tried: true })
-    // }
+    this.fetchData()
   }
   componentDidUpdate(prevProps) {
-    if (this.props.router.query.id !== prevProps.router.query.id)
-      this.props.fetchSingleWine(this.props.router.query.id)
+    if (this.props.router.query.id !== prevProps.router.query.id) this.fetchData()
   }
 
   componentWillUnmount() {
     this.props.getSingleWine([])
+  }
+
+  fetchData = async () => {
+    await this.props.fetchSingleWine(this.props.router.query.id)
+    this.setState({ liked: this.props.singleWine[3] })
   }
 
   onLike = () => {
