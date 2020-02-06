@@ -123,6 +123,7 @@ const mapStateToProps = state => {
   return {
     singleWine: state.singleWine,
     user: state.user,
+    isLoggedIn: state.user.googleId,
   }
 }
 
