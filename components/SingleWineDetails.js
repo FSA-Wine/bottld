@@ -110,7 +110,13 @@ class SingleWineDetails extends Component {
         />
         <p>
           <Popup
-            content={this.props.likeWine ? 'You like this wine' : 'Add to Liked Wines'}
+            content={
+              this.props.likeWine
+                ? 'You like this wine'
+                : this.props.isLoggedIn
+                ? 'Add to Liked Wines'
+                : 'Please log in to like this wine'
+            }
             trigger={
               <Image
                 src={this.props.likeWine ? '/heart-solid.svg' : '/heart-outline.svg'}
