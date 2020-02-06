@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Layout from '../components/Layout'
 import dynamic from 'next/dynamic'
 
-const DynamicGraph = dynamic(() => import('../components/UserPolarGraph'), {
+const DynamicGraph = dynamic(() => import('../components/UserGraph'), {
   loading: () => <p>Loading...</p>,
   ssr: false,
 })
