@@ -28,16 +28,30 @@ class SingleWineCharts extends Component {
           },
         ],
       },
+      viewport: {
+        width: '25vw',
+        height: '25vh',
+        latitude: 41.5868,
+        longitude: -93.625,
+        zoom: 5,
+      },
     }
   }
 
   componentDidMount() {
     this.getChartData(this.props.flavorData)
+    this.setView(this.props.singleWine)
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.flavorData !== prevProps.flavorData) {
       this.getChartData(this.props.flavorData)
+    }
+    if (
+      this.state.viewport.latitude !== parseFloat(this.props.singleWine.latX) ||
+      this.state.viewport.longitude !== parseFloat(this.props.singleWine.longY)
+    ) {
+      this.setView(this.props.singleWine)
     }
   }
 
@@ -61,11 +75,18 @@ class SingleWineCharts extends Component {
     }
   }
 
+  setView(wine) {
+    let viewport = { ...this.state.viewport }
+    viewport.latitude = parseFloat(wine.latX)
+    viewport.longitude = parseFloat(wine.longY)
+    this.setState({ viewport })
+  }
+
   render() {
     return (
       <div>
         <div>
-          <DynamicMap singleWine={this.props.singleWine} />
+          <DynamicMap viewport={this.state.viewport} />
         </div>
         <div className="chart-container">
           <p className="sm-gray">FLAVOR PROFILE</p>
