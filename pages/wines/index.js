@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import Head from 'next/head'
 import Link from 'next/link'
-
+import { useRouter } from 'next/router'
 import { fetchWines } from '../../store/wines'
 import Paginate from '../../components/Paginate'
 import Layout from '../../components/Layout'
@@ -10,16 +10,14 @@ import Layout from '../../components/Layout'
 const Wines = props => {
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(25)
-  const [search, setSearch] = useState('')
+
+  const router = useRouter()
 
   useEffect(() => {
-    props.fetchWines(page, limit, search)
-  }, [page, limit, search])
+    props.fetchWines(page, limit, router.query.search)
+  }, [page, limit, router.query.search])
 
-  const handleChange = e => {
-    setSearch(e.target.value)
-  }
-
+  console.log('props?', router.query)
   return (
     <Layout>
       <div>
@@ -27,12 +25,6 @@ const Wines = props => {
           <title>Search Wines</title>
           <link rel="icon" href="/favicon.ico" />
         </Head> */}
-        <input
-          type="text"
-          name="search"
-          value={search}
-          onChange={handleChange}
-          placeholder="Search wines"></input>
         <ul>
           {props.wines.length ? (
             props.wines.map(wine => (
@@ -55,8 +47,9 @@ const Wines = props => {
   )
 }
 
-// Wines.getInitialProps = async ({ store }) => {
-//   store.dispatch(fetchWines(1, 25, ''))
+// Wines.getInitialProps = async ctx => {
+//   const { url } = ctx.pathname
+//   return { url}
 // }
 
 const mapState = state => ({
