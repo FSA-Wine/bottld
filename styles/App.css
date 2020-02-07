@@ -54,14 +54,32 @@ hr {
   width: 70px;
 }
 
-/* nav */
-a {
-  text-decoration: none;
-  color: gray;
+/* User Page */
+.list-body {
+  padding: 5px 0 0 7px;
 }
 
-a:hover {
+/* width defined inline since width in css didn't hold at diff screen sizes */
+.lists {
+  height: calc(60vh);
+  overflow: scroll;
+}
+
+/* Home page */
+
+#carousel {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+#carousel #carousel-text {
+  position: absolute;
+  top: 30vh;
+  text-align: center;
   color: black;
+  font-weight: 600;
+  z-index: 1;
 }
 
 /* default styling*/
