@@ -66,7 +66,7 @@ const User = props => {
                       </Menu>
                       {props.user[view] ? (
                         <Segment attached="bottom">
-                          <UserWineList wines={props.user[view]} />
+                          <UserWineList wines={props.user[view]} view={view} />
                         </Segment>
                       ) : (
                         <div>Nothing!</div>

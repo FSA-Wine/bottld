@@ -1,6 +1,8 @@
 import React from 'react'
 import { Divider, Image, List } from 'semantic-ui-react'
 import Link from 'next/link'
+import { connect } from 'react-redux'
+import { likeWine } from '../store/user'
 // import heartOutline from '../public/heart-outline.svg'
 // import heartSolid from '../public/heart-solid.svg'
 
@@ -10,7 +12,12 @@ import Link from 'next/link'
 //hover on item = shading
 //change Link default color with 'a' selector
 
-const WineListItem = ({ wineProps }) => {
+const WineListItem = ({ wineProps, liked, likeWine, user }) => {
+  const onLike = () => {
+    likeWine(liked, user, wineProps)
+    liked = !liked
+  }
+
   if (wineProps) {
     return (
       <List.Item className="hand-cursor">
@@ -24,7 +31,8 @@ const WineListItem = ({ wineProps }) => {
               </Link>
               <Image
                 style={{ width: `18px`, margin: `5px 5px 0 0` }}
-                src="/heart-solid.svg"
+                src={liked ? '/heart-solid.svg' : '/heart-outline.svg'}
+                onClick={() => onLike()}
                 floated="right"
                 verticalAlign="bottom"
               />
@@ -38,4 +46,12 @@ const WineListItem = ({ wineProps }) => {
   } else return <div></div>
 }
 
-export default WineListItem
+const mapState = state => ({
+  user: state.user,
+})
+
+const mapDispatch = {
+  likeWine,
+}
+
+export default connect(mapState, mapDispatch)(WineListItem)
