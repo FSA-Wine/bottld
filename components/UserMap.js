@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import ReactMapGL, { Marker, NavigationControl } from 'react-map-gl'
 import { Image } from 'semantic-ui-react'
-import { Nav } from 'reactstrap'
 
 let latArr = []
 let token =
