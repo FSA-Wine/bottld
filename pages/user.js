@@ -6,6 +6,8 @@ import dynamic from 'next/dynamic'
 import { Grid, Menu, Segment } from 'semantic-ui-react'
 import UserWineList from '../components/UserWineList'
 import SearchRow from '../components/SearchRow'
+import RecommendRow from '../components/RecommendRow'
+import { fetchRecWines } from '../store/recommended'
 
 const DynamicGraph = dynamic(() => import('../components/UserGraph'), {
   loading: () => <p>Loading...</p>,
@@ -19,6 +21,9 @@ const DynamicMap = dynamic(() => import('../components/UserMap'), {
 
 const User = props => {
   const [view, setView] = useState('likedWines')
+  useEffect(() => {
+    props.fetchRecWines()
+  }, [])
 
   const getGreeting = () => {
     const greetings = ['Sláinte', 'Cheers', 'Salud', 'Prost', 'Skål', 'Santé', 'Felicidades']
@@ -108,7 +113,12 @@ const User = props => {
             <div className="lower-section-bg">
               <div className="lower-section">
                 <Grid>
-                  <Grid.Row>{/* <SearchRow /> */}</Grid.Row>
+                  <Grid.Row>
+                    <RecommendRow
+                      recWines={props.recommended}
+                      info={'We think you might enjoy these wines:'}
+                    />
+                  </Grid.Row>
                 </Grid>
               </div>
             </div>
@@ -126,6 +136,11 @@ const User = props => {
 const mapState = state => ({
   user: state.user,
   isLoggedIn: state.user.googleId,
+  recommended: state.recommended,
 })
 
-export default connect(mapState)(User)
+const mapDispatch = {
+  fetchRecWines,
+}
+
+export default connect(mapState, mapDispatch)(User)
