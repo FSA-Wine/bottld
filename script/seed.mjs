@@ -1,4 +1,4 @@
-import faker from 'faker'
+// import faker from 'faker'
 import { driver } from '../server/index.mjs'
 
 const session = driver.session()
@@ -15,13 +15,13 @@ const wineSeeder = async () => {
   await session.run('CREATE CONSTRAINT ON (d:User) ASSERT d.email IS UNIQUE')
   await session.run('CREATE CONSTRAINT ON (d:User) ASSERT d.googleId IS UNIQUE')
 
-  for (let j = 0; j < 100; j++) {
-    await session.run(
-      `MERGE (a:User {firstName: "${faker.name.firstName()}", lastName: "${faker.name.lastName()}", email: "${faker.internet.email()}", googleId: "${faker.random.number(
-        { min: 100000000000000000000, max: 999999999999999999999 }
-      )}"}) RETURN a`
-    )
-  }
+  // for (let j = 0; j < 100; j++) {
+  //   await session.run(
+  //     `MERGE (a:User {firstName: "${faker.name.firstName()}", lastName: "${faker.name.lastName()}", email: "${faker.internet.email()}", googleId: "${faker.random.number(
+  //       { min: 100000000000000000000, max: 999999999999999999999 }
+  //     )}"}) RETURN a`
+  //   )
+  // }
 
   await session.run(
     `USING PERIODIC COMMIT 5000 LOAD CSV WITH HEADERS FROM 'file:///winemag-data-notes.csv' AS line MERGE (d:Wine {title: line.title}) ON CREATE SET d.id = toInt(line.index), d.country = line.country, d.description = trim(line.description), d.points = toInteger(line.points), d.price = toFloat(line.price), d.province = line.province, d.variety = line.variety, d.winery = line.winery, d.descriptors = split(lTrim(replace(replace(replace(line.normalized_descriptors, '[', ""), ']', ""), "'", "")), ", ")`

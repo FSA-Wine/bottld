@@ -38,8 +38,10 @@ export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
     dispatch(getUser(res.data || defaultUser))
-    const liked = await axios.get(`/api/wines/liked?googleId=${res.data.googleId}`)
-    const tried = await axios.get(`/api/wines/tried?googleId=${res.data.googleId}`)
+    const [liked, tried] = await Promise.all([
+      axios.get(`/api/wines/liked?googleId=${res.data.googleId}`),
+      axios.get(`/api/wines/tried?googleId=${res.data.googleId}`),
+    ])
     dispatch(getLikedWines(liked.data))
     dispatch(getTriedWines(tried.data))
   } catch (err) {

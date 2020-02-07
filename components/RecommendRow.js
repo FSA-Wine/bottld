@@ -7,7 +7,6 @@ import { trimParen, wineColor } from './utils'
 
 class RecommendRow extends Component {
   render() {
-    
     //             < Card style = {{
     //                 margin: `0 auto`, borderTop: `5px solid ${wineColor(el._fields[0].color)}`, borderTopLeftRadius: `0`,
     //                     borderTopRightRadius: `0`
@@ -26,7 +25,7 @@ class RecommendRow extends Component {
             </div>
           </Grid.Row>
           <Grid.Row>
-            <Grid centered stackable doubling columns={3}>
+            <Grid centered stackable columns={3}>
               {this.props.recWines.map(el => {
                 let currentWineRec = el._fields[0].properties
                 return (

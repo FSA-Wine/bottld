@@ -83,7 +83,6 @@ class UserGraph extends Component {
   }
 
   render() {
-    console.log('data?', dataObj)
     return (
       <div className="chart">
         <Bar
