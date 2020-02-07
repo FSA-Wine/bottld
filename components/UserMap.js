@@ -23,7 +23,6 @@ class UserMap extends Component {
     }
   }
   render() {
-    console.log('props?', this.state.viewport)
     let wines = this.props.likedWine
     return (
       <ReactMapGL

@@ -16,6 +16,7 @@ const DynamicMap = dynamic(() => import('../components/UserMap'), {
 
 const User = props => {
   const [view, setView] = useState('likedWines')
+  console.log('props?', props)
   return (
     <Layout>
       {props.isLoggedIn ? (
