@@ -2,7 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Head from 'next/head'
 import Link from 'next/link'
+import { Button, Grid, Input, Segment } from 'semantic-ui-react'
 import Layout from '../components/Layout'
+
+//diff view if logged in or not
 
 const Home = () => (
   <Layout>
@@ -12,68 +15,42 @@ const Home = () => (
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="hero">
-        <h1 className="title">Welcome to Next.js!</h1>
-        <p className="description">
-          To get started, edit <code>pages/index.js</code> and save to reload.
-        </p>
+      <Grid id="carousel">
+        <Grid.Column id="carousel-text">
+          <Grid.Row>
+            <h1 style={{ color: `#980000` }}>Find your perfect wine match.</h1>
+            <h4 style={{ fontStyle: `italic`, letterSpacing: `.1px` }}>
+              {`Enter the name of a wine you've enjoyed, and we'll recommend similar wines.`}
+            </h4>
+          </Grid.Row>
+          <Segment>
+            <Grid.Row style={{ margin: `20px` }}>
+              <Input icon="search" placeholder="Type a wine name" />
+              <Button type="submit" style={{ margin: `10px` }}>
+                Submit
+              </Button>
+            </Grid.Row>
+          </Segment>
 
-        <div className="row">
-          <Link href="/wines">
-            <a className="card">
-              <h3>Wines &rarr;</h3>
-              <p>Browse the wines list</p>
-            </a>
-          </Link>
-        </div>
-      </div>
-
-      <style jsx>{`
-        .hero {
-          width: 100%;
-          color: #333;
-        }
-        .title {
-          margin: 0;
-          width: 100%;
-          padding-top: 80px;
-          line-height: 1.15;
-          font-size: 48px;
-        }
-        .title,
-        .description {
-          text-align: center;
-        }
-        .row {
-          max-width: 880px;
-          margin: 80px auto 40px;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-around;
-        }
-        .card {
-          padding: 18px 18px 24px;
-          width: 220px;
-          text-align: left;
-          text-decoration: none;
-          color: #434343;
-          border: 1px solid #9b9b9b;
-        }
-        .card:hover {
-          border-color: #067df7;
-        }
-        .card h3 {
-          margin: 0;
-          color: #067df7;
-          font-size: 18px;
-        }
-        .card p {
-          margin: 0;
-          padding: 12px 0 0;
-          font-size: 13px;
-          color: #333;
-        }
-      `}</style>
+          <Grid.Row>
+            <h4>
+              <Button
+                type="button"
+                style={{
+                  margin: `5px`,
+                  border: `2px solid #980000`,
+                  color: `#980000`,
+                  backgroundColor: 'white',
+                }}>
+                <a href="/auth/google" style={{ color: `#980000` }}>
+                  SIGN IN
+                </a>
+              </Button>{' '}
+              for personalized recommendations
+            </h4>
+          </Grid.Row>
+        </Grid.Column>
+      </Grid>
     </div>
   </Layout>
 )
