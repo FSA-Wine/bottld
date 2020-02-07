@@ -80,6 +80,13 @@ const wineSeeder = async () => {
     `MATCH (a:Wine), (b:Country) WHERE a.country = b.title CREATE (a)-[:CREATED_IN]->(b)`
   )
 
+  await session.run(`MATCH (w:Wine)<-[r:FOUND_IN]-(n:Note)-[r2:ASSOC_WITH]->(c:Characteristic)
+  WITH {item:id(w), categories: collect(id(c))} as wineData
+  WITH collect(wineData) as data
+  CALL algo.labs.ml.ann("jaccard", data, {topK: 5, showComputations: true, write: true})
+  YIELD nodes, similarityPairs, write, writeRelationshipType, writeProperty, min, max, mean, p95
+  RETURN nodes, similarityPairs, write, writeRelationshipType, writeProperty, min, max, mean, p95`)
+
   /// example of setting single note node relations to wines///
   // await session.run(
   //   `MATCH (a:Note), (b:Wine)
