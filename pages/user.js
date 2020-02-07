@@ -114,7 +114,10 @@ const User = props => {
               <div className="lower-section">
                 <Grid>
                   <Grid.Row>
-                    <RecommendRow recWines={props.recommended} />
+                    <RecommendRow
+                      recWines={props.recommended}
+                      info={'We think you might enjoy these wines:'}
+                    />
                   </Grid.Row>
                 </Grid>
               </div>
