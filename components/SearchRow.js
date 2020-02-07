@@ -13,7 +13,7 @@ class SearchRow extends Component {
             </div>
           </Grid.Row>
           <Grid.Row>
-            <Grid centered stackable doubling columns={3}></Grid>
+            <Grid centered stackable columns={3}></Grid>
           </Grid.Row>
         </Grid>
       </div>

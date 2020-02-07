@@ -23,7 +23,6 @@ class UserMap extends Component {
     }
   }
   render() {
-    console.log('props?', this.state.viewport)
     let wines = this.props.likedWine
     return (
       <ReactMapGL
@@ -40,7 +39,7 @@ class UserMap extends Component {
           }}>
           <NavigationControl />
         </div>
-        {wines.map(cur => {
+        {wines.map((cur, i) => {
           let wine = cur._fields[0].properties
           let curLat = parseFloat(wine.latX)
           if (latArr.includes(curLat)) {
@@ -51,7 +50,13 @@ class UserMap extends Component {
             latArr.push(curLat)
           }
           return (
-            <Marker longitude={parseFloat(wine.longY)} latitude={curLat} offsetLeft={-20} offsetTop={-10}>
+            <Marker
+              key={i}
+              longitude={parseFloat(wine.longY)}
+              latitude={curLat}
+              // offsetLeft={-20}
+              // offsetTop={-10}
+            >
               <Image src="/map-marker.png" width="25px" />
             </Marker>
           )
