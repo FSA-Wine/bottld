@@ -66,7 +66,7 @@ class SingleWineWithoutRouter extends Component {
         <Layout>
           <div className="content smaller-text">
             <div className="top-section">
-              <Grid centered stackable doubling columns={3} style={{ margin: `35px` }}>
+              <Grid centered stackable columns={3} style={{ margin: `35px` }}>
                 <Grid.Column width={2} only="tablet computer">
                   <Image
                     centered

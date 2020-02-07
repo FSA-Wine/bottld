@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import ReactMapGL, { Marker, NavigationControl } from 'react-map-gl'
 import { Image } from 'semantic-ui-react'
-import { Nav } from 'reactstrap'
 
 let latArr = []
 let token =
@@ -39,7 +38,7 @@ class UserMap extends Component {
           }}>
           <NavigationControl />
         </div>
-        {wines.map(cur => {
+        {wines.map((cur, i) => {
           let wine = cur._fields[0].properties
           let curLat = parseFloat(wine.latX)
           if (latArr.includes(curLat)) {
@@ -50,7 +49,13 @@ class UserMap extends Component {
             latArr.push(curLat)
           }
           return (
-            <Marker longitude={parseFloat(wine.longY)} latitude={curLat}>
+            <Marker
+              key={i}
+              longitude={parseFloat(wine.longY)}
+              latitude={curLat}
+              // offsetLeft={-20}
+              // offsetTop={-10}
+            >
               <Image src="/map-marker.png" width="25px" />
             </Marker>
           )

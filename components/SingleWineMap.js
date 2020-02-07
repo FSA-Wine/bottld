@@ -19,7 +19,7 @@ export default props => (
         left: 0,
         padding: '2px',
       }}></div>
-    <Marker longitude={props.viewport.longitude} latitude={props.viewport.latitude}>
+    <Marker longitude={props.viewport.longitude} latitude={props.viewport.latitude} offsetLeft={-20} offsetTop={-10}>
       <Image src="/map-marker.png" width="25px" />
     </Marker>
   </ReactMapGL>
