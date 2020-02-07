@@ -88,7 +88,6 @@ const User = props => {
                         <DynamicGraph likedWine={props.user.likedWines} />
                       </div>
                     </div>
-
                     <div className="chart-container">
                       <p className="sm-gray">WINE MAP</p>
                       <div className="polar-container">

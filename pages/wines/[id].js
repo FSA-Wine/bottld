@@ -9,6 +9,7 @@ import Layout from '../../components/Layout'
 import SingleWineDetails from '../../components/SingleWineDetails'
 import SingleWineCharts from '../../components/SingleWineCharts'
 import RecommendRow from '../../components/RecommendRow'
+import { wineImg } from '../../components/utils'
 
 const SingleWine = props => {
   const router = useRouter()
@@ -70,7 +71,7 @@ class SingleWineWithoutRouter extends Component {
                 <Grid.Column width={2} only="tablet computer">
                   <Image
                     centered
-                    src="/wineRed.png"
+                    src={wineImg(curWine.color)}
                     alt="red wine"
                     style={{ width: `120px`, top: `9px` }}
                   />
