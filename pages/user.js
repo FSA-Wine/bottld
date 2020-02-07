@@ -49,7 +49,7 @@ const User = props => {
               )}
             </ul>
             <div>
-              {!props.user.likedWines.length ? (
+              {!props.user.likedWines ? (
                 <div>Flavor Profile Not Available: Like some wines to get it started!</div>
               ) : (
                 <div>
