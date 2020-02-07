@@ -22,7 +22,7 @@ class SingleWineDetails extends Component {
           <span className="sm-gray">ORIGIN:</span> {singleWine.province}, {singleWine.country}
         </p>
         <p>
-          <span className="sm-gray">EST. PRICE:</span> {price}
+          <span className="sm-gray">EST. PRICE:</span> {price.slice(0, -3)}
         </p>
         <p>
           <span className="sm-gray">SCORE:</span>{' '}
