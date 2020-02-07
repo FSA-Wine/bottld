@@ -8,7 +8,7 @@ class PolarGraph extends Component {
 
   static defaultProps = {
     displayTitle: false,
-    displayLegend: false,
+    displayLegend: true,
   }
 
   render() {
