@@ -9,6 +9,7 @@ import Layout from '../../components/Layout'
 import SingleWineDetails from '../../components/SingleWineDetails'
 import SingleWineCharts from '../../components/SingleWineCharts'
 import RecommendRow from '../../components/RecommendRow'
+import { wineImg } from '../../components/utils'
 
 const SingleWine = props => {
   const router = useRouter()
@@ -66,11 +67,11 @@ class SingleWineWithoutRouter extends Component {
         <Layout>
           <div className="content smaller-text">
             <div className="top-section">
-              <Grid centered stackable doubling columns={3} style={{ margin: `35px` }}>
+              <Grid centered stackable columns={3} style={{ margin: `35px` }}>
                 <Grid.Column width={2} only="tablet computer">
                   <Image
                     centered
-                    src="/wineRed.png"
+                    src={wineImg(curWine.color)}
                     alt="red wine"
                     style={{ width: `120px`, top: `9px` }}
                   />
