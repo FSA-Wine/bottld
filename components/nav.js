@@ -1,75 +1,39 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import Link from 'next/link'
+import { Grid, Image } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { logout } from '../store/user'
 
-// const links = [
-//   { href: 'https://zeit.co/now', label: 'ZEIT' },
-//   { href: 'https://github.com/zeit/next.js', label: 'GitHub' },
-// ].map(link => ({
-//   ...link,
-//   key: `nav-link-${link.href}-${link.label}`,
-// }))
-
 const Nav = props => (
-  <nav>
-    <ul>
-      <li>
-        <Link href="/">
-          <a>Home</a>
-        </Link>
-      </li>
+  <Grid style={{ margin: `10px 20px` }} stackable columns={2}>
+    <Grid.Column width={2}>
+      <Link href="/">
+        <Image src="/bottld-logo-2.svg" style={{ cursor: 'pointer' }}></Image>
+      </Link>
+    </Grid.Column>
+    <Grid.Column width={14}>
       {props.isLoggedIn ? (
-        <Fragment>
-          <li>
+        <Grid columns={2}>
+          <Grid.Column width={14} textAlign="right">
             <Link href="/user">
-              <a>Profile</a>
+              <a>MY PROFILE</a>
             </Link>
-          </li>
-          <li>
+          </Grid.Column>
+          <Grid.Column width={2} textAlign="right">
             <a href="#" onClick={() => props.logout()}>
-              Logout
+              LOGOUT
             </a>
-          </li>
-        </Fragment>
+          </Grid.Column>
+        </Grid>
       ) : (
-        <li>
-          <a href="/auth/google">Login with Google</a>
-        </li>
+        <Grid>
+          <Grid.Column textAlign="right">
+            <a href="/auth/google">LOGIN</a>
+          </Grid.Column>
+        </Grid>
       )}
-      {/* {links.map(({ key, href, label }) => (
-        <li key={key}>
-          <a href={href}>{label}</a>
-        </li>
-      ))} */}
-    </ul>
-
-    <style jsx>{`
-      :global(body) {
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, Avenir Next, Avenir, Helvetica, sans-serif;
-      }
-      nav {
-        text-align: center;
-      }
-      ul {
-        display: flex;
-        justify-content: space-between;
-      }
-      nav > ul {
-        padding: 4px 16px;
-      }
-      li {
-        display: flex;
-        padding: 6px 8px;
-      }
-      a {
-        color: #067df7;
-        text-decoration: none;
-        font-size: 13px;
-      }
-    `}</style>
-  </nav>
+    </Grid.Column>
+  </Grid>
 )
 
 const mapState = state => ({

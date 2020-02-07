@@ -100,19 +100,34 @@ export const countryFlag = country => {
   }
 }
 
-///just needs images///
 export const wineImg = color => {
   switch (color) {
     case 'red':
-      return '/wineRed.png'
+      return '/wine-red-3.png'
       break
     case 'white':
-      return '/wineRed.png'
+      return '/wine-white-2.png'
       break
     case 'rose':
-      return '/wineRed.png'
+      return '/wine-rose.png'
       break
     default:
       return '/wineRed.png'
+  }
+}
+
+export const wineLabelImg = color => {
+  switch (color) {
+    case 'red':
+      return '/wine-red-3-label.png'
+      break
+    case 'white':
+      return '/wine-white-2-label.png'
+      break
+    case 'rose':
+      return '/wine-white-1-label.png'
+      break
+    default:
+      return '/wine-red-2-label.png'
   }
 }

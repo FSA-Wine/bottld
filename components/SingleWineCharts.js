@@ -83,11 +83,16 @@ class SingleWineCharts extends Component {
   }
 
   render() {
+    console.log('props', this.props)
     return (
       <div>
-        <div>
-          <DynamicMap viewport={this.state.viewport} />
-        </div>
+        {this.props.singleWine.latX ? (
+          <div>
+            <DynamicMap viewport={this.state.viewport} />
+          </div>
+        ) : (
+          <div></div>
+        )}
         <div className="chart-container">
           <p className="sm-gray">FLAVOR PROFILE</p>
           <div className="polar-container">

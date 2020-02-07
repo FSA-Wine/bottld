@@ -1,21 +1,14 @@
 import React, { Component } from 'react'
 import Link from 'next/link'
 import { Card, Grid, Image } from 'semantic-ui-react'
-import { trimParen, wineColor } from './utils'
+import { trimParen, wineColor, wineLabelImg } from './utils'
 
 //unsure where 'color' will be located once added
 
 class RecommendRow extends Component {
   render() {
-    //             < Card style = {{
-    //                 margin: `0 auto`, borderTop: `5px solid ${wineColor(el._fields[0].color)}`, borderTopLeftRadius: `0`,
-    //                     borderTopRightRadius: `0`
-    //     }
-    // } >
-
     //will need to add conditional for loading
     //cards Link to SingleWine page
-
     return (
       <div>
         <Grid>
@@ -33,9 +26,12 @@ class RecommendRow extends Component {
                     <Card
                       style={{
                         margin: `0 auto`,
+                        borderTop: `5px solid ${wineColor(currentWineRec.color)}`,
+                        borderTopLeftRadius: `0`,
+                        borderTopRightRadius: `0`,
                       }}>
                       <Image
-                        src="/wine-red-1-sm-label.png"
+                        src={wineLabelImg(currentWineRec.color)}
                         style={{ width: `50%`, margin: `0 auto` }}
                         wrapped
                         ui={false}
@@ -51,10 +47,12 @@ class RecommendRow extends Component {
                         </Card.Meta>
                         <Card.Description>
                           {el._fields[0].properties.price
-                            ? currentWineRec.price.toLocaleString(undefined, {
-                                style: 'currency',
-                                currency: 'USD',
-                              })
+                            ? currentWineRec.price
+                                .toLocaleString(undefined, {
+                                  style: 'currency',
+                                  currency: 'USD',
+                                })
+                                .slice(0, -3)
                             : 'Price not available'}
                         </Card.Description>
                       </Card.Content>
