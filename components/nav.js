@@ -12,64 +12,34 @@ import { logout } from '../store/user'
 // }))
 
 const Nav = props => (
-  <nav>
-    <ul>
-      <li>
-        <Link href="/">
-          <a>Home</a>
-        </Link>
-      </li>
-      {props.isLoggedIn ? (
-        <Fragment>
-          <li>
-            <Link href="/user">
-              <a>Profile</a>
-            </Link>
-          </li>
-          <li>
-            <a href="#" onClick={() => props.logout()}>
-              Logout
-            </a>
-          </li>
-        </Fragment>
-      ) : (
-        <li>
-          <a href="/auth/google">Login with Google</a>
-        </li>
-      )}
-      {/* {links.map(({ key, href, label }) => (
-        <li key={key}>
-          <a href={href}>{label}</a>
-        </li>
-      ))} */}
-    </ul>
+  <div className="navbar">
+    <div className="logo-wrapper">
+      <Link href="/">
+        <div>
+          <img id="logo" src="/bottld-logo.svg" />
+        </div>
+      </Link>
+    </div>
+    <div className="nav-wrapper">
+      <nav>
+        <span className="nav-general">
+          {props.isLoggedIn ? (
+            <Fragment>
+              <Link href="/user">
+                <a>MY PROFILE</a>
+              </Link>
 
-    <style jsx>{`
-      :global(body) {
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, Avenir Next, Avenir, Helvetica, sans-serif;
-      }
-      nav {
-        text-align: center;
-      }
-      ul {
-        display: flex;
-        justify-content: space-between;
-      }
-      nav > ul {
-        padding: 4px 16px;
-      }
-      li {
-        display: flex;
-        padding: 6px 8px;
-      }
-      a {
-        color: #067df7;
-        text-decoration: none;
-        font-size: 13px;
-      }
-    `}</style>
-  </nav>
+              <a href="#" onClick={() => props.logout()}>
+                LOGOUT
+              </a>
+            </Fragment>
+          ) : (
+            <a href="/auth/google">LOGIN</a>
+          )}
+        </span>
+      </nav>
+    </div>
+  </div>
 )
 
 const mapState = state => ({
