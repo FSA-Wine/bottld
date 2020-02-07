@@ -25,6 +25,9 @@ router.get('/me', async (req, res) => {
   }
 })
 
+///Basis for multi wine reccommendation by id
+// MATCH (a:Wine {id: 8})<-[:FOUND_IN]-(n:Note)-[:FOUND_IN]->(w2:Wine), (b:Wine {id: 87})<-[:FOUND_IN]-(:Note)-[:FOUND_IN]->(w2:Wine), (c:Wine {id: 176})<-[:FOUND_IN]-(:Note)-[:FOUND_IN]->(w2:Wine) WITH w2, COUNT(*) AS commonNotes RETURN w2, commonNotes ORDER BY commonNotes DESC LIMIT 5
+
 router.use('/google', google)
 
 export default router
