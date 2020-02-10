@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Router from 'next/router'
 import { Button, Grid, Input } from 'semantic-ui-react'
 import Layout from '../components/Layout'
+import { logout } from '../store/user'
 
 //sign in button hidden if logged in
 
@@ -28,6 +29,14 @@ const Home = props => {
         <Head>
           <title>Home</title>
           <link rel="icon" href="/favicon.ico" />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Lato:400i|Playfair+Display:700&display=swap"
+          />
+          <link
+            rel="stylesheet"
+            href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
+          />
         </Head>
 
         <Grid id="carousel" style={{ width: `80vw`, margin: `0 auto` }} verticalAlign="middle">
@@ -59,6 +68,7 @@ const Home = props => {
             <Grid.Row style={{ margin: `20px` }}>
               <Input
                 type="text"
+                icon="search"
                 name="search"
                 value={search}
                 onChange={handleChange}
@@ -70,23 +80,27 @@ const Home = props => {
                 Submit
               </Button>
             </Grid.Row>
-
+            {/* This section should display only if user is not logged in. After login, this section flashes before disappearing */}
             <Grid.Row>
-              <h4>
-                <Button
-                  type="button"
-                  style={{
-                    margin: `5px`,
-                    border: `2px solid #980000`,
-                    color: `#980000`,
-                    backgroundColor: 'white',
-                  }}>
-                  <a href="/auth/google" style={{ color: `#980000` }}>
-                    SIGN IN
-                  </a>
-                </Button>{' '}
-                <span style={{ fontWeight: `400` }}>for personalized recommendations</span>
-              </h4>
+              {!props.isLoggedIn ? (
+                <h4>
+                  <Button
+                    type="button"
+                    style={{
+                      margin: `5px`,
+                      border: `2px solid #980000`,
+                      color: `#980000`,
+                      backgroundColor: 'white',
+                    }}>
+                    <a href="/auth/google" style={{ color: `#980000` }}>
+                      LOG IN
+                    </a>
+                  </Button>{' '}
+                  <span style={{ fontWeight: `400` }}>for personalized recommendations</span>
+                </h4>
+              ) : (
+                <div></div>
+              )}
             </Grid.Row>
           </Grid.Column>
           <Grid.Row style={{ height: `80vh` }}>
@@ -106,4 +120,12 @@ const Home = props => {
   )
 }
 
-export default connect()(Home)
+const mapState = state => ({
+  isLoggedIn: state.user.googleId,
+})
+
+const mapDispatch = {
+  logout,
+}
+
+export default connect(mapState, mapDispatch)(Home)
