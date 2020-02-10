@@ -10,14 +10,25 @@ import Layout from '../../components/Layout'
 const Wines = props => {
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(25)
+  const [color, setColor] = useState('')
+  const [country, setCountry] = useState('')
+  const [variety, setVariety] = useState('')
+  const [priceLow, setPriceLow] = useState(0)
+  const [priceHigh, setPriceHigh] = useState(99999)
 
   const router = useRouter()
 
   useEffect(() => {
-    props.fetchWines(page, limit, router.query.search)
-  }, [page, limit, router.query.search])
+    props.fetchWines(page, limit, {
+      value: router.query.search,
+      color,
+      country,
+      variety,
+      priceHigh,
+      priceLow,
+    })
+  }, [page, limit, router.query.search, color, country, variety, priceHigh, priceLow])
 
-  console.log('props?', router.query)
   return (
     <Layout>
       <div>
