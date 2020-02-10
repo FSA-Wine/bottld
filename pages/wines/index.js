@@ -20,27 +20,6 @@ import Layout from '../../components/Layout'
 import AllWineList from '../../components/AllWineList'
 
 const countryOptions = [
-  { key: 'Arabic', text: 'Arabic', value: 'Arabic' },
-  { key: 'Chinese', text: 'Chinese', value: 'Chinese' },
-  { key: 'Danish', text: 'Danish', value: 'Danish' },
-  { key: 'Dutch', text: 'Dutch', value: 'Dutch' },
-]
-
-const flavorOptions = [
-  { key: 'Aromic', text: 'Aromic', value: 'Aromic' },
-  { key: 'Body', text: 'Body', value: 'Body' },
-  { key: 'Danish', text: 'Danish', value: 'Danish' },
-  { key: 'Dutch', text: 'Dutch', value: 'Dutch' },
-]
-
-const varietyOptions = [
-  { key: 'Cab', text: 'Cab', value: 'Cab' },
-  { key: 'Merlot', text: 'Merlot', value: 'Merlot' },
-  { key: 'Danish', text: 'Danish', value: 'Danish' },
-  { key: 'Dutch', text: 'Dutch', value: 'Dutch' },
-]
-
-const countryOptions = [
   { key: 'Argentina', text: 'Argentina', value: 'Argentina' },
   { key: 'Italy', text: 'Italy', value: 'Italy' },
   { key: 'Spain', text: 'Spain', value: 'Spain' },
@@ -62,23 +41,26 @@ const varietyOptions = [
 ]
 
 const maxPriceOptions = [
-  { key: '400', text: 'Less than $400', value: '400' },
-  { key: '200', text: 'Less than $200', value: '200' },
-  { key: '100', text: 'Less than $100', value: '100' },
-  { key: '75', text: 'Less than $75', value: '75' },
-  { key: '50', text: 'Less than $50', value: '50' },
-  { key: '25', text: 'Less than $25', value: '25' },
+  { key: '2000', text: 'Less than $2000', value: '1999' },
+  { key: '1000', text: 'Less than $1000', value: '999' },
+  { key: '500', text: 'Less than $500', value: '499' },
+  { key: '250', text: 'Less than $250', value: '249' },
+  { key: '100', text: 'Less than $100', value: '99' },
+  { key: '75', text: 'Less than $75', value: '74' },
+  { key: '50', text: 'Less than $50', value: '49' },
+  { key: '25', text: 'Less than $25', value: '24' },
 ]
 
 const minPriceOptions = [
-  { key: '200', text: 'Greater than $200', value: '200' },
-  { key: '100', text: 'Greater than $100', value: '100' },
-  { key: '75', text: 'Greater than $75', value: '75' },
-  { key: '50', text: 'Greater than $50', value: '50' },
   { key: '25', text: 'Greater than $25', value: '25' },
+  { key: '50', text: 'Greater than $50', value: '50' },
+  { key: '75', text: 'Greater than $75', value: '75' },
+  { key: '100', text: 'Greater than $100', value: '100' },
+  { key: '250', text: 'Greater than $250', value: '250' },
+  { key: '500', text: 'Greater than $500', value: '500' },
+  { key: '1000', text: 'Greater than $1000', value: '1000' },
+  { key: '2000', text: 'Greater than $2000', value: '2000' },
 ]
-// let varietyObj = {}
-// let countryObj = {}
 
 const Wines = props => {
   const [page, setPage] = useState(1)
@@ -122,7 +104,6 @@ const Wines = props => {
             placeholder="Select Type"
             clearable
             options={colorOptions}
-            search
             selection
             disabled={variety === '' ? false : true}
             onChange={(e, { value }) => setColor(value)}
@@ -139,34 +120,24 @@ const Wines = props => {
           <Dropdown
             clearable
             selection
-            placeholder="Set Max Price"
-            options={maxPriceOptions}
-            onChange={(e, { value }) => setPriceHigh(Number(value))}
-          />
-          <Dropdown
-            clearable
-            selection
             placeholder="Set Min Price"
             options={minPriceOptions}
             onChange={(e, { value }) => setPriceLow(Number(value))}
           />
+          <Dropdown
+            selection
+            placeholder="Set Max Price"
+            options={maxPriceOptions}
+            onChange={(e, { value }) => setPriceHigh(Number(value))}
+          />
         </div>
-        <ul>
-          {props.wines.length ? (
-            props.wines.map(wine => (
-              <Link
-                href="/wines/[id]"
-                as={`/wines/${wine._fields[0].properties.id.low}`}
-                key={wine._fields[0].properties.id.low}>
-                <a className="card">
-                  <li>{wine._fields[0].properties.title}</li>
-                </a>
-              </Link>
-            ))
-          ) : (
-            <li>Loading wines...</li>
-          )}
-        </ul>
+        {props.wines.length ? (
+          <Segment attached="bottom">
+            <AllWineList wines={props.wines} view={view} />
+          </Segment>
+        ) : (
+          <div>Loading wines...</div>
+        )}
         <Paginate limit={limit} count={props.wineCount} setPage={newPage => setPage(newPage)} />
       </div>
     </Layout>
