@@ -1,116 +1,84 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Bar } from 'react-chartjs-2'
+import { useSelector, useDispatch } from 'react-redux'
+import _ from 'lodash'
+import { fetchFlavors } from '../store/user'
 
-let backgroundColorData = [
-  'rgba(89, 110, 113, .5)',
-  'rgba(97, 116, 71, .5)',
-  'rgba(171, 170, 139, .5)',
-  'rgba(230, 221, 152, .5)',
-  'rgba(178, 157, 100, .5)',
-]
-let labelData = []
-let fakeLabelData = ['Nutty', 'Fruit', 'Spice', 'Body', 'Caramel']
-let fakeNumData = [1, 2, 4, 6, 3]
-let numData = []
-let dataObj = {}
-
-class UserGraph extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      chartData: {
-        labels: [],
-        datasets: [
-          {
-            data: [],
-            backgroundColor: 'rgba(89, 110, 113, .5)',
-            borderColor: 'rgba(171, 170, 139, .5)',
-            borderWidth: 1,
-            hoverBackgroundColor: 'rgba(97, 116, 71, .5)',
-            hoverBorderColor: 'rgba(255,99,132,1)',
-          },
-        ],
+const UserGraph = props => {
+  const [chartData, setChartData] = useState({
+    labels: [],
+    datasets: [
+      {
+        data: [],
+        backgroundColor: 'rgba(89, 110, 113, .5)',
+        borderColor: 'rgba(171, 170, 139, .5)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgba(97, 116, 71, .5)',
+        hoverBorderColor: 'rgba(255,99,132,1)',
       },
+    ],
+  })
+
+  const dispatch = useDispatch()
+  const flavors = useSelector(state => state.user.flavors)
+  const liked = useSelector(state => state.user.likedWines)
+
+  useEffect(() => {
+    const loadData = async () => {
+      await dispatch(fetchFlavors())
+      updateChart()
     }
-  }
+    loadData()
+  }, [liked.length, flavors.length])
 
-  static defaultProps = {
-    displayTitle: false,
-    displayLegend: false,
-  }
-
-  componentDidMount() {
-    let wines = this.props.likedWine
-    if (wines) {
-      wines.map(wine => {
-        let curWine = wine._fields[0].properties
-        curWine.descriptors.map(el => {
-          let label = el
-            .slice(0, 1)
-            .toUpperCase()
-            .concat(el.slice(1))
-          if (!dataObj[label]) {
-            dataObj[label] = 1
-          }
-          dataObj[label] += 1
-        })
-      })
-      let max = 0
-      for (let label in dataObj) {
-        if (dataObj[label] >= max) {
-          max = dataObj[label]
-          labelData.unshift(label)
-          numData.unshift(dataObj[label])
-        } else {
-          labelData.push(label)
-          numData.push(dataObj[label])
-        }
+  const updateChart = () => {
+    let labelData = []
+    let numData = []
+    flavors.forEach(flavor => {
+      labelData.push(_.capitalize(_.replace(flavor._fields[0].properties.title, '_', ' ')))
+      numData.push(flavor._fields[1].low)
+    })
+    setChartData(prevChart => {
+      return {
+        ...prevChart,
+        labels: labelData,
+        datasets: [{ ...prevChart.datasets[0], data: numData }],
       }
-    }
-    this.getChartData()
+    })
   }
 
-  getChartData() {
-    let chartData = { ...this.state.chartData }
-    if (labelData.length > 10) {
-      chartData.labels = labelData.slice(0, 10)
-      chartData.datasets[0].data = numData.slice(0, 10)
-    } else {
-      chartData.labels = labelData
-      chartData.datasets[0].data = numData
-    }
-    this.setState({ chartData })
-  }
-
-  render() {
-    return (
-      <div className="chart">
-        <Bar
-          data={this.state.chartData}
-          options={{
-            title: {
-              display: this.props.displayTitle,
-            },
-            legend: {
-              display: this.props.displayLegend,
-            },
-            scales: {
-              yAxes: [
-                {
-                  ticks: {
-                    beginAtZero: true,
-                    display: false,
-                  },
+  return (
+    <div className="chart">
+      <Bar
+        data={chartData}
+        options={{
+          title: {
+            display: props.displayTitle,
+          },
+          legend: {
+            display: props.displayLegend,
+          },
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true,
+                  display: false,
                 },
-              ],
-            },
-          }}
-          width={75}
-          height={50}
-        />
-      </div>
-    )
-  }
+              },
+            ],
+          },
+        }}
+        width={75}
+        height={50}
+      />
+    </div>
+  )
+}
+
+UserGraph.defaultProps = {
+  displayTitle: false,
+  displayLegend: false,
 }
 
 export default UserGraph
