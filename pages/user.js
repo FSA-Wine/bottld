@@ -21,9 +21,16 @@ const DynamicMap = dynamic(() => import('../components/UserMap'), {
 
 const User = props => {
   const [view, setView] = useState('likedWines')
+  const [color, setColor] = useState('')
+  const [country, setCountry] = useState('')
+  const [variety, setVariety] = useState('')
+  const [priceLow, setPriceLow] = useState(0)
+  const [priceHigh, setPriceHigh] = useState(99999)
+  const [limit, setLimit] = useState(5)
+
   useEffect(() => {
-    props.fetchRecWines()
-  }, [])
+    props.fetchRecWines({ color, country, variety, priceLow, priceHigh, limit })
+  }, [color, country, variety, priceHigh, priceLow, limit])
 
   const getGreeting = () => {
     const greetings = ['Sláinte', 'Cheers', 'Salud', 'Prost', 'Skål', 'Santé', 'Felicidades']
@@ -115,7 +122,10 @@ const User = props => {
             <div className="lower-section">
               <Grid>
                 <Grid.Row>
-                  <RecommendRow recWines={props.recommended} />
+                  <RecommendRow
+                    recWines={props.recommended}
+                    info="We think you might enjoy these wines:"
+                  />
                 </Grid.Row>
                 <Grid.Row>
                   <SearchRow />

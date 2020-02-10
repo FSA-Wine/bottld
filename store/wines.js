@@ -11,7 +11,9 @@ const initialState = {
 
 export const fetchWines = (page, limit = 25, search) => async dispatch => {
   try {
-    const { data } = await axios.get(`/api/wines?page=${page}&limit=${limit}&search=${search}`)
+    const { data } = await axios.get(
+      `/api/wines?page=${page}&limit=${limit}&search=${search.value}&color=${search.color}&country=${search.country}&variety=${search.variety}&priceLow=${search.priceLow}&priceHigh=${search.priceHigh}`
+    )
     dispatch(getWines(data))
   } catch (error) {
     console.error(error)
