@@ -7,9 +7,24 @@ const router = express.Router()
 router.get('/', async (req, res) => {
   const session = driver.session()
   try {
-    const cypher = `MATCH (n:Wine) WHERE toLower(n.title) CONTAINS toLower('${req.query.search}') RETURN n LIMIT 250`
+    const cypher = `MATCH (n:Wine) WHERE n.color CONTAINS '${req.query.color}' AND n.country CONTAINS '${req.query.country}' AND n.variety CONTAINS toLower('${req.query.variety}') AND n.price > ${req.query.priceLow} AND n.price < ${req.query.priceHigh} AND toLower(n.title) CONTAINS toLower('${req.query.search}') RETURN n LIMIT 250`
     const { records } = await session.run(cypher)
     res.json(paginate(records, req.query.page, req.query.limit))
+  } catch (err) {
+    res.status(500).send(err)
+  } finally {
+    await session.close()
+  }
+})
+
+router.get('/flavors', async (req, res) => {
+  const session = driver.session()
+  try {
+    if (req.user) {
+      const cypher = `MATCH (u:User {googleId: '${req.user.properties.googleId}'})-[r:LIKED]->(wine)<-[r2:FOUND_IN]-(n:Note) RETURN n, count(*) AS occurrence ORDER BY occurrence DESC LIMIT 10`
+      const { records } = await session.run(cypher)
+      res.json(records)
+    } else res.json([])
   } catch (err) {
     res.status(500).send(err)
   } finally {
@@ -21,7 +36,7 @@ router.get('/recommended', async (req, res) => {
   const session = driver.session()
   try {
     if (req.user) {
-      const cypher = `MATCH (u:User {googleId: '${req.user.properties.googleId}'})-[r:LIKED]->(wine)-[r2:SIMILAR]->(w:Wine) WHERE NOT exists((u)-[r]->(w)) RETURN w,u, count(*) AS occurrence ORDER BY occurrence DESC LIMIT 5`
+      const cypher = `MATCH (u:User {googleId: '${req.user.properties.googleId}'})-[r:LIKED]->(wine)-[r2:SIMILAR]->(n:Wine) WHERE n.color CONTAINS '${req.query.color}' AND n.country CONTAINS '${req.query.country}' AND n.variety CONTAINS toLower('${req.query.variety}') AND n.price > ${req.query.priceLow} AND n.price < ${req.query.priceHigh} AND NOT exists((u)-[r]->(n)) RETURN n,u, count(*) AS occurrence ORDER BY occurrence DESC LIMIT ${req.query.limit}`
       const { records } = await session.run(cypher)
       res.json(records)
     } else res.json([])
