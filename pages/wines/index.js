@@ -17,6 +17,28 @@ import { useRouter } from 'next/router'
 import { fetchWines } from '../../store/wines'
 import Paginate from '../../components/Paginate'
 import Layout from '../../components/Layout'
+import AllWineList from '../../components/AllWineList'
+
+const countryOptions = [
+  { key: 'Arabic', text: 'Arabic', value: 'Arabic' },
+  { key: 'Chinese', text: 'Chinese', value: 'Chinese' },
+  { key: 'Danish', text: 'Danish', value: 'Danish' },
+  { key: 'Dutch', text: 'Dutch', value: 'Dutch' },
+]
+
+const flavorOptions = [
+  { key: 'Aromic', text: 'Aromic', value: 'Aromic' },
+  { key: 'Body', text: 'Body', value: 'Body' },
+  { key: 'Danish', text: 'Danish', value: 'Danish' },
+  { key: 'Dutch', text: 'Dutch', value: 'Dutch' },
+]
+
+const varietyOptions = [
+  { key: 'Cab', text: 'Cab', value: 'Cab' },
+  { key: 'Merlot', text: 'Merlot', value: 'Merlot' },
+  { key: 'Danish', text: 'Danish', value: 'Danish' },
+  { key: 'Dutch', text: 'Dutch', value: 'Dutch' },
+]
 
 const countryOptions = [
   { key: 'Argentina', text: 'Argentina', value: 'Argentina' },
@@ -66,6 +88,7 @@ const Wines = props => {
   const [variety, setVariety] = useState('')
   const [priceLow, setPriceLow] = useState(0)
   const [priceHigh, setPriceHigh] = useState(99999)
+  const [view, setView] = useState('likedWines')
 
   const router = useRouter()
 
@@ -150,14 +173,11 @@ const Wines = props => {
   )
 }
 
-// Wines.getInitialProps = async ctx => {
-//   const { url } = ctx.pathname
-//   return { url}
-// }
-
 const mapState = state => ({
   wines: state.wines.data,
   wineCount: state.wines.count,
+  user: state.user,
+  isLoggedIn: state.user.googleId,
 })
 
 const mapDispatch = {

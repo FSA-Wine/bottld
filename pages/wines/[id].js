@@ -93,7 +93,7 @@ class SingleWineWithoutRouter extends Component {
               <div className="lower-section">
                 <Grid>
                   <Grid.Row>
-                    <RecommendRow recWines={recWineArr} info={'Similar wines:'} />
+                    <RecommendRow recWines={recWineArr} info="Similar wines:" />
                   </Grid.Row>
                 </Grid>
               </div>
