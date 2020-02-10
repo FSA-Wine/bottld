@@ -83,7 +83,7 @@ class SingleWineCharts extends Component {
   }
 
   render() {
-    console.log('props', this.props)
+    // console.log('props', this.props)
     return (
       <div>
         {this.props.singleWine.latX ? (
