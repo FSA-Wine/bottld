@@ -14,7 +14,7 @@ class RecommendRow extends Component {
         <Grid>
           <Grid.Row>
             <div>
-              <h3>{this.props.info}</h3>
+              <h3 style={{ fontStyle: `italic` }}>{this.props.info}</h3>
             </div>
           </Grid.Row>
           <Grid.Row>
