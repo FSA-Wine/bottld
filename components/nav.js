@@ -8,7 +8,9 @@ const Nav = props => (
   <Grid style={{ margin: `10px 20px` }} stackable columns={2}>
     <Grid.Column width={2}>
       <Link href="/">
-        <Image src="/bottld-logo-2.svg" style={{ cursor: 'pointer' }}></Image>
+        <a>
+          <Image src="/bottld-logo-2.svg" style={{ cursor: 'pointer' }}></Image>
+        </a>
       </Link>
     </Grid.Column>
     <Grid.Column width={14}>
