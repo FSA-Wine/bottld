@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import _ from 'lodash'
 import PolarGraph from './PolarGraph'
 import dynamic from 'next/dynamic'
 
@@ -60,12 +61,7 @@ class SingleWineCharts extends Component {
       let labelData = []
       let numData = []
       flavorData.map(el => {
-        labelData.push(
-          el._fields[0]
-            .slice(0, 1)
-            .toUpperCase()
-            .concat(el._fields[0].slice(1))
-        )
+        labelData.push(_.capitalize(_.replace(el._fields[0], '_', ' ')))
         numData.push(el._fields[1].low)
       })
       let chartData = { ...this.state.chartData }
@@ -83,7 +79,6 @@ class SingleWineCharts extends Component {
   }
 
   render() {
-    // console.log('props', this.props)
     return (
       <div>
         {this.props.singleWine.latX ? (
