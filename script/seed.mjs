@@ -30,9 +30,13 @@ const wineSeeder = async () => {
   await session.run(
     `LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/RoaldSchuring/wine_recommender/master/descriptor_mapping.csv' AS line MERGE (d:Characteristic {title: line.level_1})`
   )
+
   await session.run(
     `LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/RoaldSchuring/wine_recommender/master/descriptor_mapping.csv' AS line MERGE (d:Note {title: line.level_3}) ON CREATE SET d.level1 = line.level_1`
   )
+  // await session.run(
+  //   `LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/RoaldSchuring/wine_recommender/master/descriptor_mapping.csv' AS line `
+  // )
   // await session.run(
   //   `USING PERIODIC COMMIT 5000 LOAD CSV WITH HEADERS FROM 'file:///winemag-data-notes.csv' AS line MERGE (d:Wine {title: line.title}) ON CREATE SET d.country = line.country, d.description = trim(line.description), d.points = toInteger(line.points), d.price = toFloat(line.price), d.province = line.province, d.variety = line.variety, d.winery = line.winery, d.descriptors = split(line.normalized_descriptors, ',')`
   // );
@@ -41,17 +45,17 @@ const wineSeeder = async () => {
 
   ///CREATES Nodes for Variety, Province and Country from the wine data///
   //Wine Varieties
-  await session.run(
-    `LOAD CSV WITH HEADERS FROM 'file:///winemag-data-notes.csv' AS line FOREACH (x IN CASE WHEN line.variety IS NULL THEN [] ELSE [1] END | MERGE (d:Variety {title: line.variety}))`
-  )
+  // await session.run(
+  //   `LOAD CSV WITH HEADERS FROM 'file:///winemag-data-notes.csv' AS line FOREACH (x IN CASE WHEN line.variety IS NULL THEN [] ELSE [1] END | MERGE (d:Variety {title: line.variety}))`
+  // )
   //Province
-  await session.run(
-    `LOAD CSV WITH HEADERS FROM 'file:///winemag-data-notes.csv' AS line FOREACH (x IN CASE WHEN line.province IS NULL THEN [] ELSE [1] END | MERGE (d:Province {title: line.province}))`
-  )
+  // await session.run(
+  //   `LOAD CSV WITH HEADERS FROM 'file:///winemag-data-notes.csv' AS line FOREACH (x IN CASE WHEN line.province IS NULL THEN [] ELSE [1] END | MERGE (d:Province {title: line.province}))`
+  // )
   //Country
-  await session.run(
-    `LOAD CSV WITH HEADERS FROM 'file:///winemag-data-notes.csv' AS line FOREACH (x IN CASE WHEN line.country IS NULL THEN [] ELSE [1] END | MERGE (d:Country {title: line.country}))`
-  )
+  // await session.run(
+  //   `LOAD CSV WITH HEADERS FROM 'file:///winemag-data-notes.csv' AS line FOREACH (x IN CASE WHEN line.country IS NULL THEN [] ELSE [1] END | MERGE (d:Country {title: line.country}))`
+  // )
 
   ///Adds Properties WineColor and Lat/Long
   await session.run(
@@ -70,15 +74,15 @@ const wineSeeder = async () => {
   await session.run(
     `MATCH (a:Note), (b:Characteristic) WHERE a.level1 = b.title AND NOT exists((a)-[:ASSOC_WITH]->(b)) CREATE (a)-[:ASSOC_WITH]->(b)`
   )
-  await session.run(
-    `MATCH (a:Wine), (b:Variety) WHERE a.variety = b.title CREATE (a)-[:VARIETY_OF]->(b)`
-  )
-  await session.run(
-    `MATCH (a:Wine), (b:Province) WHERE a.province = b.title CREATE (a)-[:GRAPES_FROM]->(b)`
-  )
-  await session.run(
-    `MATCH (a:Wine), (b:Country) WHERE a.country = b.title CREATE (a)-[:CREATED_IN]->(b)`
-  )
+  // await session.run(
+  //   `MATCH (a:Wine), (b:Variety) WHERE a.variety = b.title CREATE (a)-[:VARIETY_OF]->(b)`
+  // )
+  // await session.run(
+  //   `MATCH (a:Wine), (b:Province) WHERE a.province = b.title CREATE (a)-[:GRAPES_FROM]->(b)`
+  // )
+  // await session.run(
+  //   `MATCH (a:Wine), (b:Country) WHERE a.country = b.title CREATE (a)-[:CREATED_IN]->(b)`
+  // )
 
   await session.run(`MATCH (w:Wine)<-[r:FOUND_IN]-(n:Note)-[r2:ASSOC_WITH]->(c:Characteristic)
   WITH {item:id(w), categories: collect(id(c))} as wineData
