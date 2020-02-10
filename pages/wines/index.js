@@ -40,6 +40,46 @@ const varietyOptions = [
   { key: 'Dutch', text: 'Dutch', value: 'Dutch' },
 ]
 
+const countryOptions = [
+  { key: 'Argentina', text: 'Argentina', value: 'Argentina' },
+  { key: 'Italy', text: 'Italy', value: 'Italy' },
+  { key: 'Spain', text: 'Spain', value: 'Spain' },
+  { key: 'US', text: 'US', value: 'US' },
+]
+
+const colorOptions = [
+  { key: 'red', text: 'Reds', value: 'red' },
+  { key: 'white', text: 'Whites', value: 'white' },
+  { key: 'rose', text: 'Rose', value: 'rose' },
+]
+
+const varietyOptions = [
+  { key: 'Cabernet', text: 'Cabernet', value: 'Cabernet' },
+  { key: 'Cabernet Sauvignon', text: 'Cabernet Sauvignon', value: 'Cabernet Sauvignon' },
+  { key: 'Malbec', text: 'Malbec', value: 'Malbec' },
+  { key: 'Pinot Noir', text: 'Pinot Noir', value: 'Pinot Noir' },
+  { key: 'Nebbiolo', text: 'Nebbiolo', value: 'Nebbiolo' },
+]
+
+const maxPriceOptions = [
+  { key: '400', text: 'Less than $400', value: '400' },
+  { key: '200', text: 'Less than $200', value: '200' },
+  { key: '100', text: 'Less than $100', value: '100' },
+  { key: '75', text: 'Less than $75', value: '75' },
+  { key: '50', text: 'Less than $50', value: '50' },
+  { key: '25', text: 'Less than $25', value: '25' },
+]
+
+const minPriceOptions = [
+  { key: '200', text: 'Greater than $200', value: '200' },
+  { key: '100', text: 'Greater than $100', value: '100' },
+  { key: '75', text: 'Greater than $75', value: '75' },
+  { key: '50', text: 'Greater than $50', value: '50' },
+  { key: '25', text: 'Greater than $25', value: '25' },
+]
+// let varietyObj = {}
+// let countryObj = {}
+
 const Wines = props => {
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(25)
@@ -62,7 +102,6 @@ const Wines = props => {
       priceLow,
     })
   }, [page, limit, router.query.search, color, country, variety, priceHigh, priceLow])
-
   return (
     <Layout>
       <div>
@@ -71,28 +110,63 @@ const Wines = props => {
           <link rel="icon" href="/favicon.ico" />
         </Head> */}
         <div>
-          <Dropdown placeholder="Select Variety" search selection options={varietyOptions} />
-          <Dropdown placeholder="Select Country" options={countryOptions} search selection />
-          <Dropdown placeholder="Select Flavor" options={flavorOptions} search selection />
-          <Input labelPosition="right" type="text" placeholder="Max Price">
-            <Label basic>$</Label>
-            <input />
-            <Label>.00</Label>
-          </Input>
-          <Input labelPosition="right" type="text" placeholder="Min Price">
-            <Label basic>$</Label>
-            <input />
-            <Label>.00</Label>
-          </Input>
-          <Button type="submit">Filter Search</Button>
+          <Dropdown
+            placeholder="Select Country"
+            clearable
+            options={countryOptions}
+            search
+            selection
+            onChange={(e, { value }) => setCountry(value)}
+          />
+          <Dropdown
+            placeholder="Select Type"
+            clearable
+            options={colorOptions}
+            search
+            selection
+            disabled={variety === '' ? false : true}
+            onChange={(e, { value }) => setColor(value)}
+          />
+          <Dropdown
+            placeholder="Select Variety"
+            clearable
+            search
+            selection
+            disabled={color === '' ? false : true}
+            options={varietyOptions}
+            onChange={(e, { value }) => setVariety(value)}
+          />
+          <Dropdown
+            clearable
+            selection
+            placeholder="Set Max Price"
+            options={maxPriceOptions}
+            onChange={(e, { value }) => setPriceHigh(Number(value))}
+          />
+          <Dropdown
+            clearable
+            selection
+            placeholder="Set Min Price"
+            options={minPriceOptions}
+            onChange={(e, { value }) => setPriceLow(Number(value))}
+          />
         </div>
-        {props.wines.length ? (
-          <Segment attached="bottom">
-            <AllWineList wines={props.wines} view={view} />
-          </Segment>
-        ) : (
-          <div>Nothing!</div>
-        )}
+        <ul>
+          {props.wines.length ? (
+            props.wines.map(wine => (
+              <Link
+                href="/wines/[id]"
+                as={`/wines/${wine._fields[0].properties.id.low}`}
+                key={wine._fields[0].properties.id.low}>
+                <a className="card">
+                  <li>{wine._fields[0].properties.title}</li>
+                </a>
+              </Link>
+            ))
+          ) : (
+            <li>Loading wines...</li>
+          )}
+        </ul>
         <Paginate limit={limit} count={props.wineCount} setPage={newPage => setPage(newPage)} />
       </div>
     </Layout>

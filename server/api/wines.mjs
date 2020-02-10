@@ -7,7 +7,7 @@ const router = express.Router()
 router.get('/', async (req, res) => {
   const session = driver.session()
   try {
-    const cypher = `MATCH (n:Wine) WHERE n.color CONTAINS '${req.query.color}' AND n.country CONTAINS '${req.query.country}' AND n.variety CONTAINS toLower('${req.query.variety}') AND n.price > ${req.query.priceLow} AND n.price < ${req.query.priceHigh} AND toLower(n.title) CONTAINS toLower('${req.query.search}') RETURN n LIMIT 250`
+    const cypher = `MATCH (n:Wine) WHERE n.color CONTAINS '${req.query.color}' AND n.country CONTAINS '${req.query.country}' AND n.variety CONTAINS '${req.query.variety}' AND n.price > ${req.query.priceLow} AND n.price < ${req.query.priceHigh} AND toLower(n.title) CONTAINS toLower('${req.query.search}') RETURN n LIMIT 250`
     const { records } = await session.run(cypher)
     res.json(paginate(records, req.query.page, req.query.limit))
   } catch (err) {
