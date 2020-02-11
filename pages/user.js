@@ -94,19 +94,24 @@ const User = props => {
                     style={{
                       padding: `0 0 0 30px`,
                     }}>
-                    {/* user's liked wines: flavor profile & origin location */}
-                    <div className="chart-container">
-                      <p className="sm-gray">FLAVOR PROFILE</p>
-                      <div className="polar-container">
-                        <DynamicGraph likedWine={props.user.likedWines} />
+                    {props.user.likedWines.length ? (
+                      <div>
+                        <div className="chart-container">
+                          <p className="sm-gray">FLAVOR PROFILE</p>
+                          <div className="polar-container">
+                            <DynamicGraph likedWine={props.user.likedWines} />
+                          </div>
+                        </div>
+                        <div className="chart-container">
+                          <p className="sm-gray">WINE MAP</p>
+                          <div className="polar-container">
+                            <DynamicMap likedWine={props.user.likedWines} />
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="chart-container">
-                      <p className="sm-gray">WINE MAP</p>
-                      <div className="polar-container">
-                        <DynamicMap likedWine={props.user.likedWines} />
-                      </div>
-                    </div>
+                    ) : (
+                      <div></div>
+                    )}
                   </Grid.Column>
                 </Grid>
               </Grid.Row>
