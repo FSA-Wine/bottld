@@ -38,6 +38,7 @@ export const varietyOptions = [
 
 export const countryOptions = [
   { key: 'ar', value: 'Argentina', text: 'Argentina' },
+  { key: 'am', value: 'Armenia', text: 'Armenia' },
   { key: 'au', value: 'Australia', text: 'Australia' },
   { key: 'at', value: 'Austria', text: 'Austria' },
   {
