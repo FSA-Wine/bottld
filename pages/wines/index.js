@@ -21,24 +21,46 @@ import AllWineList from '../../components/AllWineList'
 import ErrorNoResults from '../../components/ErrorNoResults'
 
 const countryOptions = [
-  { key: 'Arabic', text: 'Arabic', value: 'Arabic' },
-  { key: 'Chinese', text: 'Chinese', value: 'Chinese' },
-  { key: 'Danish', text: 'Danish', value: 'Danish' },
-  { key: 'Dutch', text: 'Dutch', value: 'Dutch' },
+  { key: 'Argentina', text: 'Argentina', value: 'Argentina' },
+  { key: 'Italy', text: 'Italy', value: 'Italy' },
+  { key: 'Spain', text: 'Spain', value: 'Spain' },
+  { key: 'US', text: 'US', value: 'US' },
 ]
 
-const flavorOptions = [
-  { key: 'Aromic', text: 'Aromic', value: 'Aromic' },
-  { key: 'Body', text: 'Body', value: 'Body' },
-  { key: 'Danish', text: 'Danish', value: 'Danish' },
-  { key: 'Dutch', text: 'Dutch', value: 'Dutch' },
+const colorOptions = [
+  { key: 'red', text: 'Reds', value: 'red' },
+  { key: 'white', text: 'Whites', value: 'white' },
+  { key: 'rose', text: 'Rose', value: 'rose' },
 ]
 
 const varietyOptions = [
-  { key: 'Cab', text: 'Cab', value: 'Cab' },
-  { key: 'Merlot', text: 'Merlot', value: 'Merlot' },
-  { key: 'Danish', text: 'Danish', value: 'Danish' },
-  { key: 'Dutch', text: 'Dutch', value: 'Dutch' },
+  { key: 'Cabernet', text: 'Cabernet', value: 'Cabernet' },
+  { key: 'Cabernet Sauvignon', text: 'Cabernet Sauvignon', value: 'Cabernet Sauvignon' },
+  { key: 'Malbec', text: 'Malbec', value: 'Malbec' },
+  { key: 'Pinot Noir', text: 'Pinot Noir', value: 'Pinot Noir' },
+  { key: 'Nebbiolo', text: 'Nebbiolo', value: 'Nebbiolo' },
+]
+
+const maxPriceOptions = [
+  { key: '2000', text: 'Less than $2000', value: '1999' },
+  { key: '1000', text: 'Less than $1000', value: '999' },
+  { key: '500', text: 'Less than $500', value: '499' },
+  { key: '250', text: 'Less than $250', value: '249' },
+  { key: '100', text: 'Less than $100', value: '99' },
+  { key: '75', text: 'Less than $75', value: '74' },
+  { key: '50', text: 'Less than $50', value: '49' },
+  { key: '25', text: 'Less than $25', value: '24' },
+]
+
+const minPriceOptions = [
+  { key: '25', text: 'Greater than $25', value: '25' },
+  { key: '50', text: 'Greater than $50', value: '50' },
+  { key: '75', text: 'Greater than $75', value: '75' },
+  { key: '100', text: 'Greater than $100', value: '100' },
+  { key: '250', text: 'Greater than $250', value: '250' },
+  { key: '500', text: 'Greater than $500', value: '500' },
+  { key: '1000', text: 'Greater than $1000', value: '1000' },
+  { key: '2000', text: 'Greater than $2000', value: '2000' },
 ]
 
 const Wines = props => {
@@ -63,7 +85,6 @@ const Wines = props => {
       priceLow,
     })
   }, [page, limit, router.query.search, color, country, variety, priceHigh, priceLow])
-
   return (
     <Layout>
       <div>
@@ -72,20 +93,44 @@ const Wines = props => {
           <link rel="icon" href="/favicon.ico" />
         </Head> */}
         <div>
-          <Dropdown placeholder="Select Variety" search selection options={varietyOptions} />
-          <Dropdown placeholder="Select Country" options={countryOptions} search selection />
-          <Dropdown placeholder="Select Flavor" options={flavorOptions} search selection />
-          <Input labelPosition="right" type="text" placeholder="Max Price">
-            <Label basic>$</Label>
-            <input />
-            <Label>.00</Label>
-          </Input>
-          <Input labelPosition="right" type="text" placeholder="Min Price">
-            <Label basic>$</Label>
-            <input />
-            <Label>.00</Label>
-          </Input>
-          <Button type="submit">Filter Search</Button>
+          <Dropdown
+            placeholder="Select Country"
+            clearable
+            options={countryOptions}
+            search
+            selection
+            onChange={(e, { value }) => setCountry(value)}
+          />
+          <Dropdown
+            placeholder="Select Type"
+            clearable
+            options={colorOptions}
+            selection
+            disabled={variety === '' ? false : true}
+            onChange={(e, { value }) => setColor(value)}
+          />
+          <Dropdown
+            placeholder="Select Variety"
+            clearable
+            search
+            selection
+            disabled={color === '' ? false : true}
+            options={varietyOptions}
+            onChange={(e, { value }) => setVariety(value)}
+          />
+          <Dropdown
+            clearable
+            selection
+            placeholder="Set Min Price"
+            options={minPriceOptions}
+            onChange={(e, { value }) => setPriceLow(Number(value))}
+          />
+          <Dropdown
+            selection
+            placeholder="Set Max Price"
+            options={maxPriceOptions}
+            onChange={(e, { value }) => setPriceHigh(Number(value))}
+          />
         </div>
         {props.wines.length ? (
           <Segment attached="bottom">

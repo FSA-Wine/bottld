@@ -79,14 +79,12 @@ hr {
   height: 85vh;
   display: flex;
   justify-content: center;
+  margin: 0;
 }
 
 #carousel #carousel-text {
   position: absolute;
-  top: 30vh;
   text-align: center;
-  color: black;
-  font-weight: 600;
   z-index: 1;
 }
 
