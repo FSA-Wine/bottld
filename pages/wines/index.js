@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import Head from 'next/head'
 import Link from 'next/link'
-import { Dropdown, Segment } from 'semantic-ui-react'
+import { Dropdown, Segment, Grid } from 'semantic-ui-react'
 import { useRouter } from 'next/router'
 import { fetchWines } from '../../store/wines'
 import Paginate from '../../components/Paginate'
@@ -49,7 +49,7 @@ const Wines = props => {
           <title>Search Wines</title>
           <link rel="icon" href="/favicon.ico" />
         </Head> */}
-        <div>
+        <Grid.Row centered columns={5} style={{ margin: `0 0 0 10px` }}>
           <Dropdown
             placeholder="Select vintage"
             clearable
@@ -95,7 +95,7 @@ const Wines = props => {
             options={maxPriceOptions}
             onChange={(e, { value }) => setPriceHigh(Number(value))}
           />
-        </div>
+        </Grid.Row>
         {props.wines.length ? (
           <Segment attached="bottom">
             <AllWineList wines={props.wines} view={view} />
