@@ -19,7 +19,12 @@ class SingleWineDetails extends Component {
           <span className="sm-gray">VARIETY:</span> {singleWine.variety}
         </p>
         <p>
-          <span className="sm-gray">ORIGIN:</span> {singleWine.province}, {singleWine.country}
+          <span className="sm-gray">ORIGIN:</span> {singleWine.province}, {singleWine.country}{' '}
+          <img
+            style={{ width: `2.2%`, margin: `0 0 0 16px` }}
+            src={countryFlag(singleWine.country)}
+            circular
+          />
         </p>
         <p>
           <span className="sm-gray">EST. PRICE:</span> {price.slice(0, -3)}
@@ -29,13 +34,6 @@ class SingleWineDetails extends Component {
           <span style={{ fontWeight: `bold` }}>{singleWine.points.low}</span> &nbsp;
           <span style={{ color: `gray` }}>{scoreComment(singleWine.points.low)}</span>
         </p>
-        <Image
-          style={{ width: `8%`, padding: `2px` }}
-          src={countryFlag(singleWine.country)}
-          //   size="mini"
-          centered
-          circular
-        />
         <p>
           <Popup
             content={
