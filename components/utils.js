@@ -95,6 +95,21 @@ export const countryFlag = country => {
     case 'New Zealand':
       return '/NewZealand_flag.svg'
       break
+    case 'Brazil':
+      return '/Brazil_flag.svg'
+      break
+    case 'Bulgaria':
+      return '/Bulgaria_flag.svg'
+      break
+    case 'Croatia':
+      return '/Croatia_flag.svg'
+      break
+    case 'Georgia':
+      return '/Georgia_flag.svg'
+      break
+    case 'Romania':
+      return '/Romania_flag.svg'
+      break
     default:
       return 'https://react.semantic-ui.com/images/wireframe/square-image.png'
   }

@@ -12,6 +12,7 @@ import {
   Segment,
   Input,
   Label,
+  Grid,
 } from 'semantic-ui-react'
 import { useRouter } from 'next/router'
 import { fetchWines } from '../../store/wines'
@@ -27,7 +28,6 @@ import {
   minPriceOptions,
 } from '../../components/dropdownOptions'
 import ErrorNoResults from '../../components/ErrorNoResults'
-
 
 const Wines = props => {
   const [page, setPage] = useState(1)
@@ -58,7 +58,7 @@ const Wines = props => {
           <title>Search Wines</title>
           <link rel="icon" href="/favicon.ico" />
         </Head> */}
-        <div>
+        <Grid.Row centered columns={5} style={{ margin: `0 0 0 10px` }}>
           <Dropdown
             placeholder="Select Country"
             clearable
@@ -97,7 +97,7 @@ const Wines = props => {
             options={maxPriceOptions}
             onChange={(e, { value }) => setPriceHigh(Number(value))}
           />
-        </div>
+        </Grid.Row>
         {props.wines.length ? (
           <Segment attached="bottom">
             <AllWineList wines={props.wines} view={view} />
