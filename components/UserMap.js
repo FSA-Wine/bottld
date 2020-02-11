@@ -14,57 +14,36 @@ class UserMap extends Component {
     this.state = {
       viewport: {
         width: '100%',
-        height: '50vh',
-        latitude: 18.31,
-        longitude: -25.05,
-        zoom: 1,
+        height: '30vh',
+        latitude: 20.95,
+        longitude: -42.62,
+        zoom: 0,
       },
     }
   }
   render() {
     let wines = this.props.likedWine
+    console.log('state', this.state)
     return (
       <ReactMapGL
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxApiAccessToken={token}
-        onViewportChange={viewport => this.setState({ ...viewport })}
+        onViewportChange={viewport => this.setState({ viewport })}
         {...this.state.viewport}>
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            padding: '4px',
-          }}>
-          <NavigationControl />
-        </div>
         {wines.map((cur, i) => {
           let wine = cur._fields[0].properties
-          let curLat = parseFloat(wine.latX)
-          if (latArr.includes(curLat)) {
-            let num = Math.random()
-            curLat += num
-            latArr.push(curLat)
-          } else {
-            latArr.push(curLat)
-          }
+          let lat = parseFloat(wine.latX) + 1
           return (
             <Marker
               key={i}
               longitude={parseFloat(wine.longY)}
-              latitude={curLat}
-              // offsetLeft={-20}
-              // offsetTop={-10}
-            >
-              <Image src="/map-marker.png" width="25px" />
+              latitude={lat}
+              offsetLeft={-20}
+              offsetTop={-10}>
+              <Image src="/map-marker.png" width="15px" />
             </Marker>
           )
         })}
-        {/* <Marker
-          longitude={parseFloat(wines[0]._fields[0].properties.longY)}
-          latitude={parseFloat(wines[0]._fields[0].properties.latX)}>
-          <Image src="/map-marker.png" width="25px" />
-        </Marker> */}
       </ReactMapGL>
     )
   }
