@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import Link from 'next/link'
+import Head from 'next/head'
 import Layout from '../components/Layout'
 import dynamic from 'next/dynamic'
 import { Grid, Menu, Segment } from 'semantic-ui-react'
@@ -24,14 +25,15 @@ const User = props => {
   const [view, setView] = useState('likedWines')
   const [color, setColor] = useState('')
   const [country, setCountry] = useState('')
+  const [vintage, setVintage] = useState('')
   const [variety, setVariety] = useState('')
   const [priceLow, setPriceLow] = useState(0)
   const [priceHigh, setPriceHigh] = useState(99999)
   const [limit, setLimit] = useState(5)
 
   useEffect(() => {
-    props.fetchRecWines({ color, country, variety, priceLow, priceHigh, limit })
-  }, [color, country, variety, priceHigh, priceLow, limit])
+    props.fetchRecWines({ color, country, variety, priceLow, priceHigh, limit, vintage })
+  }, [color, country, variety, priceHigh, priceLow, limit, vintage])
 
   const getGreeting = () => {
     const greetings = ['Sláinte', 'Cheers', 'Salud', 'Prost', 'Skål', 'Santé', 'Felicidades']
@@ -41,6 +43,18 @@ const User = props => {
 
   return (
     <Layout>
+      <Head>
+        <title>Home</title>
+        <link rel="icon" href="/favicon.ico" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Lato:400i|Playfair+Display:700&display=swap"
+        />
+        <link
+          rel="stylesheet"
+          href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
+        />
+      </Head>
       {props.isLoggedIn ? (
         <div className="content smaller-text">
           <div className="top-section">
@@ -127,7 +141,7 @@ const User = props => {
           <div className="lower-section-bg">
             {props.user.likedWines.length ? (
               <div className="lower-section">
-                <Grid>
+                <Grid centered>
                   <Grid.Row>
                     <RecommendRow
                       recWines={props.recommended}

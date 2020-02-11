@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Link from 'next/link'
 import { Card, Grid, Image } from 'semantic-ui-react'
 import { trimParen, wineColor, wineLabelImg } from './utils'
-import ErrorNoResults from './ErrorNoResults'
+import ErrorUserNoResults from './ErrorUserNoResults'
 
 //unsure where 'color' will be located once added
 
@@ -63,9 +63,11 @@ class RecommendRow extends Component {
                   )
                 })
               ) : (
-                <section style={{ margin: `0 auto`, paddingTop: `12vh` }}>
-                  <ErrorNoResults />
-                </section>
+                // <section style={{ margin: `0 auto`, paddingTop: `12vh` }}>
+                <Grid.Row>
+                  <ErrorUserNoResults />
+                </Grid.Row>
+                // </section>
               )}
             </Grid>
           </Grid.Row>
