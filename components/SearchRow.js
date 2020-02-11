@@ -33,7 +33,6 @@ const SearchRow = props => {
 
   return (
     <div>
-      {/* <form onSubmit={this.handleSubmit}> */}
       <Grid>
         <hr style={{ borderTop: `2px solid #BEBEBE`, width: `100%` }} />
         <Grid.Row>
@@ -44,7 +43,6 @@ const SearchRow = props => {
 
         {/* Top row of inputs */}
         <Grid.Row centered columns={2} style={{ display: `flex` }}>
-          {/* value in Dropdown?? */}
           <Grid.Column width={6} columns={2} style={{ display: `flex` }}>
             <h4 style={{ margin: `8px` }}> Variety</h4>
             <Dropdown
@@ -75,8 +73,8 @@ const SearchRow = props => {
 
         {/* bottom row of inputs */}
         <Grid.Row centered columns={2} style={{ display: `flex` }}>
-          <Grid.Column width={5} columns={2} style={{ display: `flex` }}>
-            <h4 style={{ margin: `8px` }}> Flavor</h4>
+          <Grid.Column width={6} columns={2} style={{ display: `flex` }}>
+            <h4 style={{ margin: `8px` }}> Type </h4>
             <Dropdown
               clearable
               fluid
@@ -97,87 +95,26 @@ const SearchRow = props => {
               style={{
                 margin: `0 0 0 15px`,
                 paddingTop: `.9em`,
+                paddingLeft: `.3em`,
               }}
               placeholder="Set Minimum"
               options={minPriceOptions}
               onChange={(e, { value }) => setPriceLow(Number(value))}
             />
-            {/* <Label
-              basic
-              horizontal
-              style={{
-                margin: `0 0 0 15px`,
-                paddingTop: `.8em`,
-                backgroundColor: `#E2E2E2`,
-              }}>
-              $
-            </Label>
-            <Input
-              fluid
-              placeholder="Min"
-              style={{ width: `35%` }}
-              // value={this.state.minPrice}
-              // onChange={this.handleChange}
-            />
-            <Label
-              style={{
-                paddingTop: `.9em`,
-                paddingLeft: `.3em`,
-                backgroundColor: `transparent`,
-              }}>
-              .00
-            </Label> */}
             <Dropdown
               selection
               style={{
                 margin: `0 0 0 15px`,
                 paddingTop: `.9em`,
+                paddingLeft: `.3em`,
               }}
               placeholder="Set Max"
               options={maxPriceOptions}
               onChange={(e, { value }) => setPriceHigh(Number(value))}
             />
-            {/* <Label
-              basic
-              horizontal
-              style={{
-                margin: `0 0 0 15px`,
-                paddingTop: `.9em`,
-                backgroundColor: `#E2E2E2`,
-              }}>
-              $
-            </Label>
-            <Input
-              fluid
-              placeholder="Max"
-              style={{ width: `35%` }}
-              // value={this.state.maxPrice}
-              // onChange={this.handleChange}
-            />
-            <Label
-              style={{
-                paddingTop: `.8em`,
-                paddingLeft: `.3em`,
-                backgroundColor: `transparent`,
-              }}>
-              .00
-            </Label> */}
           </Grid.Column>
         </Grid.Row>
-
-        {/* Button Row */}
-        {/* <Grid.Row>
-          <Button
-            type="submit"
-            style={{
-              backgroundColor: `#b7b7b7`,
-              margin: `0 auto`,
-            }}>
-            Submit
-          </Button>
-        </Grid.Row> */}
       </Grid>
-      {/* </form> */}
     </div>
   )
 }
