@@ -67,13 +67,13 @@ const User = props => {
                           <Menu.Item
                             name="liked"
                             active={view === 'likedWines'}
-                            onClick={() => setView('likedWines')}
+                            // onClick={() => setView('likedWines')}
                           />
-                          <Menu.Item
+                          {/* <Menu.Item
                             name="tried"
                             active={view === 'triedWines'}
                             onClick={() => setView('triedWines')}
-                          />
+                          /> */}
                         </Fragment>
                       </Menu>
                       {props.user[view] ? (
@@ -91,7 +91,7 @@ const User = props => {
                     tablet={16}
                     computer={6}
                     style={{
-                      padding: `0 0 0 30px`,
+                      padding: `0 30px 0 30px`,
                     }}>
                     {/* user's liked wines: flavor profile & origin location */}
                     <div className="chart-container">

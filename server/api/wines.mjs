@@ -1,6 +1,6 @@
 import express from 'express'
 import { driver } from '../index.mjs'
-import paginate from './middleware/paginate'
+import paginate from './middleware/paginate.mjs'
 
 const router = express.Router()
 

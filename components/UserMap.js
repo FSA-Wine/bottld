@@ -13,7 +13,7 @@ class UserMap extends Component {
     super(props)
     this.state = {
       viewport: {
-        width: '50vw',
+        width: '100%',
         height: '50vh',
         latitude: 18.31,
         longitude: -25.05,
