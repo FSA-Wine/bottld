@@ -54,6 +54,7 @@ export const countryOptions = [
   { key: 'hr', value: 'Croatia', text: 'Croatia' },
   { key: 'cy', value: 'Cyprus', text: 'Cyprus' },
   { key: 'cz', value: 'Czech Republic', text: 'Czech Republic' },
+  { key: 'eg', value: 'Egypt', text: 'Egypt' },
   { key: 'gb', value: 'England', text: 'England' },
   { key: 'fr', value: 'France', text: 'France' },
   { key: 'ge', value: 'Georgia', text: 'Georgia' },
