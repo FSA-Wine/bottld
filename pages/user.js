@@ -7,6 +7,7 @@ import { Grid, Menu, Segment } from 'semantic-ui-react'
 import UserWineList from '../components/UserWineList'
 import SearchRow from '../components/SearchRow'
 import RecommendRow from '../components/RecommendRow'
+import ErrorLogin from '../components/ErrorLogin'
 import { fetchRecWines } from '../store/recommended'
 
 const DynamicGraph = dynamic(() => import('../components/UserGraph'), {
@@ -135,8 +136,8 @@ const User = props => {
           </div>
         </div>
       ) : (
-        <section>
-          <h2>Access Denied: Please log in first</h2>
+        <section style={{ margin: `0 auto`, paddingTop: `12vh` }}>
+          <ErrorLogin />
         </section>
       )}
     </Layout>

@@ -18,6 +18,7 @@ import { fetchWines } from '../../store/wines'
 import Paginate from '../../components/Paginate'
 import Layout from '../../components/Layout'
 import AllWineList from '../../components/AllWineList'
+import ErrorNoResults from '../../components/ErrorNoResults'
 
 const countryOptions = [
   { key: 'Arabic', text: 'Arabic', value: 'Arabic' },
@@ -91,7 +92,9 @@ const Wines = props => {
             <AllWineList wines={props.wines} view={view} />
           </Segment>
         ) : (
-          <div>Nothing!</div>
+          <section style={{ margin: `0 auto`, paddingTop: `12vh` }}>
+            <ErrorNoResults />
+          </section>
         )}
         <Paginate limit={limit} count={props.wineCount} setPage={newPage => setPage(newPage)} />
       </div>
