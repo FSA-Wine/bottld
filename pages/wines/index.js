@@ -26,6 +26,8 @@ import {
   maxPriceOptions,
   minPriceOptions,
 } from '../../components/dropdownOptions'
+import ErrorNoResults from '../../components/ErrorNoResults'
+
 
 const Wines = props => {
   const [page, setPage] = useState(1)
@@ -101,7 +103,9 @@ const Wines = props => {
             <AllWineList wines={props.wines} view={view} />
           </Segment>
         ) : (
-          <div>Loading wines...</div>
+          <section style={{ margin: `0 auto`, paddingTop: `12vh` }}>
+            <ErrorNoResults />
+          </section>
         )}
         <Paginate limit={limit} count={props.wineCount} setPage={newPage => setPage(newPage)} />
       </div>
