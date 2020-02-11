@@ -104,7 +104,7 @@ class SingleWineWithoutRouter extends Component {
     } else {
       return (
         <Layout>
-          <div> Loading Wine...</div>
+          <h3 style={{ fontStyle: `italic`, margin: `20px` }}>Uncorking your wine...</h3>
         </Layout>
       )
     }

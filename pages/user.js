@@ -125,19 +125,23 @@ const User = props => {
             </Grid>
           </div>
           <div className="lower-section-bg">
-            <div className="lower-section">
-              <Grid>
-                <Grid.Row>
-                  <RecommendRow
-                    recWines={props.recommended}
-                    info="We think you might enjoy these wines:"
-                  />
-                </Grid.Row>
-                <Grid.Row>
-                  <SearchRow />
-                </Grid.Row>
-              </Grid>
-            </div>
+            {props.user.likedWines.length ? (
+              <div className="lower-section">
+                <Grid>
+                  <Grid.Row>
+                    <RecommendRow
+                      recWines={props.recommended}
+                      info="We think you might enjoy these wines:"
+                    />
+                  </Grid.Row>
+                  <Grid.Row>
+                    <SearchRow />
+                  </Grid.Row>
+                </Grid>
+              </div>
+            ) : (
+              <div></div>
+            )}
           </div>
         </div>
       ) : (
