@@ -42,7 +42,7 @@ export default ({ wines, view }) => {
                 marginTop: `45%`,
                 textAlign: `center`,
               }}>
-              {`Like ${5 - wines.length} more wines to improve your reccomendations!`}
+              {`Like ${5 - wines.length} more wines to improve your recommendations!`}
             </h3>
           </div>
         </List>
