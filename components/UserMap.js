@@ -23,7 +23,6 @@ class UserMap extends Component {
   }
   render() {
     let wines = this.props.likedWine
-    console.log('state', this.state)
     return (
       <ReactMapGL
         mapStyle="mapbox://styles/mapbox/streets-v9"
