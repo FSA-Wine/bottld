@@ -33,6 +33,7 @@ const Wines = props => {
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(25)
   const [color, setColor] = useState('')
+  const [vintage, setVintage] = useState('')
   const [country, setCountry] = useState('')
   const [variety, setVariety] = useState('')
   const [priceLow, setPriceLow] = useState(0)
@@ -49,8 +50,9 @@ const Wines = props => {
       variety,
       priceHigh,
       priceLow,
+      vintage,
     })
-  }, [page, limit, router.query.search, color, country, variety, priceHigh, priceLow])
+  }, [page, limit, router.query.search, color, vintage, country, variety, priceHigh, priceLow])
   return (
     <Layout>
       <div>
@@ -59,6 +61,13 @@ const Wines = props => {
           <link rel="icon" href="/favicon.ico" />
         </Head> */}
         <Grid.Row centered columns={5} style={{ margin: `0 0 0 10px` }}>
+          <Dropdown
+            placeholder="Select vintage"
+            clearable
+            search
+            selection
+            onChange={(e, { value }) => setVintage(value)}
+          />
           <Dropdown
             placeholder="Select Country"
             clearable

@@ -70,7 +70,7 @@ hr {
 /* width defined inline since width in css didn't hold at diff screen sizes */
 .lists {
   height: calc(60vh);
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 /* Home page */

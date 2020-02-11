@@ -1,13 +1,14 @@
 import express from 'express'
 import { driver } from '../index.mjs'
-import paginate from './middleware/paginate'
+import paginate from './middleware/paginate.mjs'
 
 const router = express.Router()
 
 router.get('/', async (req, res) => {
   const session = driver.session()
   try {
-    const cypher = `MATCH (n:Wine) WHERE n.color CONTAINS '${req.query.color}' AND n.country CONTAINS '${req.query.country}' AND n.variety CONTAINS '${req.query.variety}' AND n.price > ${req.query.priceLow} AND n.price < ${req.query.priceHigh} AND toLower(n.title) CONTAINS toLower('${req.query.search}') RETURN n LIMIT 250`
+    const cypher = `CALL db.index.fulltext.queryNodes("wineTitle", '${req.query.search}~') YIELD node AS n WHERE n.color CONTAINS '${req.query.color}' AND n.country CONTAINS '${req.query.country}' AND n.variety CONTAINS '${req.query.variety}' AND n.price > ${req.query.priceLow} AND n.price < ${req.query.priceHigh} AND n.title CONTAINS '${req.query.vintage}' RETURN n LIMIT 250`
+    // const cypher = `MATCH (n:Wine) WHERE n.color CONTAINS '${req.query.color}' AND n.country CONTAINS '${req.query.country}' AND n.variety CONTAINS '${req.query.variety}' AND n.price > ${req.query.priceLow} AND n.price < ${req.query.priceHigh} AND n.title CONTAINS '${req.query.vintage}' AND toLower(n.title) CONTAINS toLower('${req.query.search}') RETURN n LIMIT 250`
     const { records } = await session.run(cypher)
     res.json(paginate(records, req.query.page, req.query.limit))
   } catch (err) {
@@ -36,7 +37,7 @@ router.get('/recommended', async (req, res) => {
   const session = driver.session()
   try {
     if (req.user) {
-      const cypher = `MATCH (u:User {googleId: '${req.user.properties.googleId}'})-[r:LIKED]->(wine)-[r2:SIMILAR]->(n:Wine) WHERE n.color CONTAINS '${req.query.color}' AND n.country CONTAINS '${req.query.country}' AND n.variety CONTAINS toLower('${req.query.variety}') AND n.price > ${req.query.priceLow} AND n.price < ${req.query.priceHigh} AND NOT exists((u)-[r]->(n)) RETURN n,u, count(*) AS occurrence ORDER BY occurrence DESC LIMIT ${req.query.limit}`
+      const cypher = `MATCH (u:User {googleId: '${req.user.properties.googleId}'})-[r:LIKED]->(wine)-[r2:SIMILAR]->(n:Wine) WHERE n.color CONTAINS '${req.query.color}' AND n.country CONTAINS '${req.query.country}' AND n.title CONTAINS '${req.query.vintage}' AND n.variety CONTAINS toLower('${req.query.variety}') AND n.price > ${req.query.priceLow} AND n.price < ${req.query.priceHigh} AND NOT exists((u)-[r]->(n)) RETURN n,u, count(*) AS occurrence ORDER BY occurrence DESC LIMIT ${req.query.limit}`
       const { records } = await session.run(cypher)
       res.json(records)
     } else res.json([])

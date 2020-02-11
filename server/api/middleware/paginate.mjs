@@ -1,4 +1,4 @@
-module.exports = (content, page, limit) => {
+export default (content, page, limit) => {
   page = parseInt(page, 10)
   limit = parseInt(limit, 10)
 

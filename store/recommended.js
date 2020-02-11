@@ -10,7 +10,7 @@ export const setRecWines = wines => ({
 export const fetchRecWines = search => async dispatch => {
   try {
     const { data } = await axios.get(
-      `/api/wines/recommended?color=${search.color}&country=${search.country}&variety=${search.variety}&priceLow=${search.priceLow}&priceHigh=${search.priceHigh}&limit=${search.limit}`
+      `/api/wines/recommended?vintage=${search.vintage}&color=${search.color}&country=${search.country}&variety=${search.variety}&priceLow=${search.priceLow}&priceHigh=${search.priceHigh}&limit=${search.limit}`
     )
     dispatch(setRecWines(data))
   } catch (error) {

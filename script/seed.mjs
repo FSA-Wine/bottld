@@ -91,6 +91,8 @@ const wineSeeder = async () => {
   YIELD nodes, similarityPairs, write, writeRelationshipType, writeProperty, min, max, mean, p95
   RETURN nodes, similarityPairs, write, writeRelationshipType, writeProperty, min, max, mean, p95`)
 
+  await session.run(`CALL db.index.fulltext.createNodeIndex("wineTitle",["Wine"],["title"])`)
+
   /// example of setting single note node relations to wines///
   // await session.run(
   //   `MATCH (a:Note), (b:Wine)
