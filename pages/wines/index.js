@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import Head from 'next/head'
-import Link from 'next/link'
 import { Dropdown, Segment, Grid, Input } from 'semantic-ui-react'
 import { useRouter } from 'next/router'
 import { fetchWines } from '../../store/wines'
@@ -9,7 +8,6 @@ import Paginate from '../../components/Paginate'
 import Layout from '../../components/Layout'
 import AllWineList from '../../components/AllWineList'
 import {
-  flavors,
   countryOptions,
   varietyOptions,
   colorOptions,
@@ -53,10 +51,10 @@ const Wines = props => {
   return (
     <Layout>
       <div>
-        {/* <Head>
-          <title>Search Wines</title>
+        <Head>
+          <title>Wine results for '{search}'</title>
           <link rel="icon" href="/favicon.ico" />
-        </Head> */}
+        </Head>
         <Grid.Row style={{ margin: `20px` }}>
           <Input
             type="text"
