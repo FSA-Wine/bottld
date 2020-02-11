@@ -1,4 +1,4 @@
-export const varieties = [
+export const varietyOptions = [
   { key: 'ba', value: 'Barbera', text: 'Barbera' },
   { key: 'bl', value: 'Blaufr‰nkisch', text: 'Blaufr‰nkisch' },
   { key: 'ct', value: 'Cabernet', text: 'Cabernet' },
@@ -36,7 +36,7 @@ export const varieties = [
   { key: 'zn', value: 'Zinfandel', text: 'Zinfandel' },
 ]
 
-export const countries = [
+export const countryOptions = [
   { key: 'ar', value: 'Argentina', text: 'Argentina' },
   { key: 'am', value: 'Armenia', text: 'Armenia' },
   { key: 'au', value: 'Australia', text: 'Australia' },
@@ -102,4 +102,32 @@ export const flavors = [
   { key: 'ta', value: 'tannin', text: 'tannin' },
   { key: 've', value: 'vegetal', text: 'vegetal' },
   { key: 'wo', value: 'woody', text: 'woody' },
+]
+
+export const colorOptions = [
+  { key: 'red', text: 'Reds', value: 'red' },
+  { key: 'white', text: 'Whites', value: 'white' },
+  { key: 'rose', text: 'Rose', value: 'rose' },
+]
+
+export const maxPriceOptions = [
+  { key: '2000', text: 'Less than $2000', value: '1999' },
+  { key: '1000', text: 'Less than $1000', value: '999' },
+  { key: '500', text: 'Less than $500', value: '499' },
+  { key: '250', text: 'Less than $250', value: '249' },
+  { key: '100', text: 'Less than $100', value: '99' },
+  { key: '75', text: 'Less than $75', value: '74' },
+  { key: '50', text: 'Less than $50', value: '49' },
+  { key: '25', text: 'Less than $25', value: '24' },
+]
+
+export const minPriceOptions = [
+  { key: '25', text: 'Greater than $25', value: '25' },
+  { key: '50', text: 'Greater than $50', value: '50' },
+  { key: '75', text: 'Greater than $75', value: '75' },
+  { key: '100', text: 'Greater than $100', value: '100' },
+  { key: '250', text: 'Greater than $250', value: '250' },
+  { key: '500', text: 'Greater than $500', value: '500' },
+  { key: '1000', text: 'Greater than $1000', value: '1000' },
+  { key: '2000', text: 'Greater than $2000', value: '2000' },
 ]

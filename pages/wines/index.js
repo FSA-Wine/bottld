@@ -18,49 +18,16 @@ import { fetchWines } from '../../store/wines'
 import Paginate from '../../components/Paginate'
 import Layout from '../../components/Layout'
 import AllWineList from '../../components/AllWineList'
+import {
+  flavors,
+  countryOptions,
+  varietyOptions,
+  colorOptions,
+  maxPriceOptions,
+  minPriceOptions,
+} from '../../components/dropdownOptions'
+import ErrorNoResults from '../../components/ErrorNoResults'
 
-const countryOptions = [
-  { key: 'Argentina', text: 'Argentina', value: 'Argentina' },
-  { key: 'Italy', text: 'Italy', value: 'Italy' },
-  { key: 'Spain', text: 'Spain', value: 'Spain' },
-  { key: 'US', text: 'US', value: 'US' },
-]
-
-const colorOptions = [
-  { key: 'red', text: 'Reds', value: 'red' },
-  { key: 'white', text: 'Whites', value: 'white' },
-  { key: 'rose', text: 'Rose', value: 'rose' },
-]
-
-const varietyOptions = [
-  { key: 'Cabernet', text: 'Cabernet', value: 'Cabernet' },
-  { key: 'Cabernet Sauvignon', text: 'Cabernet Sauvignon', value: 'Cabernet Sauvignon' },
-  { key: 'Malbec', text: 'Malbec', value: 'Malbec' },
-  { key: 'Pinot Noir', text: 'Pinot Noir', value: 'Pinot Noir' },
-  { key: 'Nebbiolo', text: 'Nebbiolo', value: 'Nebbiolo' },
-]
-
-const maxPriceOptions = [
-  { key: '2000', text: 'Less than $2000', value: '1999' },
-  { key: '1000', text: 'Less than $1000', value: '999' },
-  { key: '500', text: 'Less than $500', value: '499' },
-  { key: '250', text: 'Less than $250', value: '249' },
-  { key: '100', text: 'Less than $100', value: '99' },
-  { key: '75', text: 'Less than $75', value: '74' },
-  { key: '50', text: 'Less than $50', value: '49' },
-  { key: '25', text: 'Less than $25', value: '24' },
-]
-
-const minPriceOptions = [
-  { key: '25', text: 'Greater than $25', value: '25' },
-  { key: '50', text: 'Greater than $50', value: '50' },
-  { key: '75', text: 'Greater than $75', value: '75' },
-  { key: '100', text: 'Greater than $100', value: '100' },
-  { key: '250', text: 'Greater than $250', value: '250' },
-  { key: '500', text: 'Greater than $500', value: '500' },
-  { key: '1000', text: 'Greater than $1000', value: '1000' },
-  { key: '2000', text: 'Greater than $2000', value: '2000' },
-]
 
 const Wines = props => {
   const [page, setPage] = useState(1)
@@ -136,7 +103,9 @@ const Wines = props => {
             <AllWineList wines={props.wines} view={view} />
           </Segment>
         ) : (
-          <div>Loading wines...</div>
+          <section style={{ margin: `0 auto`, paddingTop: `12vh` }}>
+            <ErrorNoResults />
+          </section>
         )}
         <Paginate limit={limit} count={props.wineCount} setPage={newPage => setPage(newPage)} />
       </div>

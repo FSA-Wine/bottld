@@ -104,7 +104,7 @@ class SingleWineWithoutRouter extends Component {
     } else {
       return (
         <Layout>
-          <div> Loading...</div>
+          <div> Loading Wine...</div>
         </Layout>
       )
     }
