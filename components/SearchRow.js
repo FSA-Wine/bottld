@@ -14,7 +14,6 @@ import { fetchRecWines } from '../store/recommended'
 
 const SearchRow = props => {
   const [limit, setLimit] = useState(5)
-  const [vintage, setVintage] = useState('')
   const [color, setColor] = useState('')
   const [country, setCountry] = useState('')
   const [variety, setVariety] = useState('')
@@ -24,14 +23,13 @@ const SearchRow = props => {
   useEffect(() => {
     props.fetchRecWines({
       limit,
-      vintage,
       color,
       country,
       variety,
       priceHigh,
       priceLow,
     })
-  }, [limit, color, vintage, country, variety, priceHigh, priceLow])
+  }, [limit, color, country, variety, priceHigh, priceLow])
 
   return (
     <div>
