@@ -22,6 +22,15 @@ const Home = props => {
       query: { search },
     })
   }
+  const handleEnter = e => {
+    if (e.key === 'Enter' && search) {
+      Router.push({
+        pathname: '/wines',
+        as: `/wines?search=${search}`,
+        query: { search },
+      })
+    }
+  }
 
   return (
     <Layout>
@@ -72,10 +81,12 @@ const Home = props => {
                 name="search"
                 value={search}
                 onChange={handleChange}
+                onKeyPress={handleEnter}
                 placeholder="Enter a wine name"></Input>
               <Button
                 type="submit"
                 style={{ margin: `10px`, backgroundColor: `#b7b7b7ff` }}
+                disabled={!search}
                 onClick={handleSubmit}>
                 Submit
               </Button>

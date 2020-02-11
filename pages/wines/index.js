@@ -2,17 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import Head from 'next/head'
 import Link from 'next/link'
-import {
-  Button,
-  Dropdown,
-  Image,
-  Popup,
-  Card,
-  List,
-  Segment,
-  Input,
-  Label,
-} from 'semantic-ui-react'
+import { Dropdown, Segment } from 'semantic-ui-react'
 import { useRouter } from 'next/router'
 import { fetchWines } from '../../store/wines'
 import Paginate from '../../components/Paginate'
@@ -28,11 +18,11 @@ import {
 } from '../../components/dropdownOptions'
 import ErrorNoResults from '../../components/ErrorNoResults'
 
-
 const Wines = props => {
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(25)
   const [color, setColor] = useState('')
+  const [vintage, setVintage] = useState('')
   const [country, setCountry] = useState('')
   const [variety, setVariety] = useState('')
   const [priceLow, setPriceLow] = useState(0)
@@ -49,8 +39,9 @@ const Wines = props => {
       variety,
       priceHigh,
       priceLow,
+      vintage,
     })
-  }, [page, limit, router.query.search, color, country, variety, priceHigh, priceLow])
+  }, [page, limit, router.query.search, color, vintage, country, variety, priceHigh, priceLow])
   return (
     <Layout>
       <div>
@@ -59,6 +50,13 @@ const Wines = props => {
           <link rel="icon" href="/favicon.ico" />
         </Head> */}
         <div>
+          <Dropdown
+            placeholder="Select vintage"
+            clearable
+            search
+            selection
+            onChange={(e, { value }) => setVintage(value)}
+          />
           <Dropdown
             placeholder="Select Country"
             clearable
