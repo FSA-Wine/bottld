@@ -15,7 +15,6 @@ export default ({ wines, view }) => (
           </div>
         )
       })}
-      {/* {wines.lengthwines.length < 5 ? ( */}
       <div>
         <h3
           style={{
@@ -31,9 +30,6 @@ export default ({ wines, view }) => (
             : ''}
         </h3>
       </div>
-      {/* ) : (
-        <></>
-      )} */}
     </List>
   </Card>
 )
