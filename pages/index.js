@@ -18,16 +18,32 @@ const Home = props => {
     e.preventDefault()
     Router.push({
       pathname: '/wines',
-      as: `/wines?search=${search}`,
-      query: { search },
+      query: {
+        search,
+        page: 1,
+        limit: 25,
+        color: '',
+        country: '',
+        variety: '',
+        priceLow: 0,
+        priceHigh: 2999,
+      },
     })
   }
   const handleEnter = e => {
     if (e.key === 'Enter' && search) {
       Router.push({
         pathname: '/wines',
-        as: `/wines?search=${search}`,
-        query: { search },
+        query: {
+          search,
+          page: 1,
+          limit: 25,
+          color: '',
+          country: '',
+          variety: '',
+          priceLow: 0,
+          priceHigh: 9999,
+        },
       })
     }
   }
