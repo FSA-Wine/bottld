@@ -4,10 +4,7 @@ const GET_WINES = 'GET_WINES'
 
 const getWines = wines => ({ type: GET_WINES, wines })
 
-const initialState = {
-  count: null,
-  data: [],
-}
+const initialState = []
 
 export const fetchWines = (page, limit = 25, search) => async dispatch => {
   try {
