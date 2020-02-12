@@ -1,7 +1,7 @@
-import React from 'react'
-import { Divider, Image, List } from 'semantic-ui-react'
+import React, { useState } from 'react'
+import { Divider, Image, List, Popup } from 'semantic-ui-react'
 import Link from 'next/link'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { likeWine } from '../store/user'
 // import heartOutline from '../public/heart-outline.svg'
 // import heartSolid from '../public/heart-solid.svg'
@@ -12,12 +12,14 @@ import { likeWine } from '../store/user'
 //hover on item = shading
 //change Link default color with 'a' selector
 
-const AllWineListItem = ({ wineProps, liked }) => {
-  const user = useSelector(state => state.user)
+const AllWineListItem = ({ wineProps, liked, isLoggedIn }) => {
+  const [isLiked, setIsLiked] = useState(liked)
   const dispatch = useDispatch()
   const onLike = () => {
-    dispatch(likeWine(liked, user, wineProps))
-    liked = !liked
+    if (isLoggedIn) {
+      dispatch(likeWine(isLiked, wineProps))
+      setIsLiked(!isLiked)
+    }
   }
 
   if (wineProps) {
@@ -31,13 +33,24 @@ const AllWineListItem = ({ wineProps, liked }) => {
                   <strong>{wineProps.title}</strong>
                 </a>
               </Link>
-              <Image
-                style={{ width: `18px`, margin: `5px 5px 0 0` }}
-                // src={liked ? '/heart-solid.svg' : '/heart-outline.svg'}
-                src="/heart-outline.svg"
-                // onClick={() => onLike()}
-                floated="right"
-                verticalAlign="bottom"
+              <Popup
+                content={
+                  isLiked
+                    ? 'You like this wine'
+                    : isLoggedIn
+                    ? 'Add to Liked Wines'
+                    : 'Please log in to like this wine'
+                }
+                trigger={
+                  <Image
+                    src={isLiked ? '/heart-solid.svg' : '/heart-outline.svg'}
+                    style={{ width: `18px`, margin: `5px 5px 0 0` }}
+                    onClick={() => onLike()}
+                    floated="right"
+                    verticalAlign="bottom"
+                  />
+                }
+                position={'right center'}
               />
             </List.Description>
             <List.Description className="description">{wineProps.variety}</List.Description>
