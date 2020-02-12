@@ -23,14 +23,14 @@ const Nav = props => (
           </Grid.Column>
           <Grid.Column width={2} textAlign="right">
             <a href="#" onClick={() => props.logout()}>
-              LOGOUT
+              LOG OUT
             </a>
           </Grid.Column>
         </Grid>
       ) : (
         <Grid>
           <Grid.Column textAlign="right">
-            <a href="/auth/google">LOGIN</a>
+            <a href="/auth/google">LOG IN</a>
           </Grid.Column>
         </Grid>
       )}

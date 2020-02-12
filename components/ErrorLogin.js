@@ -11,11 +11,12 @@ const ErrorLogIn = () => {
               textAlign: `center`,
               color: `#980000`,
               fontFamily: `Playfair Display, serif`,
+              fontWeight: `700`,
               fontStyle: `italic`,
               fontSize: `2.3rem`,
               marginBottom: `0`,
             }}>
-            ID please!
+            {`Let's see some ID.`}
           </h2>
           <h4
             style={{
@@ -27,7 +28,7 @@ const ErrorLogIn = () => {
               fontWeight: `400`,
               marginTop: `5px`,
             }}>
-            Log in to access this page.
+            Please log in to access this page.
           </h4>
         </Grid.Column>
       </Grid.Row>

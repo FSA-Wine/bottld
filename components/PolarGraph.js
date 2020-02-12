@@ -22,6 +22,16 @@ class PolarGraph extends Component {
             },
             legend: {
               display: this.props.displayLegend,
+              onClick: null,
+            },
+            scale: {
+              ticks: {
+                display: false,
+                stepSize: 2,
+              },
+            },
+            tooltips: {
+              displayColors: false,
             },
           }}
           width={100}
