@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, List } from 'semantic-ui-react'
 import AllWineListItem from './AllWineListItem'
 
-export default ({ wines, view }) => {
+export default ({ wines, isLoggedIn }) => {
   if (wines.length) {
     return (
       <Card className="lists" style={{ width: `100%` }}>
@@ -12,7 +12,8 @@ export default ({ wines, view }) => {
               <div key={i}>
                 <AllWineListItem
                   wineProps={wine._fields[0].properties}
-                  liked={view === 'likedWines' ? true : false}
+                  liked={wine._fields[1]}
+                  isLoggedIn={isLoggedIn}
                 />
               </div>
             )

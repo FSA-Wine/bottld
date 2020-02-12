@@ -31,6 +31,7 @@ class UserMap extends Component {
         {...this.state.viewport}>
         {wines.map((cur, i) => {
           let wine = cur._fields[0].properties
+          if (!wine.latX || !wine.longY) return
           let lat = parseFloat(wine.latX) + 1
           return (
             <Marker

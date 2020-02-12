@@ -7,7 +7,8 @@ const router = express.Router()
 router.get('/', async (req, res) => {
   const session = driver.session()
   try {
-    const cypher = `CALL db.index.fulltext.queryNodes("wineTitle", '${req.query.search}*~0.7') YIELD node AS n WHERE n.color CONTAINS '${req.query.color}' AND n.country CONTAINS '${req.query.country}' AND n.variety CONTAINS '${req.query.variety}' AND n.price > ${req.query.priceLow} AND n.price < ${req.query.priceHigh} RETURN n LIMIT 250`
+    const googleId = req.user ? req.user.properties.googleId : ''
+    const cypher = `CALL db.index.fulltext.queryNodes("wineTitle", '${req.query.search}*~0.7') YIELD node AS n MATCH (u:User) WHERE u.googleId CONTAINS '${googleId}' AND n.color CONTAINS '${req.query.color}' AND n.country CONTAINS '${req.query.country}' AND n.variety CONTAINS '${req.query.variety}' AND n.price > ${req.query.priceLow} AND n.price < ${req.query.priceHigh} RETURN n, EXISTS((n)-[:LIKED]-(u)) LIMIT 250`
     // const cypher = `MATCH (n:Wine) WHERE n.color CONTAINS '${req.query.color}' AND n.country CONTAINS '${req.query.country}' AND n.variety CONTAINS '${req.query.variety}' AND n.price > ${req.query.priceLow} AND n.price < ${req.query.priceHigh} AND toLower(n.title) CONTAINS toLower('${req.query.search}') RETURN n LIMIT 250`
     const { records } = await session.run(cypher)
     res.json(paginate(records, req.query.page, req.query.limit))
@@ -77,8 +78,8 @@ router.get('/tried', async (req, res) => {
 router.post('/liked', async (req, res) => {
   const session = driver.session()
   try {
-    const likeCypher = `MATCH (w:Wine), (u:User) WHERE u.googleId = '${req.body.user.googleId}' AND w.id = ${req.body.wine.id.low} MERGE (u)-[r:LIKED]->(w) RETURN w`
-    const triedCypher = `MATCH (w:Wine), (u:User) WHERE u.googleId = '${req.body.user.googleId}' AND w.id = ${req.body.wine.id.low} MERGE (u)-[r:TRIED]->(w) RETURN w`
+    const likeCypher = `MATCH (w:Wine), (u:User) WHERE u.googleId = '${req.user.properties.googleId}' AND w.id = ${req.body.wine.id.low} MERGE (u)-[r:LIKED]->(w) RETURN w`
+    const triedCypher = `MATCH (w:Wine), (u:User) WHERE u.googleId = '${req.user.properties.googleId}' AND w.id = ${req.body.wine.id.low} MERGE (u)-[r:TRIED]->(w) RETURN w`
     const record = await session.run(likeCypher)
     const { records } = await session.run(triedCypher)
     res.json(records[0])
@@ -92,9 +93,9 @@ router.post('/liked', async (req, res) => {
 router.delete('/liked', async (req, res) => {
   const session = driver.session()
   try {
-    const unlikeCypher = `MATCH (u:User {googleId: '${req.body.user.googleId}'})-[r:LIKED]->(w:Wine {id: ${req.body.wine.id.low}}) DELETE r`
+    const unlikeCypher = `MATCH (u:User {googleId: '${req.user.properties.googleId}'})-[r:LIKED]->(w:Wine {id: ${req.body.wine.id.low}}) DELETE r`
     await session.run(unlikeCypher)
-    const cypher = `MATCH (u:User {googleId: '${req.body.user.googleId}'})-[r:LIKED]->(Wine) RETURN Wine`
+    const cypher = `MATCH (u:User {googleId: '${req.user.properties.googleId}'})-[r:LIKED]->(Wine) RETURN Wine`
     const { records } = await session.run(cypher)
     res.json(records)
   } catch (error) {

@@ -34,7 +34,7 @@ class SingleWineCharts extends Component {
         height: '25vh',
         latitude: 41.5868,
         longitude: -93.625,
-        zoom: 5,
+        zoom: 4,
       },
     }
   }

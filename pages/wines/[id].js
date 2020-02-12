@@ -45,11 +45,7 @@ class SingleWineWithoutRouter extends Component {
 
   onLike = () => {
     if (this.props.isLoggedIn) {
-      this.props.likeWine(
-        this.state.liked,
-        this.props.user,
-        this.props.singleWine[0][0]._fields[0].properties
-      )
+      this.props.likeWine(this.state.liked, this.props.singleWine[0][0]._fields[0].properties)
       this.setState(prevState => {
         return { liked: !prevState.liked }
       })

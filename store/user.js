@@ -60,13 +60,13 @@ export const fetchFlavors = () => async dispatch => {
   }
 }
 
-export const likeWine = (liked, user, wine) => async dispatch => {
+export const likeWine = (liked, wine) => async dispatch => {
   try {
     if (liked) {
-      const { data } = await axios.delete('/api/wines/liked', { data: { user, wine } })
+      const { data } = await axios.delete('/api/wines/liked', { data: { wine } })
       dispatch(getLikedWines(data))
     } else {
-      const { data } = await axios.post('/api/wines/liked', { user, wine })
+      const { data } = await axios.post('/api/wines/liked', { wine })
       dispatch(addLikedWine(data))
     }
   } catch (error) {

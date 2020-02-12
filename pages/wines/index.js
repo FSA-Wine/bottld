@@ -113,7 +113,7 @@ const Wines = props => {
         </Grid.Row>
         {props.wines.length ? (
           <Segment attached="bottom">
-            <AllWineList wines={props.wines} view={view} />
+            <AllWineList wines={props.wines} isLoggedIn={props.isLoggedIn} />
           </Segment>
         ) : (
           <section style={{ margin: `0 auto`, paddingTop: `12vh` }}>

@@ -16,7 +16,7 @@ const WineListItem = ({ wineProps, liked }) => {
   const user = useSelector(state => state.user)
   const dispatch = useDispatch()
   const onLike = () => {
-    dispatch(likeWine(liked, user, wineProps))
+    dispatch(likeWine(liked, wineProps))
     liked = !liked
   }
 
