@@ -134,7 +134,7 @@ const User = props => {
                       info="We think you might enjoy these wines:"
                     />
                   </Grid.Row>
-                  <Grid.Row>
+                  <Grid.Row style={{ margin: `0 0 20px 0` }}>
                     <SearchRow />
                   </Grid.Row>
                 </Grid>
