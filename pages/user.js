@@ -2,7 +2,6 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import Head from 'next/head'
 import Link from 'next/link'
-import Head from 'next/head'
 import Layout from '../components/Layout'
 import dynamic from 'next/dynamic'
 import { Grid, Menu, Segment } from 'semantic-ui-react'
@@ -49,7 +48,7 @@ const User = props => {
         <link rel="icon" href="/favicon.ico" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Lato:400i|Playfair+Display:700&display=swap"
+          href="https://fonts.googleapis.com/css?family=Lato:400i|Playfair+Display:700i&display=swap"
         />
         <link
           rel="stylesheet"

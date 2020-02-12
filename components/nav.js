@@ -13,24 +13,35 @@ const Nav = props => (
         </a>
       </Link>
     </Grid.Column>
-    <Grid.Column width={14}>
+    <Grid.Column width={14} floated="right">
       {props.isLoggedIn ? (
-        <Grid columns={2}>
-          <Grid.Column width={14} textAlign="right">
+        <Grid columns={3}>
+          <Grid.Column textAlign="right" width={12}>
+            <Link href="/wines">
+              <a>SEARCH</a>
+            </Link>
+          </Grid.Column>
+
+          <Grid.Column width={2} textAlign="right" style={{ paddingLeft: `5px` }}>
             <Link href="/user">
               <a>MY PROFILE</a>
             </Link>
           </Grid.Column>
           <Grid.Column width={2} textAlign="right">
             <a href="#" onClick={() => props.logout()}>
-              LOG OUT
+              LOGOUT
             </a>
           </Grid.Column>
         </Grid>
       ) : (
-        <Grid>
-          <Grid.Column textAlign="right">
-            <a href="/auth/google">LOG IN</a>
+        <Grid columns={2} width={14}>
+          <Grid.Column textAlign="right" width={14}>
+            <Link href="/wines">
+              <a>SEARCH</a>
+            </Link>
+          </Grid.Column>
+          <Grid.Column textAlign="right" width={2}>
+            <a href="/auth/google">LOGIN</a>
           </Grid.Column>
         </Grid>
       )}
