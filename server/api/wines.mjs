@@ -15,9 +15,8 @@ router.get('/', async (req, res) => {
       req.query.variety
     }' AND n.price > ${req.query.priceLow} AND n.price < ${
       req.query.priceHigh
-    } RETURN n, EXISTS((n)-[:LIKED]-(u)) SKIP ${req.query.limit * req.query.page} LIMIT ${
-      req.query.limit
-    }`
+    } RETURN n, EXISTS((n)-[:LIKED]-(u)) SKIP ${req.query.limit * req.query.page -
+      req.query.limit} LIMIT ${req.query.limit}`
     const { records } = await session.run(cypher)
     res.json(records)
   } catch (err) {

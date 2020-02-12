@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import Head from 'next/head'
+import Router, { useRouter } from 'next/router'
 import { Dropdown, Segment, Grid, Input, Button, Icon } from 'semantic-ui-react'
-import { useRouter } from 'next/router'
 import { fetchWines } from '../../store/wines'
 import Layout from '../../components/Layout'
 import AllWineList from '../../components/AllWineList'
@@ -18,41 +18,66 @@ import ErrorNoResults from '../../components/ErrorNoResults'
 const Wines = props => {
   const router = useRouter()
   const [search, setSearch] = useState(router.query.search)
-  const [page, setPage] = useState(0)
-  const [limit, setLimit] = useState(25)
-  const [color, setColor] = useState('')
-  const [country, setCountry] = useState('')
-  const [variety, setVariety] = useState('')
-  const [priceLow, setPriceLow] = useState(0)
-  const [priceHigh, setPriceHigh] = useState(99999)
-  const [view, setView] = useState('likedWines')
+  const [page, setPage] = useState(Number(router.query.page))
+  const [limit, setLimit] = useState(Number(router.query.limit) || 25)
+  const [color, setColor] = useState(router.query.color || '')
+  const [country, setCountry] = useState(router.query.country || '')
+  const [variety, setVariety] = useState(router.query.variety || '')
+  const [priceLow, setPriceLow] = useState(Number(router.query.priceLow) || '')
+  const [priceHigh, setPriceHigh] = useState(Number(router.query.priceHigh) || '')
 
-  useEffect(() => {
-    props.fetchWines(page, limit, {
-      value: search,
+  const fetchAction = searchStr => {
+    return props.fetchWines(page, limit, {
+      value: searchStr,
       color,
       country,
       variety,
       priceHigh,
       priceLow,
     })
-  }, [page, limit, search, color, country, variety, priceHigh, priceLow])
-
-  const pageChange = val => setPage(page + val)
+  }
+  useEffect(() => {
+    fetchAction(router.query.search)
+    handleRoute(router.query.search)
+  }, [page, limit, color, country, variety, priceHigh, priceLow])
 
   const handleChange = e => {
     setSearch(e.target.value)
-    setPage(0)
+  }
+  const handleSubmit = e => {
+    e.preventDefault()
+    setPage(1)
+    handleRoute(search)
+    fetchAction(search)
+  }
+  const handleEnter = e => {
+    if (e.key === 'Enter' && search) {
+      setPage(1)
+      handleRoute(search)
+      fetchAction(search)
+    }
   }
 
-  // const handleSubmit = e => {
-  //   e.preventDefault()
-  //   Router.push({
-  //     pathname: '/wines',
-  //     as: `/wines?search=${search}`,
-  //     query: { search },
-  //   })
-  // }
+  const handleRoute = searchStr => {
+    Router.push({
+      pathname: '/wines',
+      query: {
+        search: searchStr,
+        page,
+        limit,
+        color,
+        country,
+        variety,
+        priceLow,
+        priceHigh,
+      },
+    })
+  }
+
+  const pageChange = val => {
+    setPage(val + Number(page))
+    // handleRoute()
+  }
 
   return (
     <Layout>
@@ -62,6 +87,7 @@ const Wines = props => {
           <link rel="icon" href="/favicon.ico" />
           <link
             rel="stylesheet"
+            href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
             href="https://fonts.googleapis.com/css?family=Lato:400i|700i&display=swap"
           />
           <link
@@ -69,26 +95,11 @@ const Wines = props => {
             href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
           />
         </Head>
-        <Grid.Row style={{ margin: `20px` }}>
-          <Input
-            type="text"
-            name="search"
-            value={search}
-            onChange={handleChange}
-            placeholder="Enter a wine name"
-          />
-          {/* <Button
-            type="submit"
-            style={{ margin: `10px`, backgroundColor: `#b7b7b7ff` }}
-            disabled={!search}
-            onClick={handleSubmit}>
-            Submit
-          </Button> */}
-        </Grid.Row>
-        <Grid.Row centered columns={5} style={{ margin: `0 0 0 10px` }}>
+        <Grid.Row columns={5} style={{ margin: `0 0 0 10px` }}>
           <Dropdown
             placeholder="Select Country"
             clearable
+            defaultValue={country}
             options={countryOptions}
             search
             selection
@@ -97,6 +108,7 @@ const Wines = props => {
           <Dropdown
             placeholder="Select Type"
             clearable
+            defaultValue={color}
             options={colorOptions}
             selection
             disabled={variety === '' ? false : true}
@@ -104,6 +116,7 @@ const Wines = props => {
           />
           <Dropdown
             placeholder="Select Variety"
+            defaultValue={variety}
             clearable
             search
             selection
@@ -112,18 +125,37 @@ const Wines = props => {
             onChange={(e, { value }) => setVariety(value)}
           />
           <Dropdown
+            defaultValue={priceLow}
             clearable
             selection
             placeholder="Set Min Price"
             options={minPriceOptions}
-            onChange={(e, { value }) => setPriceLow(Number(value))}
+            onChange={(e, { value }) => setPriceLow(value)}
           />
           <Dropdown
             selection
+            clearable
+            defaultValue={priceHigh}
             placeholder="Set Max Price"
             options={maxPriceOptions}
-            onChange={(e, { value }) => setPriceHigh(Number(value))}
+            onChange={(e, { value }) => setPriceHigh(value)}
           />
+          <Input
+            type="text"
+            name="search"
+            value={search}
+            icon="search"
+            onChange={handleChange}
+            onKeyPress={handleEnter}
+            placeholder="Enter a wine name"
+          />
+          <Button
+            type="submit"
+            style={{ margin: `0 0 0 10px`, backgroundColor: `#b7b7b7ff` }}
+            disabled={!search}
+            onClick={handleSubmit}>
+            Submit
+          </Button>
         </Grid.Row>
         {props.wines.length ? (
           <Segment attached="bottom">
@@ -135,7 +167,7 @@ const Wines = props => {
           </section>
         )}
         <div style={{ textAlign: 'center' }}>
-          <Button animated onClick={() => pageChange(-1)} disabled={!page}>
+          <Button animated onClick={() => pageChange(-1)} disabled={page <= 1}>
             <Button.Content visible>Prev</Button.Content>
             <Button.Content hidden>
               <Icon name="arrow left" />
