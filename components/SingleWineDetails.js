@@ -7,24 +7,24 @@ class SingleWineDetails extends Component {
     const singleWine = this.props.singleWine
     const price = singleWine.price
       ? singleWine.price.toLocaleString(undefined, { style: 'currency', currency: 'USD' })
-      : 'Not available'
+      : 'Not available   '
     return (
       <div>
         <hr style={{ borderTop: `5px solid ${wineColor(singleWine.color)}` }} />
         <h2>{trimParen(singleWine.title)}</h2>
+        <img
+          style={{ width: `2em`, margin: `0 0 7px 0` }}
+          src={countryFlag(singleWine.country)}
+          circular
+        />
+        <p>
+          <span className="sm-gray">ORIGIN:</span> {singleWine.province}, {singleWine.country}{' '}
+        </p>
         <p>
           <span className="sm-gray">WINERY:</span> {singleWine.winery}
         </p>
         <p>
           <span className="sm-gray">VARIETY:</span> {singleWine.variety}
-        </p>
-        <p>
-          <span className="sm-gray">ORIGIN:</span> {singleWine.province}, {singleWine.country}{' '}
-          <img
-            style={{ width: `2.2%`, margin: `0 0 0 16px` }}
-            src={countryFlag(singleWine.country)}
-            circular
-          />
         </p>
         <p>
           <span className="sm-gray">EST. PRICE:</span> {price.slice(0, -3)}
