@@ -13,6 +13,7 @@ const Nav = props => (
         </a>
       </Link>
     </Grid.Column>
+    {/* Search must be in both logged in/logged out conditions or formatting breaks */}
     <Grid.Column width={14} floated="right">
       {props.isLoggedIn ? (
         <Grid columns={3}>
