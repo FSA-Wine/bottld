@@ -6,17 +6,30 @@ const router = express.Router()
 router.get('/', async (req, res) => {
   const session = driver.session()
   try {
-    const googleId = req.user ? req.user.properties.googleId : ''
-    const cypher = `CALL db.index.fulltext.queryNodes("wineTitle", '${
-      req.query.search
-    }*~0.7') YIELD node AS n MATCH (u:User) WHERE u.googleId CONTAINS '${googleId}' AND n.color CONTAINS '${
-      req.query.color
-    }' AND n.country CONTAINS '${req.query.country}' AND n.variety CONTAINS '${
-      req.query.variety
-    }' AND n.price > ${req.query.priceLow} AND n.price < ${
-      req.query.priceHigh
-    } RETURN n, EXISTS((n)-[:LIKED]-(u)) SKIP ${req.query.limit * req.query.page -
-      req.query.limit} LIMIT ${req.query.limit}`
+    const cypher = req.user
+      ? `CALL db.index.fulltext.queryNodes("wineTitle", '${
+          req.query.search
+        }*~0.7') YIELD node AS n MATCH (u:User) WHERE u.googleId CONTAINS '${
+          req.user.properties.googleId
+        }' AND n.color CONTAINS '${req.query.color}' AND n.country CONTAINS '${
+          req.query.country
+        }' AND n.variety CONTAINS '${req.query.variety}' AND n.price > ${
+          req.query.priceLow
+        } AND n.price < ${req.query.priceHigh} RETURN n, EXISTS((n)-[:LIKED]-(u)) SKIP ${req.query
+          .limit *
+          req.query.page -
+          req.query.limit} LIMIT ${req.query.limit}`
+      : `CALL db.index.fulltext.queryNodes("wineTitle", '${
+          req.query.search
+        }*~0.7') YIELD node AS n WHERE n.color CONTAINS '${
+          req.query.color
+        }' AND n.country CONTAINS '${req.query.country}' AND n.variety CONTAINS '${
+          req.query.variety
+        }' AND n.price > ${req.query.priceLow} AND n.price < ${
+          req.query.priceHigh
+        } RETURN n, false SKIP ${req.query.limit * req.query.page - req.query.limit} LIMIT ${
+          req.query.limit
+        }`
     const { records } = await session.run(cypher)
     res.json(records)
   } catch (err) {
@@ -85,11 +98,13 @@ router.get('/tried', async (req, res) => {
 router.post('/liked', async (req, res) => {
   const session = driver.session()
   try {
-    const likeCypher = `MATCH (w:Wine), (u:User) WHERE u.googleId = '${req.user.properties.googleId}' AND w.id = ${req.body.wine.id.low} MERGE (u)-[r:LIKED]->(w) RETURN w`
-    const triedCypher = `MATCH (w:Wine), (u:User) WHERE u.googleId = '${req.user.properties.googleId}' AND w.id = ${req.body.wine.id.low} MERGE (u)-[r:TRIED]->(w) RETURN w`
-    const record = await session.run(likeCypher)
-    const { records } = await session.run(triedCypher)
-    res.json(records[0])
+    if (req.user) {
+      const likeCypher = `MATCH (w:Wine), (u:User) WHERE u.googleId = '${req.user.properties.googleId}' AND w.id = ${req.body.wine.id.low} MERGE (u)-[r:LIKED]->(w) RETURN w`
+      const triedCypher = `MATCH (w:Wine), (u:User) WHERE u.googleId = '${req.user.properties.googleId}' AND w.id = ${req.body.wine.id.low} MERGE (u)-[r:TRIED]->(w) RETURN w`
+      const record = await session.run(likeCypher)
+      const { records } = await session.run(triedCypher)
+      res.json(records[0])
+    } else res.json({})
   } catch (error) {
     res.status(500).send(error)
   } finally {
@@ -100,11 +115,13 @@ router.post('/liked', async (req, res) => {
 router.delete('/liked', async (req, res) => {
   const session = driver.session()
   try {
-    const unlikeCypher = `MATCH (u:User {googleId: '${req.user.properties.googleId}'})-[r:LIKED]->(w:Wine {id: ${req.body.wine.id.low}}) DELETE r`
-    await session.run(unlikeCypher)
-    const cypher = `MATCH (u:User {googleId: '${req.user.properties.googleId}'})-[r:LIKED]->(Wine) RETURN Wine`
-    const { records } = await session.run(cypher)
-    res.json(records)
+    if (req.user) {
+      const unlikeCypher = `MATCH (u:User {googleId: '${req.user.properties.googleId}'})-[r:LIKED]->(w:Wine {id: ${req.body.wine.id.low}}) DELETE r`
+      await session.run(unlikeCypher)
+      const cypher = `MATCH (u:User {googleId: '${req.user.properties.googleId}'})-[r:LIKED]->(Wine) RETURN Wine`
+      const { records } = await session.run(cypher)
+      res.json(records)
+    } else res.json({})
   } catch (error) {
     res.status(500).send(error)
   } finally {
