@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Link from 'next/link'
 import { Card, Grid, Image } from 'semantic-ui-react'
-import { trimParen, wineColor, wineLabelImg } from './utils'
+import { trimParen, wineColor, wineImg } from './utils'
 import ErrorUserNoResults from './ErrorUserNoResults'
 
 //unsure where 'color' will be located once added
@@ -33,7 +33,7 @@ class RecommendRow extends Component {
                           borderTopRightRadius: `0`,
                         }}>
                         <Image
-                          src={wineLabelImg(currentWineRec.color)}
+                          src={wineImg(currentWineRec.color, currentWineRec.id.low)}
                           style={{ width: `50%`, margin: `0 auto` }}
                           wrapped
                           ui={false}

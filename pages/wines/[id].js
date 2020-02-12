@@ -67,7 +67,7 @@ class SingleWineWithoutRouter extends Component {
                 <Grid.Column width={2} only="tablet computer">
                   <Image
                     centered
-                    src={wineImg(curWine.color)}
+                    src={wineImg(curWine.color, curWine.id.low, '')}
                     alt="red wine"
                     style={{ width: `120px`, top: `9px` }}
                   />
