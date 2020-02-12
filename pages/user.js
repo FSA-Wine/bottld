@@ -48,7 +48,7 @@ const User = props => {
         <link rel="icon" href="/favicon.ico" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Lato:400i|Playfair+Display:700&display=swap"
+          href="https://fonts.googleapis.com/css?family=Lato:400i|Playfair+Display:700i&display=swap"
         />
         <link
           rel="stylesheet"
