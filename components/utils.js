@@ -115,7 +115,7 @@ export const countryFlag = country => {
   }
 }
 
-const getRandomPhoto = () => Math.floor(Math.random() * 9)
+const getRandomPhoto = () => Math.floor(Math.random() * 10)
 
 export const wineImg = color => {
   switch (color) {
