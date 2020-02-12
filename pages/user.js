@@ -103,7 +103,7 @@ const User = props => {
                           </div>
                         </div>
                         <div className="chart-container">
-                          <p className="sm-gray">WINE MAP</p>
+                          <p className="sm-gray">LIKED WINES</p>
                           <div className="polar-container">
                             <DynamicMap likedWine={props.user.likedWines} />
                           </div>
