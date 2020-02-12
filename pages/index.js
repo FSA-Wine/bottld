@@ -82,7 +82,8 @@ const Home = props => {
                 value={search}
                 onChange={handleChange}
                 onKeyPress={handleEnter}
-                placeholder="Enter a wine name"></Input>
+                placeholder="Enter a wine name"
+              />
               <Button
                 type="submit"
                 style={{ margin: `10px`, backgroundColor: `#b7b7b7ff` }}

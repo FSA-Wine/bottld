@@ -44,13 +44,15 @@ class SingleWineCharts extends Component {
     this.setView(this.props.singleWine)
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (this.props.flavorData !== prevProps.flavorData) {
       this.getChartData(this.props.flavorData)
     }
     if (
-      this.state.viewport.latitude !== parseFloat(this.props.singleWine.latX) ||
-      this.state.viewport.longitude !== parseFloat(this.props.singleWine.longY)
+      this.props.singleWine.latX &&
+      this.props.singleWine.longY &&
+      (prevState.viewport.latitude !== parseFloat(this.props.singleWine.latX) ||
+        prevState.viewport.longitude !== parseFloat(this.props.singleWine.longY))
     ) {
       this.setView(this.props.singleWine)
     }
