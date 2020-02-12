@@ -13,6 +13,7 @@ const Nav = props => (
         </a>
       </Link>
     </Grid.Column>
+
     <Grid.Column width={14} floated="right">
       {props.isLoggedIn ? (
         <Grid columns={3}>
@@ -21,7 +22,6 @@ const Nav = props => (
               <a>SEARCH</a>
             </Link>
           </Grid.Column>
-
           <Grid.Column width={2} textAlign="right" style={{ paddingLeft: `5px` }}>
             <Link href="/user">
               <a>MY PROFILE</a>
