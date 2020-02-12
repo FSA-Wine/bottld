@@ -19,7 +19,7 @@ class RecommendRow extends Component {
             </div>
           </Grid.Row>
           <Grid.Row>
-            <Grid centered stackable columns={3}>
+            <Grid centered stackable columns={5}>
               {this.props.recWines.length ? (
                 this.props.recWines.map(el => {
                   let currentWineRec = el._fields[0].properties
