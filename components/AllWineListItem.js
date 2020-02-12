@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Divider, Image, List, Popup } from 'semantic-ui-react'
 import Link from 'next/link'
 import { useDispatch } from 'react-redux'
@@ -15,6 +15,11 @@ import { likeWine } from '../store/user'
 const AllWineListItem = ({ wineProps, liked, isLoggedIn }) => {
   const [isLiked, setIsLiked] = useState(liked)
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    setIsLiked(liked)
+  }, [liked, isLoggedIn])
+
   const onLike = () => {
     if (isLoggedIn) {
       dispatch(likeWine(isLiked, wineProps))
