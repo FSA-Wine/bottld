@@ -54,6 +54,10 @@ const Wines = props => {
         <Head>
           <title>Wine results for '{search}'</title>
           <link rel="icon" href="/favicon.ico" />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Playfair+Display:700&display=swap"
+          />
         </Head>
         <Grid.Row style={{ margin: `20px` }}>
           <Input
