@@ -97,7 +97,7 @@ const SearchRow = props => {
                 paddingTop: `.9em`,
                 paddingLeft: `.3em`,
               }}
-              placeholder="Set Minimum"
+              placeholder="Set Min"
               options={minPriceOptions}
               onChange={(e, { value }) => setPriceLow(Number(value))}
             />
