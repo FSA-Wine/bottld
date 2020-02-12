@@ -26,7 +26,7 @@ const Home = props => {
         country: '',
         variety: '',
         priceLow: 0,
-        priceHigh: 2999,
+        priceHigh: 9999,
       },
     })
   }
