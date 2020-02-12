@@ -115,34 +115,36 @@ export const countryFlag = country => {
   }
 }
 
+const getRandomPhoto = () => Math.floor(Math.random() * 10)
+
 export const wineImg = color => {
   switch (color) {
     case 'red':
-      return '/wine-red-3.png'
+      return `/photos/wine-red-${[getRandomPhoto()]}.png`
       break
     case 'white':
-      return '/wine-white-2.png'
+      return `/photos/wine-white-${[getRandomPhoto()]}.png`
       break
     case 'rose':
-      return '/wine-rose.png'
+      return `/photos/wine-rose-${[getRandomPhoto()]}.png`
       break
     default:
-      return '/wineRed.png'
+      return `/photos/wine-red-${[getRandomPhoto()]}.png`
   }
 }
 
 export const wineLabelImg = color => {
   switch (color) {
     case 'red':
-      return '/wine-red-3-label.png'
+      return `/photos/wine-red-${[getRandomPhoto()]}-label.png`
       break
     case 'white':
-      return '/wine-white-2-label.png'
+      return `/photos/wine-white-${[getRandomPhoto()]}-label.png`
       break
     case 'rose':
-      return '/wine-white-1-label.png'
+      return `/photos/wine-rose-${[getRandomPhoto()]}-label.png`
       break
     default:
-      return '/wine-red-2-label.png'
+      return `/photos/wine-red-${[getRandomPhoto()]}-label.png`
   }
 }
