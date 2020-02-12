@@ -13,10 +13,17 @@ const Nav = props => (
         </a>
       </Link>
     </Grid.Column>
-    <Grid.Column width={14}>
+    {/* Search must be in both logged in/logged out conditions or formatting breaks */}
+    <Grid.Column width={14} floated="right">
       {props.isLoggedIn ? (
-        <Grid columns={2}>
-          <Grid.Column width={14} textAlign="right">
+        <Grid columns={3}>
+          <Grid.Column textAlign="right" width={12}>
+            <Link href="/wines">
+              <a>SEARCH</a>
+            </Link>
+          </Grid.Column>
+
+          <Grid.Column width={2} textAlign="right" style={{ paddingLeft: `12px` }}>
             <Link href="/user">
               <a>MY PROFILE</a>
             </Link>
@@ -28,8 +35,13 @@ const Nav = props => (
           </Grid.Column>
         </Grid>
       ) : (
-        <Grid>
-          <Grid.Column textAlign="right">
+        <Grid columns={2} width={14}>
+          <Grid.Column textAlign="right" width={14}>
+            <Link href="/wines">
+              <a>SEARCH</a>
+            </Link>
+          </Grid.Column>
+          <Grid.Column textAlign="right" width={2}>
             <a href="/auth/google">LOG IN</a>
           </Grid.Column>
         </Grid>
