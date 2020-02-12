@@ -26,9 +26,9 @@ const Wines = props => {
   const [priceLow, setPriceLow] = useState(Number(router.query.priceLow) || '')
   const [priceHigh, setPriceHigh] = useState(Number(router.query.priceHigh) || '')
 
-  const fetchAction = () => {
+  const fetchAction = searchStr => {
     return props.fetchWines(page, limit, {
-      value: search,
+      value: searchStr,
       color,
       country,
       variety,
@@ -37,8 +37,8 @@ const Wines = props => {
     })
   }
   useEffect(() => {
-    fetchAction()
-    handleRoute(page)
+    fetchAction(router.query.search)
+    handleRoute(router.query.search)
   }, [page, limit, color, country, variety, priceHigh, priceLow])
 
   const handleChange = e => {
@@ -47,22 +47,22 @@ const Wines = props => {
   const handleSubmit = e => {
     e.preventDefault()
     setPage(1)
-    handleRoute()
-    fetchAction()
+    handleRoute(search)
+    fetchAction(search)
   }
   const handleEnter = e => {
     if (e.key === 'Enter' && search) {
       setPage(1)
-      handleRoute()
-      fetchAction()
+      handleRoute(search)
+      fetchAction(search)
     }
   }
 
-  const handleRoute = () => {
+  const handleRoute = searchStr => {
     Router.push({
       pathname: '/wines',
       query: {
-        search,
+        search: searchStr,
         page,
         limit,
         color,
@@ -76,7 +76,7 @@ const Wines = props => {
 
   const pageChange = val => {
     setPage(val + Number(page))
-    handleRoute()
+    // handleRoute()
   }
 
   return (
