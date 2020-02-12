@@ -1,6 +1,6 @@
-/* * {
+* {
   border: 1px solid red;
-} */
+}
 body {
   margin: 0;
   height: 90%;
@@ -56,7 +56,7 @@ a:hover {
 .lower-section {
   width: 75vw;
   margin: 0 auto;
-  padding: 25px 35px 65px 35px;
+  padding: 25px 35px 75px 35px;
 }
 
 div.ui.centered.doubling.five.column.grid {

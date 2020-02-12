@@ -87,7 +87,6 @@ const Wines = props => {
           <link rel="icon" href="/favicon.ico" />
           <link
             rel="stylesheet"
-            href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
             href="https://fonts.googleapis.com/css?family=Lato:400i|700i&display=swap"
           />
           <link
