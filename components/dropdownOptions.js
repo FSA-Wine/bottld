@@ -111,7 +111,7 @@ export const colorOptions = [
 ]
 
 export const maxPriceOptions = [
-  { key: '9999', text: 'No Max Limit', value: 9999 },
+  // { key: '9999', text: 'No Max Limit', value: '' },
   { key: '2000', text: 'Less than $2000', value: 1999 },
   { key: '1000', text: 'Less than $1000', value: 999 },
   { key: '500', text: 'Less than $500', value: 499 },
@@ -123,7 +123,7 @@ export const maxPriceOptions = [
 ]
 
 export const minPriceOptions = [
-  { key: '0', text: 'No Min Limit', value: 0 },
+  // { key: '0', text: 'No Min Limit', value: '' },
   { key: '25', text: 'Greater than $25', value: 25 },
   { key: '50', text: 'Greater than $50', value: 50 },
   { key: '75', text: 'Greater than $75', value: 75 },

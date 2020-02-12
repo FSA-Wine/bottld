@@ -25,8 +25,8 @@ const Home = props => {
         color: '',
         country: '',
         variety: '',
-        priceLow: 0,
-        priceHigh: 9999,
+        priceLow: '',
+        priceHigh: '',
       },
     })
   }
@@ -41,8 +41,8 @@ const Home = props => {
           color: '',
           country: '',
           variety: '',
-          priceLow: 0,
-          priceHigh: 9999,
+          priceLow: '',
+          priceHigh: '',
         },
       })
     }

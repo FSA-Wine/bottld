@@ -23,8 +23,8 @@ const Wines = props => {
   const [color, setColor] = useState(router.query.color || '')
   const [country, setCountry] = useState(router.query.country || '')
   const [variety, setVariety] = useState(router.query.variety || '')
-  const [priceLow, setPriceLow] = useState(Number(router.query.priceLow) || 0)
-  const [priceHigh, setPriceHigh] = useState(Number(router.query.priceHigh) || 9999)
+  const [priceLow, setPriceLow] = useState(Number(router.query.priceLow) || '')
+  const [priceHigh, setPriceHigh] = useState(Number(router.query.priceHigh) || '')
 
   const fetchAction = () => {
     return props.fetchWines(page, limit, {
@@ -126,17 +126,19 @@ const Wines = props => {
           />
           <Dropdown
             defaultValue={priceLow}
+            clearable
             selection
             placeholder="Set Min Price"
             options={minPriceOptions}
-            onChange={(e, { value }) => setPriceLow(Number(value))}
+            onChange={(e, { value }) => setPriceLow(value)}
           />
           <Dropdown
             selection
+            clearable
             defaultValue={priceHigh}
             placeholder="Set Max Price"
             options={maxPriceOptions}
-            onChange={(e, { value }) => setPriceHigh(Number(value))}
+            onChange={(e, { value }) => setPriceHigh(value)}
           />
           <Input
             type="text"
