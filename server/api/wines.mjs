@@ -45,7 +45,7 @@ router.get('/recommended', async (req, res) => {
   const session = driver.session()
   try {
     if (req.user) {
-      const cypher = `MATCH (u:User {googleId: '${req.user.properties.googleId}'})-[r:LIKED]->(wine)-[r2:SIMILAR]->(n:Wine) WHERE n.color CONTAINS '${req.query.color}' AND n.country CONTAINS '${req.query.country}' AND n.variety CONTAINS toLower('${req.query.variety}') AND n.price > ${req.query.priceLow} AND n.price < ${req.query.priceHigh} AND NOT exists((u)-[r]->(n)) RETURN n,u, count(*) AS occurrence ORDER BY occurrence DESC LIMIT ${req.query.limit}`
+      const cypher = `MATCH (u:User {googleId: '${req.user.properties.googleId}'})-[r:LIKED]->(wine)-[r2:SIMILAR]->(n:Wine) WHERE n.color CONTAINS '${req.query.color}' AND n.country CONTAINS '${req.query.country}' AND n.variety CONTAINS '${req.query.variety}' AND n.price > ${req.query.priceLow} AND n.price < ${req.query.priceHigh} AND NOT exists((u)-[r]->(n)) RETURN n,u, count(*) AS occurrence ORDER BY occurrence DESC LIMIT ${req.query.limit}`
       const { records } = await session.run(cypher)
       res.json(records)
     } else res.json([])

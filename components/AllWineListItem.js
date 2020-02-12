@@ -43,7 +43,7 @@ const AllWineListItem = ({ wineProps, liked, isLoggedIn }) => {
                 }
                 trigger={
                   <Image
-                    src={isLiked ? '/heart-solid.svg' : '/heart-outline.svg'}
+                    src={isLiked && isLoggedIn ? '/heart-solid.svg' : '/heart-outline.svg'}
                     style={{ width: `18px`, margin: `5px 5px 0 0` }}
                     onClick={() => onLike()}
                     floated="right"
