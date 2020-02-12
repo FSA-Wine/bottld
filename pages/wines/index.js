@@ -39,7 +39,7 @@ const Wines = props => {
       priceLow,
     })
   }, [page, limit, search, color, country, variety, priceHigh, priceLow])
-  
+
   const handleChange = e => {
     setCurentSearch(e.target.value)
   }
@@ -72,6 +72,7 @@ const Wines = props => {
           <link
             rel="stylesheet"
             href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
+            href="https://fonts.googleapis.com/css?family=Lato:400i|700,700i&display=swap"
           />
         </Head>
         {/* <Grid.Row style={{ margin: `20px` }}>
@@ -143,12 +144,12 @@ const Wines = props => {
           />
           <Button
             type="submit"
-            style={{ margin: `0 0 0 10px`, backgroundColor: `#b7b7b7ff`}}
+            style={{ margin: `0 0 0 10px`, backgroundColor: `#b7b7b7ff` }}
             disabled={!currentSearch}
             onClick={handleSubmit}>
             Submit
           </Button>
-          </Grid.Row>
+        </Grid.Row>
         {props.wines.length ? (
           <Segment attached="bottom">
             <AllWineList wines={props.wines} isLoggedIn={props.isLoggedIn} />

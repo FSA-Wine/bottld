@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { connect } from 'react-redux'
+import Head from 'next/head'
 import Link from 'next/link'
 import Head from 'next/head'
 import Layout from '../components/Layout'
@@ -117,7 +118,7 @@ const User = props => {
                           </div>
                         </div>
                         <div className="chart-container">
-                          <p className="sm-gray">WINE MAP</p>
+                          <p className="sm-gray">LIKED WINES</p>
                           <div className="polar-container">
                             <DynamicMap likedWine={props.user.likedWines} />
                           </div>

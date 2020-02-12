@@ -22,6 +22,7 @@ export default ({ wines, view }) => (
             marginBottom: `15px`,
             marginTop: `15px`,
             textAlign: `center`,
+            color: 'gray',
           }}>
           {!wines.length
             ? `Like some wines to get started!`

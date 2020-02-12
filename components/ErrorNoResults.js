@@ -10,6 +10,7 @@ const ErrorNoResults = () => {
             textAlign: `center`,
             color: `#980000`,
             fontFamily: `Playfair Display, serif`,
+            fontWeight: `700`,
             fontStyle: `italic`,
             fontSize: `2.3rem`,
             padding: `0`,
@@ -35,7 +36,7 @@ const ErrorNoResults = () => {
 
       <Grid.Row>
         <Grid.Column computer={2} tablet={3}>
-          <Image centered src="./glass-grapes.svg"></Image>
+          <Image centered src="./glass-grapes-2.svg"></Image>
         </Grid.Column>
       </Grid.Row>
     </Grid>
