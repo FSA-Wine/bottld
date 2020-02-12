@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import Head from 'next/head'
-import { Dropdown, Segment, Grid, Input } from 'semantic-ui-react'
+import { Dropdown, Segment, Grid, Input, Button, Icon } from 'semantic-ui-react'
 import { useRouter } from 'next/router'
 import { fetchWines } from '../../store/wines'
-import Paginate from '../../components/Paginate'
 import Layout from '../../components/Layout'
 import AllWineList from '../../components/AllWineList'
 import {
@@ -19,7 +18,7 @@ import ErrorNoResults from '../../components/ErrorNoResults'
 const Wines = props => {
   const router = useRouter()
   const [search, setSearch] = useState(router.query.search)
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(0)
   const [limit, setLimit] = useState(25)
   const [color, setColor] = useState('')
   const [country, setCountry] = useState('')
@@ -38,6 +37,13 @@ const Wines = props => {
       priceLow,
     })
   }, [page, limit, search, color, country, variety, priceHigh, priceLow])
+
+  const pageChange = val => setPage(page + val)
+
+  const handleChange = e => {
+    setSearch(e.target.value)
+    setPage(0)
+  }
 
   // const handleSubmit = e => {
   //   e.preventDefault()
@@ -58,13 +64,17 @@ const Wines = props => {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Lato:400i|700,700i&display=swap"
           />
+          <link
+            rel="stylesheet"
+            href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
+          />
         </Head>
         <Grid.Row style={{ margin: `20px` }}>
           <Input
             type="text"
             name="search"
             value={search}
-            onChange={(e, { value }) => setSearch(value)}
+            onChange={handleChange}
             placeholder="Enter a wine name"
           />
           {/* <Button
@@ -124,15 +134,31 @@ const Wines = props => {
             <ErrorNoResults />
           </section>
         )}
-        <Paginate limit={limit} count={props.wineCount} setPage={newPage => setPage(newPage)} />
+        <div style={{ textAlign: 'center' }}>
+          <Button animated onClick={() => pageChange(-1)} disabled={!page}>
+            <Button.Content visible>Prev</Button.Content>
+            <Button.Content hidden>
+              <Icon name="arrow left" />
+            </Button.Content>
+          </Button>
+          <Button animated onClick={() => pageChange(1)} disabled={props.wines.length < limit}>
+            <Button.Content visible>Next</Button.Content>
+            <Button.Content hidden>
+              <Icon name="arrow right" />
+            </Button.Content>
+          </Button>
+        </div>
       </div>
     </Layout>
   )
 }
 
+Wines.defaultProps = {
+  wines: [],
+}
+
 const mapState = state => ({
-  wines: state.wines.data,
-  wineCount: state.wines.count,
+  wines: state.wines,
   user: state.user,
   isLoggedIn: state.user.googleId,
 })
