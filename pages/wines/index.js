@@ -56,7 +56,7 @@ const Wines = props => {
           <link rel="icon" href="/favicon.ico" />
           <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Playfair+Display:700&display=swap"
+            href="https://fonts.googleapis.com/css?family=Lato:400i|700,700i&display=swap"
           />
         </Head>
         <Grid.Row style={{ margin: `20px` }}>

@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { connect } from 'react-redux'
+import Head from 'next/head'
 import Link from 'next/link'
 import Layout from '../components/Layout'
 import dynamic from 'next/dynamic'
@@ -41,6 +42,12 @@ const User = props => {
 
   return (
     <Layout>
+      <Head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Lato:400i|Playfair+Display:700&display=swap"
+        />
+      </Head>
       {props.isLoggedIn ? (
         <div className="content smaller-text">
           <div className="top-section">
@@ -134,7 +141,7 @@ const User = props => {
                       info="We think you might enjoy these wines:"
                     />
                   </Grid.Row>
-                  <Grid.Row style={{ margin: `0 0 20px 0` }}>
+                  <Grid.Row>
                     <SearchRow />
                   </Grid.Row>
                 </Grid>

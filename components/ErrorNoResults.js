@@ -10,6 +10,7 @@ const ErrorNoResults = () => {
             textAlign: `center`,
             color: `#980000`,
             fontFamily: `Playfair Display, serif`,
+            fontWeight: `700`,
             fontStyle: `italic`,
             fontSize: `2.3rem`,
             padding: `0`,
