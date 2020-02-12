@@ -27,16 +27,18 @@ class UserMap extends Component {
       <ReactMapGL
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxApiAccessToken={token}
+        scrollZoom={false}
         onViewportChange={viewport => this.setState({ viewport })}
         {...this.state.viewport}>
         {wines.map((cur, i) => {
           let wine = cur._fields[0].properties
           if (!wine.latX || !wine.longY) return
-          let lat = parseFloat(wine.latX) + 1
+          let lat = parseFloat(wine.latX)
+          let long = parseFloat(wine.longY) + 6
           return (
             <Marker
               key={i}
-              longitude={parseFloat(wine.longY)}
+              longitude={long}
               latitude={lat}
               offsetLeft={-20}
               offsetTop={-10}>
