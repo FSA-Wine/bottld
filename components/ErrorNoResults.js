@@ -35,7 +35,7 @@ const ErrorNoResults = () => {
 
       <Grid.Row>
         <Grid.Column computer={2} tablet={3}>
-          <Image centered src="./glass-grapes.svg"></Image>
+          <Image centered src="./glass-grapes-2.svg"></Image>
         </Grid.Column>
       </Grid.Row>
     </Grid>
