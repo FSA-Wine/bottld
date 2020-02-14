@@ -95,6 +95,7 @@ const Home = props => {
                 type="text"
                 icon="search"
                 name="search"
+                autocomplete="off"
                 value={search}
                 onChange={handleChange}
                 onKeyPress={handleEnter}

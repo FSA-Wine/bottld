@@ -142,6 +142,7 @@ const Wines = props => {
           <Input
             type="text"
             name="search"
+            autocomplete="off"
             value={search}
             icon="search"
             onChange={handleChange}
